@@ -1,0 +1,9 @@
+.pagination{
+  margin: 20px 8px;
+  .page.active > a{ background-color: #707173; border: 1px solid #707173;
+     -moz-border: 1px solid #707173; -webkit-border: 1px solid #707173;
+  }
+  .page, .next_page, .last.next, .prev, .first{
+    a{ color: #000;}
+  } 
+}

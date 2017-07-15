@@ -1,0 +1,49 @@
+<div class="col-md-8 col-lg-8">
+  <h1 class='title-page'>Personal Information</h1>
+
+  <%= form_for @user , :url => update_avatar_user_path(@user),  :method => 'post', :remote => true, :html => {:multipart => true, :id => 'form_update_avatar'} do |f| %>
+    <p>
+      <%= image_tag(backend_avatar_url(current_user), :class => 'user_avatar') %>
+    </p>
+    <p>
+      <a class="default-link btn-change-avatar">Change Avatar</a>
+      <%= f.file_field :avatar, class: 'hide upload-avatar' %>
+    </p>
+  <% end %>
+  <%= form_for user,:url=>update_personal_information_path,:method=>"post", :html => {:multipart => true,:name => 'edit_personal_form', id: 'personal_info_form'} do |f|%>
+  <table width="100%">
+    <tr valign="top">
+      <td>
+      
+        <p>
+          <%=f.label :email%>
+          <%=f.email_field :email, class: "form-control", disabled: true %>
+        </p>
+        <p>
+          <%=f.label :username%>
+          <%=f.text_field :username, class: "form-control " %>
+        </p>
+        <p>
+          <%=f.label :phone %>
+          <%=f.text_field :phone , class: "form-control ", :onkeypress => "return isNumberKey(event)"%>
+        </p>
+        <p>
+          <%=f.label :postcode %>
+          <%=f.text_field :postcode , class: "form-control "%>
+        </p>
+        <p>
+          <%=f.submit "Submit",class: "update_info default-btn"%>
+
+        </p>
+      
+      </td>
+    </tr>
+  </table>
+
+  <% end %>
+
+</div>
+<div class="col-md-4 col-lg-4 mg-bt-20">
+  <h3 class='title-page'><%= t('membership.upgrade_account_title') %></h3>
+  <%= link_to t('membership.upgrade_account'), become_a_member_path, class: "default-link" %>
+</div>

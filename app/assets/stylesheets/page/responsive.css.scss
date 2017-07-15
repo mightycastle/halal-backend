@@ -1,0 +1,685 @@
+  @media(min-width: 992px){
+    #border-quality{border-right: 1px solid #fff; border-left: 1px solid #fff;}
+    .searching-img{ margin-left: 10px; margin-top: 5px; vertical-align: top;}
+  }
+  @media(max-width: 979px) and (min-width: 768px){
+    .searching-img{ margin-left: 0px; margin-top: 5px; vertical-align: top;}
+    // .container{ padding: 0;}
+    #search_form{
+      .result-search-part .container{ 
+        width: 100%;
+        // padding: 0;
+      }
+    }
+  #feature_view{
+    .content-review {
+      .f-review {
+        .top-review{
+          width: 210px;
+          .logo-image {width: 210px;  height: 210px;}
+        }
+        .info-part .title-restaurant {font-size: 22px;}
+      } 
+    }
+  }
+  .part3 #border-quality{ border: none;}
+  #more_reviews, #all_reply_reviews{
+    .column_reviews {
+      .rating_box{ font-size: 12px; 
+        .start-review{ padding-right: 0;}
+      }
+    }
+  }
+  #wordpress_posts{
+   .wordpress-post-item .post_content {
+
+    }
+  }
+}
+
+
+@media(max-width: 767px){
+  .detail-page-info{ padding-left: 30px;}
+  .part4{ padding-left:15px;}
+  .owner-page .welcome-owner{
+    height: auto; padding-bottom: 10px;
+  }
+  .detail-page{
+    .part1{ padding-bottom: 15px;}
+  }
+  .dotted-line{ margin: 0;}
+  .login-page .login-btn{margin-top: 0;}
+  .page_add_new_restaurant, .page_add_new_collection {
+    .form_infor_restaurant label.error {
+      margin-top: 10px;
+    }
+  }
+  .search_result .result-search-part .result-search .item-result{ height: auto;
+    .bottom-item{ position: relative; height: 65px; width: 100%; margin-top: 5px;}
+  }
+  .searching-img{position: absolute;  top: 88px; left: 50%; margin-left: -16px;}
+  .search_result{
+    .result-search{
+      .item-result{
+        .img_bounder{
+          .item img{ height: auto;}
+        }
+      }
+    }
+  }
+  
+  .part1.restaurant-photos{
+    .tn3-slide-part{
+      .tn3-thumbs{ margin-bottom: 0;}
+    }
+  }  
+  #more_reviews, #all_reply_reviews{
+    .column_reviews{
+      .rating_box{ font-size: 10px; 
+        .start-review{ 
+          .label_stars{ margin-right: 3px;  font-size: 11px;}
+        }
+        .start-review:first-child{ padding-left: 15px;}
+      }
+    }
+  }
+  .filter-toggle-mobile{ margin-top: 15px;
+    &:hover, &:focus{ outline: none;}
+  }
+  #search_bar.mobile_site{ display: none;}
+  .result-search-part{ text-align: right;}
+  .search_result .search-result-part{ text-align: left; padding-top: 15px;}
+  .action-filter{ text-align: center; margin-top: 15px;}
+  .show-review-page-top-search-box{
+    padding: 20px 0px 20px;
+  }
+  .mobile-css{
+
+    #search_filter .content_filter .selelct-option-filter{
+
+     .btn-group.bootstrap-select {
+        width: 100%;
+      }
+      .btn-group.bootstrap-select.select-time-hour {
+        width: 100%;
+      }
+      
+    }
+    
+  }
+  .part1{
+    #restaurant_social{
+      float: left ! important;
+    }
+  }
+  .search_result{
+    .search_input{
+      font-size: 12px ! important;
+    }
+  }
+  
+  #footer .first_col {
+    padding-left: 10px;
+    .submit-email{ padding-left: 10px; margin-top: 10px;}
+  }
+  .or-phone{
+    margin: 10px 0px 0px;
+    line-height: 20px;
+    color: #fff;
+  }
+  .nav_top{
+    // height: 70px;
+    a.add_your_restaurant{ font-size: 13px; line-height: 70px;}
+    .top-right .login-part {line-height: 70px;}
+    // &.header .logo {width: 100px;}
+  }
+  #feature_view{
+    .content-review {
+      .f-review .top-review{
+        width: 210px;
+        .logo-image {width: 210px;  height: 210px;}
+      } 
+    }
+  }
+  #wordpress_posts {
+    .wordpress-post-item {
+      .post_content.first .title-page{width: 100%;}
+    }
+    
+  }
+  #contact_us{
+    .visit_blog , .connect_us , .advertise_us{
+      padding: 0;
+      .text{ width: 160px;}
+    }
+  }
+  #feature_view .content-review .f-review{
+    padding: 0px ! important;
+  }
+  .nav_center{
+    .btn_select_cuisin.btn{
+      font-size: 12px;
+    }
+    .search-part-home{
+      margin-left: 0;
+      height: auto;
+      text-align: center;
+      position: static;
+      margin-top: 0px;
+      padding: 20px 0px;
+      width: 100%;
+      .or{ display: none;}
+      .search_pnl {
+        padding: 5px 5px;
+        h1{ font-size: 16px;}
+      }
+    }
+    .carousel-indicators{display: none;}
+    
+  }
+  
+}
+
+@media(min-width: 380px) and (max-width: 480px){
+  .tn3-gallery{
+    height: 350px ! important;
+    .tn3-image{
+      height: 250px ! important;
+    }
+  }
+}
+
+@media(min-width: 320px) and (max-width: 380px){
+  .tn3-gallery{
+    height: 300px ! important;
+    .tn3-image{
+      height: 200px ! important;
+    }
+  }
+}
+@media(max-width: 319px){
+  .tn3-gallery{
+    height: 250px ! important;
+    .tn3-image{
+      height: 150px ! important;
+    }
+  }
+}
+@media(min-width: 481px){
+  #search_form{
+    .result-search-part .container{ width: 100%; }
+  }
+  .search_result #search_bar #map_script {
+    border: 3px solid #fff;
+  }
+}
+@media(max-width: 480px){  
+  .search-result-part .box-search input[type="search"]{
+    width: 100%;
+  }
+  .header .nav_top{ min-height: 45px;
+    .navbar-header {
+      .navbar-toggle{ padding: 5px;}
+      .navbar-brand.navbar-logo{
+        line-height: 40px; padding: 0;
+        .logo{ width: 70%;}
+      }
+    }
+  }
+  .search_result .results-right-part .result-search{ padding: 0;}
+  .result-rest-info{padding-left: 5px;}
+  .restaurant-photos .tn3-slide-part .tn3-thumbs .tn3-thumb{
+    width: 130px ! important;
+  } 
+  .qtip-mobile-slide.cl{ top: -999px !important;}
+  #qtip-0{ top: -999px !important;}
+  /*.filter-toggle-mobile{ margin-top: 15px;
+    &:hover, &:focus{ outline: none;}
+  }
+  #search_bar.mobile_site{ display: none;}
+  .result-search-part{ text-align: right;}
+  .search_result .search-result-part{ text-align: left; padding-top: 15px;}
+  .action-filter{ text-align: center; margin-top: 15px;}
+  .show-review-page-top-search-box{
+    padding: 20px 0px 20px;
+    margin-bottom: 20px;
+  }
+  .mobile-css{
+
+    #search_filter .content_filter .selelct-option-filter{
+
+     .btn-group.bootstrap-select {
+        width: 100%;
+      }
+      .btn-group.bootstrap-select.select-time-hour {
+        width: 100%;
+      }
+      
+    }
+    
+  }*/
+
+  .search_result{
+    .form_search_input{
+      width: 100%;
+    }
+    .btn-group.bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]){
+      width: 100%;
+    }
+    .search_input{
+      font-size: 11px ! important;
+      width: 100% !important;
+    }
+  }
+  .nav_center{
+    .btn_select_cuisin.btn{
+      font-size: 11px;
+    }
+  }
+  .contact{
+    .visit_blog{
+      margin-bottom: 5px;
+    }
+    .connect_us{
+      margin-bottom: 5px;
+    }
+  }
+  #wordpress_posts{
+    .link_blog{ 
+      font-size: 12px;
+    }
+  }
+  .nav_top{
+    height: auto; 
+    .add-restaurant-btn{
+      a.add_your_restaurant{ font-size: 10px;
+        img{width: 15px;}
+      }
+    }
+    .login-part{
+      .login-link{ font-size: 10px;}
+    }
+    
+    // &.header .logo {width: 100px;}
+  }
+  /*.container{ padding: 0; margin: 0;}*/
+  #contact_us{
+    .visit_blog , .connect_us , .advertise_us{
+      padding: 0;
+      .text{ width: 130px; font-size: 10px;}
+      img{ width: 34px; height: 30px;}
+    }
+    .connect-social .icon_social {
+      padding: 0 2px;
+    }
+  } 
+}
+
+@media (min-width: 981px) and (max-width: 1100px) { 
+  .nav_center .carousel-control {
+    .glyphicon-chevron-right{
+      right: 15px;
+    }
+    .glyphicon-chevron-left{
+      left: 15px;
+    }
+  }
+}
+@media (min-width: 850px) and (max-width: 979px) { 
+  .nav_center {
+    .carousel-control {
+      .glyphicon-chevron-right{
+        display: none;
+      }
+      .glyphicon-chevron-left{
+        display: none;
+      }
+    }
+    .search-part-home{
+      margin-left: 0;
+      height: auto;
+      text-align: center;
+      position: static;
+      margin-top: 0px;
+      padding: 20px 0px;
+      width: 100%;
+      .or{ display: none;}
+      .title-page{
+        text-align: left;
+      }
+    }
+  }
+}
+@media (max-width: 849px) { 
+  .nav_center {
+    .search-part-home{
+      margin-left: 0;
+      height: auto;
+      text-align: center;
+      position: static;
+      margin-top: 0px;
+      padding: 20px 0px;
+      width: 100%;
+      .search_pnl{
+        padding: 5px;
+      }
+      .or{ display: none;}
+      .or-phone{ 
+        display: block ! important; 
+        margin: 10px 0px 0px;
+        line-height: 20px;
+        color: #fff;
+      }
+    }
+  }
+}
+@media (max-width: 979px) { 
+  .part1.restaurant-photos{
+    .infor3{ margin-top: 0;}
+    .download-menu-button{
+      float: right ! important; margin: 15px 0;
+    }
+    .map_view{ float: right !important;
+      .btn-viewmap{ margin: 0;}
+    }
+  }
+  
+  .search_result .sort-title{
+    width: 100%;
+  }
+}
+@media (min-width: 768px) { 
+  
+}
+@media (min-width: 980px) {
+  .show-review-page-top-search-box{
+    padding: 50px 0px 20px;
+  }
+}
+@media(min-width: 480px){
+  .profile-page{ padding-top: 20px;
+    .row_restaurants{
+    .row_restaurant_image{
+      float: left;
+      width: 160px;
+    }
+    .row_restaurant_info{
+      float: left;
+    }
+    }
+  }
+}
+@media(min-width: 480px) and (max-width: 979px){
+  .show-review-page-top-search-box{
+    padding: 80px 0px 20px;
+    .show-review-page .bootstrap-select.select-sort-review{
+      width: 50%;
+    }
+  }
+}
+@media(max-width: 479px){
+  .infor4{
+    .label_stars {min-width: 60px;}
+  }
+  
+  .nav.nav-tabs li{
+    font-size: 12px;
+  }
+  .nav_center{
+    .search-part-home{
+      .search_pnl{
+        width: 100%;
+      }
+      input[type=search]{
+        width: 100% ! important;
+        font-size: 12px;
+        padding-right: 40px;
+      }
+      left: 50%;
+      .btn-group.bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]){ 
+        width: 100% ! important;
+      }
+    }
+  }
+}
+@media(max-width: 400px){
+  .profile-page{ 
+    #personal_info_form{
+      .form-control{
+        width: 100% ! important;
+      }
+    }
+  }
+  #add_menus{
+    .form-control{
+      width: 100% ! important;
+    }
+  }
+  #add_social{
+    .form-control{
+      width: 100% ! important;
+    } 
+  }
+}
+@media(max-width: 355px){
+  .search_result{
+    .search_input{
+      font-size: 11px ! important;
+    }
+  }
+  .nav.nav-tabs li{
+    font-size: 11px;
+  }
+  
+}
+@media (max-width: 1200px) { 
+  .rating-label{
+    min-width: 80px;
+  }
+  .tn3-gallery{
+    margin-bottom: 10px;
+  }
+  #contact_us{
+    .font-size-22{
+      font-size: 18px;
+    }
+  }
+  #wordpress_posts .wordpress-post-item .post_content p{
+    font-size: 28px ! important;
+  }
+}
+
+@media (max-width: 580px) { 
+  .visit_blog, .connect_us, .advertise_us{
+      width: 100% ! important;
+  }
+  .visit_blog, .connect_us{border-right: none ! important;}
+}
+
+  
+@media (max-width: 480px) { 
+  .owner-page{
+    .manage-btn{ margin-top: 5px;}
+  }
+  .login-page{ padding: 0 10px;}
+  .form_add_new_restaurant,.form_add_new_collection{
+    .titles_page_add_restaurant{
+      font-size: 20px;
+      img{
+        width: 32px; height: 32px;
+      }
+    }
+  }
+  .part1.restaurant-photos{
+    .mobile-ui{ margin: 0;}
+    .slide-part{ padding: 0;}
+    .detail-page-info{ padding: 0;
+      .infor2{ padding: 0;}
+    }
+
+  }
+  .part4{ padding: 20px 10px;}
+  .form_review_restaurant .re-login-message{ margin-bottom: 0;}
+  .nav_center #feature_view{
+    .title-feature{ font-size: 23px !important;}
+    .content-review {
+      .f-review {
+
+        .top-review{
+          margin: auto;
+        }
+        .info-part{
+          .title-restaurant{ text-align: center;}
+        }
+        .info-review{
+          .city-restaurant, .rating-star{ text-align: center;}
+
+        }
+      } 
+
+    }
+  }
+  .nav_center{
+    #wordpress_posts {
+      .wordpress-post-item{ 
+        .post_content{ 
+          p{ font-size: 23px ! important;  }
+        }
+      }
+    }
+  }
+
+  .nav_center{
+    .top-search{ position: relative; 
+        .hyperlinked_text{
+            width: 100%;
+            margin-bottom: 0px;
+
+
+        }
+    }
+  }
+  .nav_top a.add_your_restaurant,
+  .top-right .login-part{
+    padding: 0px 5px ! important;
+  }
+  .carousel-inner > .item > img, .carousel-inner > .item > a > img{
+    height: 200px;
+  }
+  .header{
+    .nav_top{
+      height: auto;
+      .top-right {
+        .add-restaurant-btn{
+          float: left;
+          font-size: 10px;
+          width: 100%;
+          text-align: center;
+          line-height: 30px;
+          a.add_your_restaurant{ line-height: 50px;}
+        }
+        .login-part{
+          float: left;
+          width: 100%;
+          text-align: center;
+          font-size: 10px;
+          line-height: 40px;
+        }
+      }
+      .logo{
+        // width: 100px;
+      }
+    }
+  }
+  .part1{ 
+    padding-top: 0px ! important; 
+  }
+}
+
+@media (max-width: 768px) {
+  .nav_center .search-part-home{
+    top: auto;
+    bottom: 0px;
+    background-color: gray;
+  }
+  .nav_top a.add_your_restaurant,
+  .top-right .login-part{
+    padding: 0px 10px;
+  }
+  #contact_us{
+    .font-size-22{
+      font-size: 16px;
+    }
+  }
+  #wordpress_posts .wordpress-post-item .post_content p{
+    font-size: 20px ! important;
+  }
+  #footer {
+    .submit-footer{
+      /*margin-top: -0px;*/
+    }
+    .input-email-footer{
+      width: 90%;
+    }
+  }
+  #feature_view{    background-color: #ecf6fa;
+    .title-feature{
+      font-size: 27px ! important;
+    }
+  }
+  #wordpress_posts{
+      font-weight: 900; padding-top: 30px;
+      .title-w-p{ text-transform: uppercase; color: #0e65a3; font-size: 23px ! important;}
+      .wordpress-post-item{ background-color: #fff;
+          .post_content{ min-height: 400px; position: relative;
+              .link_blog{ color: #d90017;}
+              p{ font-size: 35px ! important; text-transform: uppercase; color: #0e65a3; }
+              .content{
+                img{ height: auto;  width: 100%; pointer-events: none; margin-top: 0px;}
+              }
+              img.icon_view_more{ height: auto; width: auto; padding-right: 5px;}
+              .content{ 
+                font-weight: normal; 
+                font-size: 15px; 
+                word-wrap: break-word;
+              }
+          }
+          .post_content{
+              .content{
+                  a{ 
+                    display: none; width: 100%;
+                  }
+                  a:first-child{ 
+                    display: block;
+                  }
+              }
+              
+          }
+          .post_content.first{
+              .content{
+                  width: 100%;
+                  a{
+                      margin-left: 0px;
+                      float: none;
+                      width: 100%;
+                      margin-top: 35px;
+                  }
+              }
+          }
+          .post_content.last{
+              p.last{ 
+                margin-left: 0%;
+              }
+              .content{
+                  a{ 
+                      margin-right: 0px;
+                      float: none;
+                      width: 100%;
+                      margin-top: 35px;
+                  }
+              }
+          }
+      }
+      .carousel-indicators{ bottom: 0; margin-bottom: 0;}
+  }
+}

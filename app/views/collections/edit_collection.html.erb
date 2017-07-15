@@ -1,0 +1,23 @@
+
+<div class="edit-restaurant-admin">
+  <div class="">
+    <div class="page-header color-blue-title">
+      <h1>Edit <%= @collection.name %> Collection</h1>
+    </div>
+    <div class="page_content info">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Info</a></li>
+        <li class=""><a href="#tab2" data-toggle="tab">Restaurants</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active edit_profile" id="tab1">
+          <%= render 'collection_form' %>
+        </div>
+        <div class="tab-pane" id="tab2">
+          <%= render 'collection_restaurants_form' %>
+          <%= render 'collection_restaurants_list' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

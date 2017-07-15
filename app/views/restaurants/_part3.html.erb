@@ -1,0 +1,32 @@
+<% halal_status = @restaurant.halal_status %>
+<% if halal_status.present? %>
+  <div class="halalgems_status text-center">
+  
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 "><p class='title-halal-status font-32 uppercase'><%= t('layout.halal_status_comment')%></p></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 status-comment">
+      <%= halal_status %>
+    </div>
+  
+  </div>
+  <div class="dotted-line"></div>
+<% end %>
+<div class="part3">
+
+  <div class="row infor_reviews ">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><p class='title-review title-page font-32'><%= t('layout.review')%></p></div>
+  </div>
+
+  <div id="more_reviews">
+    <%= render partial: "reviews", :locals=>{:reviews =>@reviews, :gem_hunter => @gem_hunter }%>
+    <br class="clearfix">
+    <div class="align-c">
+      <% if @gem_hunter.present? || (@reviews.present? && @reviews.size > 0)%>
+        <%= link_to "Read more", show_reviews_path(restaurant_id: @restaurant.slug), class: "default-btn" %>
+      
+      <% else %>
+        <p><%= I18n.t("restaurant.no_review") %></p>
+        
+      <% end %>
+    </div>
+  </div>
+</div>

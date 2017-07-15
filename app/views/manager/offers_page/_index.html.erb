@@ -1,0 +1,212 @@
+<div class="manager-container">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>OFFERS</h1>
+    </div>
+  </div>
+
+  <div id="offers-and-deals-wrapper">
+
+    <div id="offer-list-panel">
+      <h2>Recurring offers</h2>
+
+      <table id="recurring-offers-table">
+        <thead>
+          <th>Title</th>
+          <th>Start date</th>
+          <th>Start time</th>
+          <th>End time</th>
+          <th>Days</th>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <%= render partial: 'offers', locals: {offers: @offers, type: 'recurring'} %>
+        </tbody>
+      </table>
+
+      <br/>
+
+      <button class="default-btn btn-details btn-edit-profile" onclick="open_new_recurring();">Add offer</button>
+
+      <h2>One-time offers</h2>
+
+      <table id="onetime-offers-table">
+        <thead>
+          <th>Title</th>
+          <th>Date</th>
+          <th>Start time</th>
+          <th>End time</th>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <%= render partial: 'offers', locals: {offers: @offers, type: 'onetime'} %>
+        </tbody>
+      </table>
+
+      <br/>
+
+      <button class="default-btn btn-details btn-edit-profile" onclick="create_one_time_offer();">Add offer</button>
+    </div>
+
+    <div id="offer-panel-container">
+      <div id="recurring-offer-panel" class="disabled-panel offer-panel">
+        <%= render "create_offer_recurring" %>
+      </div>
+
+      <div id="edit-offer-recurring-panel" class="disabled-panel offer-panel">
+        <%= render "edit_offer_recurring" %>
+      </div>
+
+      <div id="offer-onetime-panel" class="disabled-panel offer-panel">
+        <%= render "create_offer_onetime" %>
+      </div>
+
+      <div id="edit-offer-onetime-panel" class="disabled-panel offer-panel">
+        <%= render "edit_offer_onetime" %>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="text/javascript">
+
+  $(function(){
+    var preview = $(".preview-image");
+
+    $(".offer-image").change(function(event){
+      // TODO: Dimensionsal and size restrictions
+       var input = $(event.currentTarget);
+       var file = input[0].files[0];
+       var reader = new FileReader();
+       reader.onload = function(e){
+           image_base64 = e.target.result;
+           preview.attr("src", image_base64);
+       };
+       reader.readAsDataURL(file);
+    });
+  });
+
+  var open_new_recurring = function() {
+    $("#offer-list-panel").hide();
+    $("#recurring-offer-panel").removeClass("disabled-panel");
+  }
+  var create_one_time_offer = function() {
+    $("#offer-list-panel").hide();
+    $("#offer-onetime-panel").removeClass("disabled-panel");
+  }
+
+  var edit_recurring_offer = function() {
+    $("#offer-list-panel").hide();
+    $("#edit-offer-recurring-panel").removeClass("disabled-panel");
+  }
+  var edit_one_time_offer = function() {
+    $("#offer-list-panel").hide();
+    $("#edit-offer-onetime-panel").removeClass("disabled-panel");
+  }
+
+  var close_offer_panel = function() {
+    $("#offer-list-panel").show();
+    $(".dates-warning").css("display", "none");
+
+    $("#offer-panel-container").children().each(function(i, elem) {
+      $(elem).addClass("disabled-panel");
+    });
+
+    $(".offer-input").val("");
+    $(".preview-image").attr("src", "");
+  }
+
+  var must_fill_dates_warning = function() {
+    var no_error = true;
+    $("#offer-panel-container").children().each(function(i, e) {
+      if ($(e).is(":visible")) {
+        var not_warn = $(e).find(".select_day_from").val() != "";
+        not_warn = not_warn && $(e).find(".select_day_to").val() != "";
+        not_warn = not_warn && $(e).find(".offer_start_time").val() != "";
+        not_warn = not_warn && $(e).find(".offer_end_time").val() != "";
+
+        if (!not_warn) {
+          $(".fill_dates_warning").css("display", "");
+          no_error = false;
+        } else {
+          $(".fill_dates_warning").css("display", "none");
+
+          var d1 = parseInt($(e).find(".select_day_from").val())
+          var d2 = parseInt($(e).find(".select_day_to").val())
+
+          if (d1 > d2) {
+            $(".invalid_date_warning").css("display", "");
+            no_error = false;
+          } else {
+            $(".invalid_date_warning").css("display", "none");
+          }
+        }
+      }
+    })
+
+    return no_error;
+  }
+
+  var edit_offer = function(_offer_id) {
+    $.ajax({
+      url: "<%= manager_offers_edit_path %>",
+      type: "GET",
+      dataType: "script",
+      data: {
+        offer_id: _offer_id
+      },
+
+      success: function(data, status) {
+        if (data["errors"]) {
+          for (var error in data.errors) {
+            alert(data.errors[error])
+          }
+        } else {
+          // success
+        }
+      },
+      error: function(xhr, desc, err) {
+        a = xhr
+        b = desc
+        c = err
+        alert("Internal server error");
+      }
+    });
+  }
+
+  var remove_offer = function(_offer_id) {
+    var conf = confirm("Are you sure you want to delete this offer?");
+
+    if (!conf) {
+      return;
+    }
+
+    $.ajax({
+      url: "<%= manager_offers_remove_path %>",
+      type: "POST",
+      dataType: "json",
+      data: {
+        offer_id: _offer_id
+      },
+
+      success: function(data, status) {
+        if (data["errors"]) {
+          for (var error in data.errors) {
+            alert(data.errors[error])
+          }
+        } else {
+          $("#offer-id-" + _offer_id).remove();
+        }
+      },
+      error: function(xhr, desc, err) {
+        alert("Internal server error");
+      }
+    });
+  }
+
+</script>

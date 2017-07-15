@@ -1,0 +1,82 @@
+
+
+
+<% reviews.each_with_index do |review, index| %>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 column_reviews">
+      <div class="row">
+        
+        <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+          <div id="avatar"><%= image_tag avatar_url review.user, "61x57#" %></div>
+        </div>
+        <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 none-padding">
+          <h4 class="bold"><%= review.user ? review.user.full_name  : "No Name" %></h4>
+              
+          
+        </div>
+        
+      </div>
+
+      <div class="reviewed_text">
+        <%= truncate(review.content, :length=>5000)%>
+      </div>
+
+      <div class="reviewed_time"><%= t('layout.visited')%>&nbsp<%= review.month_ago%></div>
+
+      <div class="rating_box">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 start-review">
+            <div class="label_stars">Service</div>
+            <div class="stars_color ">
+            <%= render :partial=>"restaurants/rating", :locals =>{:rate_count=>review.service, :is_rating =>false} %></div>
+          </div>
+          <div id="border-quality" class="col-xs-12 col-sm-4 col-md-4 col-lg-4 start-review">
+            <div class="label_stars">Quality</div>
+            <div class= "stars_color"><%= render :partial=>"restaurants/rating", :locals => {:rate_count => review.quality, :is_rating => false} %></div>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 start-review">
+            <div class="label_stars">Value</div>
+            <div class="stars_color"><%= render :partial=>"restaurants/rating", :locals => {:rate_count => review.value, :is_rating => false} %></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="reply_area">
+        <% if review.reply_content != nil && review.approve_reply == true %>
+          <div class="manager_reponded">
+            <div id="icon_reply"><%= image_tag('icon_manager_responded.png')%></div>
+            <div><h4 class="bold"><%= t('layout.manager_responded')%></h4></div>
+            <div class="text_content"><%= review.reply_content %></div>
+            <div class="replied_time"><%= t('layout.visited')%>&nbsp<%= review.time_replied%></div>
+          </div>
+        <% elsif review.reply_content != nil && !review.is_approved_reply? && review.is_show?(current_user) %>
+          <p class='not-yet-approved-reply'><%= t('review.not_yet_approved_reply') %></p>
+        <% end%>
+        
+        <% if review.reply_content == nil && review.restaurant.user_id && current_user && review.restaurant.user_id == current_user.id %>
+          <div class="reply-owner" id="reply_review_owner_<%= review.id %>">
+            <label><%= t('layout.type_reply_here')%></label>
+            <%= form_tag user_restaurants_reply_review_path, :remote => true , id: 'reply_owner_form'  do |r| %>
+              <%= text_area_tag "reply_review[reply_content]", nil, :class=>"form-control", :size => "80x5", onkeyup: "countChar(this)" %>
+              <span class="content_character_count pull-right">0/5000</span>
+            
+                <p class="error-message">
+                  <label class="error hide"  for="review_reply_content" generated="true">Please fill your reply content.</label>
+              
+              </p>
+              <%= hidden_field_tag "review_id", review.id %>
+
+              <button id="btn-reply" name="button" type="submit" class="default-btn btn-details">
+              <!-- <i class="fa fa-angle-right fa-lg arrow-left" ></i> -->
+              <%= t('reply')%></button>
+            <%end%>
+          </div>
+        <%end%>
+        
+      </div>
+
+    </div>
+    <% if index%2 ==1 %>
+      <div class="clearfix"></div>
+    <%end%>
+<%end%>
+

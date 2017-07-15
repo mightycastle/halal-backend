@@ -1,0 +1,49 @@
+.membership-page{
+
+  
+  .paypal-part{ padding: 30px 20px 20px 20px;}
+  .benefit, .payment,.membership_allow{
+    .title-page{ font-size: 32px; text-transform: uppercase; padding: 0 20px;}
+  }
+  .benefit{
+    .benefit-item{ padding-left: 0;
+      li.text{ 
+        list-style: none; 
+        margin-bottom: 20px;
+        padding-left: 27px;
+        .fa-circle{ 
+          font-size: 8px; 
+          line-height: 5px; 
+          padding-right: 15px;
+          margin-left: -23px;
+        }
+      }
+    }
+  }
+  .payment{ padding-left: 30px;  height: 255px;
+    .choice-plan{
+      .plan-text{ font-size: 25px; font-weight: bold;}
+    }
+    .submit-paypal{ border: none; background: none; outline: none; padding: 0;}
+  }
+  .membership-alow{
+    .title-text{ font-size: 16px;  }
+    .image-content{ margin: 30px 0;}
+
+  }
+  .top-membership-page{
+    background-color: #000; padding: 40px 0;
+  }
+}
+.complete-paypal-page{ min-height: 400px; background: #ecf6fa;
+  padding: 30px 0 40px 0;
+}
+.success-payment-page{ min-height: 500px;}
+
+@media (min-width: 767px){
+  .membership-page{
+    .payment{
+      border-left: 2px solid #dbe8f1; 
+    }
+  }
+}

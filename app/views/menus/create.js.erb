@@ -1,0 +1,5 @@
+<%= remotipart_response do %>
+  $("#menus-table tbody").append("<%=escape_javascript menu_row(@menu)%>");
+  $("#menu_name").val("");
+  $("#menu_menu").val("");
+<% end %>

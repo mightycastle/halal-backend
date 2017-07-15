@@ -1,0 +1,53 @@
+$(".offer_id").val("<%= @offer.id %>")
+
+$(".offer-start-date").val("<%= @offer.time_start_offer %>");
+
+$(".offer-title").val("<%= @offer.offer_content %>");
+
+$(".preview-image").attr("src", '<%= @offer.image.url if @offer.image != nil %>');
+
+<% if @offer.start_date %>
+  $("select.offer-start-date").val("<%= @offer.start_date %>");
+  var index = <%= @offer.start_date %>;
+  $("select.offer-start-date").children().each(function(i, elem) {
+    if ((i - 1) == index) {
+      $(".offer-start-date").find(".filter-option").text(elem.textContent);
+    }
+  });
+<% end %>
+
+<% if @offer.end_date %>
+  $("select.offer-end-date").val("<%= @offer.end_date %>");
+  index = <%= @offer.end_date %>;
+  $("select.offer-end-date").children().each(function(i, elem) {
+    if ((i - 1) == index) {
+      $(".offer-end-date").find(".filter-option").text(elem.textContent);
+    }
+  });
+<% end %>
+
+<% if @offer.start_time %>
+  $("select.offer_start_time").val("<%= @offer.start_time %>");
+  var value = <%= @offer.start_time %>;
+  $("select.offer_start_time").children().each(function(i, elem) {
+    if (value == parseInt(elem.getAttribute("value"))) {
+      $(".offer_start_time").find(".filter-option").text(elem.textContent);
+    }
+  });
+<% end %>
+
+<% if @offer.end_time %>
+  $("select.offer_end_time").val("<%= @offer.end_time %>");
+  var value = <%= @offer.end_time %>;
+  $("select.offer_end_time").children().each(function(i, elem) {
+    if (value == parseInt(elem.getAttribute("value"))) {
+      $(".offer_end_time").find(".filter-option").text(elem.textContent);
+    }
+  });
+<% end %>
+
+<% if @offer.is_onetime %>
+  edit_one_time_offer();
+<% else %>
+  edit_recurring_offer();
+<% end %>

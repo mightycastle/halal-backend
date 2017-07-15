@@ -1,0 +1,32 @@
+<h3>Add a restaurant to the collection</h3>
+
+<div class="form_add_new_collection">
+  <%= form_for(@collection_restaurant, url: add_restaurant_collections_path , html: { id: "collection_restaurants" }) do |f| %>
+    <div class="simple-label">
+      <%= f.label :menu, "Choose restaurant", class: "control-label" %>
+    </div>
+    <%= f.collection_select(:restaurant_id, @restaurants, :id, :name) %>
+    <%= f.submit 'Add', disable_with: "Submitting...", class: 'btn btn-success',  id: 'add_restaurant'  %>
+  <% end %>
+</div>
+<script type="text/javascript">
+$( document ).ready( function() {
+	$( '#collection_restaurants' ).on( 'submit', function( event ) {
+		event.preventDefault();
+		var postData = $(this).serialize();
+		var formURL = $(this).attr('action');
+		$.ajax( {
+			url: formURL,
+			type: 'POST',
+			data: postData,
+			success: function(data, textStatus, jqXHR) {
+				$( '#add_restaurant' ).val( 'Add' ).removeAttr('disabled', '');
+				$( '.collection-restaurants-list').html($(data).find('.collection-restaurants-list').html());
+			},
+			error: function(data, textStatus, errorThrown) {
+				console.log(errorThrown);
+			}
+		} );
+	} );
+})
+</script>

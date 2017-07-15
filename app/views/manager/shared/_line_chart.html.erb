@@ -1,0 +1,77 @@
+
+<%
+
+#canvas_id = "test"
+scale_type = "PERCENTAGE_X" # PERCENTAGE_XY PERCENTAGE_Y NOSCALE
+canvas_width = 100
+canvas_height = 400
+start_date = Time.now.strftime("%Y-%m-%d")
+days_to_display = 20
+
+left_margin = 40
+right_margin = 0
+top_margin = 10
+bottom_margin = 40
+
+%>
+
+<!--
+
+Arguments:
+canvas_id
+canvas_width
+canvas_height
+
+-->
+
+<h3 class="line-chart-title"><%= chart_title.html_safe %></h3>
+
+<div class="line-chart-legend">
+  <% datasets.each do |dataset| %>
+    <span style="color: <%= dataset[:color] %>;">
+      &#9633; <%= dataset[:name] %> &nbsp; &nbsp;
+    </span>
+  <% end %>
+</div>
+
+<canvas id="<%= canvas_id %>"></canvas>
+
+<div style="font-family: OldStandard_Italic; width: 100%; font-size: 14px;">
+  &lt; <a class="stat-button" onclick="stat_objects['<%= canvas_id %>'].go_back(10)">Previous 10 days</a>
+  <span class="pull-right" onclick="stat_objects['<%= canvas_id %>'].go_forward(10)"><a class="stat-button">Next 10 days</a> &gt;</span>
+</div>
+
+<script type="text/javascript">
+
+/* Initialize stats */
+
+var data = {
+  scale_type: "<%= scale_type %>",
+  canvas_width: "<%= canvas_width %>",
+  canvas_height: "<%= canvas_height %>",
+  start_date: "<%= start_date %>",
+  days_to_display: <%= days_to_display %>,
+  min_value: <%= min_value %>,
+  max_value: <%= max_value %>,
+  y_axis: <%= y_axis.to_s %>,
+  left_margin: <%= left_margin %>,
+  right_margin: <%= right_margin %>,
+  top_margin: <%= top_margin %>,
+  bottom_margin: <%= bottom_margin %>,
+  datasets: []
+};
+
+<% datasets.each do |data| %>
+
+data.datasets.push({
+  name: "<%= data[:name] %>",
+  color: "<%= data[:color] %>",
+  source: "<%= data[:source] %>",
+  pull_data_url: "<%= data[:pull_data_url] %>"
+});
+
+<% end %>
+
+initiate_line_chart("<%= canvas_id %>", data);
+
+</script>

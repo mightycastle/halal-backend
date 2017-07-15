@@ -1,0 +1,66 @@
+
+
+
+  <div class="show-review-page-top-search-box">
+    <div class="part3 show-review-page">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <h1 id="show_reviews" class="infor_reviews"><%= t('layout.review')%></h1>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 pull-left mg-t-10">
+          <%= form_tag("show_reviews_sorted", id: 'sort_review', method: "get", remote: true, class: "") do %>
+            <%= hidden_field "restaurant", "id", {value: params[:restaurant_id], name: "restaurant_id"} %>
+            <%= hidden_field "page", "number", {value: params[:page_num] || 1, name: "page_num"} %>
+            <%= label_tag :sort_by, "Sort ", class: " display-inline padding-r-10" %>
+            <%= select_tag :sort_by, options_for_select(list_review_sort_by_for_select_box, params[:sort_by]), class: "form-control text-left select-sort-review display-inline"  %>
+          <% end %>
+        </div>
+        <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12 pull-left mg-t-10">
+
+
+          <div class='col-lg-8 col-md-8 col-sm-6 col-xs-6'>
+            <div class="row">
+              <span class=' display-inline padding-r-10'>Average of all reviews</span>
+              <div class='stars_color display-inline'>
+                <%= render :partial => "rating", :locals => {:rate_count => @restaurant.rating_avg, :is_rating => true} %>
+              </div>
+            </div>
+          </div>
+
+          <div class='col-lg-4 col-md-4 col-sm-6 col-xs-6'>
+            <div class="row">
+              <span class="rating_label  display-inline padding-r-10 min-width-70">Service</span>
+            
+            <div class='stars_color display-inline'><%= render :partial => "rating", :locals => {:rate_count => @restaurant.service_avg, :is_rating => false} %></div>
+            </div>
+            <div class="row">
+              <span class="rating_label  display-inline padding-r-10 min-width-70">Quality</span>
+          
+              <div class='stars_color display-inline'><%= render :partial => "rating", :locals => {:rate_count => @restaurant.quality_avg, :is_rating => false} %></div>
+            </div>
+          
+            <div class="row">
+              <span class="rating_label  display-inline padding-r-10 min-width-70">Value</span>
+        
+              <div class='stars_color display-inline'><%= render :partial => "rating", :locals => {:rate_count => @restaurant.value_avg, :is_rating => false} %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="part3 show-review-page">
+    <div class="row">
+      <div id='all_reply_reviews'>
+        <%= render partial: 'user_restaurants/all_reply_reviews', locals: {reviews: @reviews} %>
+      </div>
+
+
+    </div>
+  </div> 
+  <script type="text/javascript" charset="utf-8">
+    $('#sort_review #sort_by').change(function(){
+      $('#sort_review').submit();
+    });
+  </script>

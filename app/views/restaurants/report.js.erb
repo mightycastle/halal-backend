@@ -1,0 +1,24 @@
+<% if current_user %>
+  <% if @no_report_info == true %>
+    $("#report_modal .flash_caution").html('<div></div>');
+    $("#report_modal .flash_caution div").append('<button class="close" data-dismiss="alert" ,"aria-hidden"="true">×</button>');
+    $("#report_modal .flash_caution div").append('<div class="message_common alert-danger">Please check the reason or provide details so we can check this out.</div>');
+  <% else %>
+    $("#report_modal .flash_caution").html('');
+    $("#report_modal").modal("hide");
+    $("#flash_caution #popup_message").html('<div></div>');
+    $("#flash_caution #popup_message div").append('<button class="close" data-dismiss="alert" ,"aria-hidden"="true">×</button>');
+    <% if @delivered %>
+      $("#flash_caution #popup_message div").append('<div class="message_common alert-info">Thank you for your report. We’ll investigate within 3 days.</div>');  
+    <% else %>
+      $("#flash_caution #popup_message div").append('<div class="message_common alert-danger">Error when send report email.</div>');
+    <% end %>
+    setTimeout(function(){
+        $("#flash_caution #popup_message").html('');
+    },10000);
+  <% end %>
+<% else %>
+  $("#report_modal .flash_caution").html('<div></div>');
+  $("#report_modal .flash_caution div").append('<button class="close" data-dismiss="alert" ,"aria-hidden"="true">×</button>');
+  $("#report_modal .flash_caution div").append('<div class="message_common alert-info">You need login to report this restaurant.</div>');
+<% end %>

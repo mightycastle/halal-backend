@@ -1,0 +1,157 @@
+@media only screen and (max-width: 768px)  {
+  .basic-page{
+    .page .page_content{
+      table tr td{ display: block; width: 100%;
+        
+      }
+
+      h4{ font-size: 15px;}
+      .title-page{ font-size: 20px;}
+      form input[type=text], form input[type=email], form textarea{ min-width: 100%;}
+    }
+    .page.about_us_page{
+      table tr td{ img{ min-width: 100%;}}
+    }
+    .how_it_works{
+      .text-indent-20{ text-indent: 20px;}
+      span.visible-xs{ position: absolute;
+
+      }
+      img[alt="Click_here_to_get_started"]{ width: 200px;}
+      table tr td.cursor{text-align: center; height: 100px;
+        img{
+          -webkit-transform: rotate(90deg);
+          -moz-transform: rotate(90deg);
+          filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+          width: 40px;
+        }
+      }
+      h3{font-size: 15px;
+        line-height: 23px;
+        word-wrap: break-word;
+        text-align: justify;
+      }
+    }
+  } 
+}
+  
+
+
+.menu-name{ width: 70%;}
+.menu-action{ text-align: center; padding-right: 10px;
+  a{ padding: 0 5px;}
+}
+
+.contact_info{ padding-left: 30px; }
+
+.basic-page{
+  padding: 10px;
+  li{  line-height: 22px; padding: 5px 0;}
+  a, h3, h4, h5{ color: #fff; vertical-align: top;}
+  .title-page{ font-size: 28px;}
+  .page{
+    .page_content{
+      table{
+        tr[valign="top"]{
+          img{
+            width: 100%; 
+          }
+          img[alt="Refresh_captcha"], img[alt="captcha"]{
+            width: auto;
+          }
+        }
+      }
+    }
+  }
+  .about_us_page{
+    table tr td{ img{ min-width: 400px;}}
+  }
+  .page_content {
+    padding: 20px ;
+    background: #707173;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .about_us h4 {
+    /*background: url(/assets/gem.png) left no-repeat;*/
+    text-transform: uppercase;
+    color: #fff;
+    padding: 5px 0 5px 20px;
+  }
+  .page_content table tr td {
+
+    padding: 0;
+  }
+  .page_content table tr{
+    .contact-left{  width: 35%;}
+  }
+  
+  .page_content .talk_to_us {
+    background: url(/assets/talk_to_us.png);
+    width: 581px;
+    height: 135px;
+    margin: 0 auto;
+  }
+  .page_content form .title {
+    background: url(/assets/contact_email_close.png) left no-repeat;
+    padding: 5px 0 5px 30px;
+  }
+  div.simple_captcha_image {
+    /*background: url(/assets/captcha_background.png) no-repeat;*/
+    height: 57px;
+  }
+
+  .page_content form input[type=text], .page_content form input[type=email], .page_content form textarea {
+    border: 1px solid #D6D6D6;
+    width: 100%;
+    min-width: 300px;
+    padding: 10px;
+  }
+  div#refresh_captcha {
+    margin-left: 110px;
+    margin-bottom: -40px;
+  }
+  .page_content .email_us {
+    background: url(/assets/contact_email_open.png) left no-repeat;
+    padding: 15px 0 5px 30px;
+  }
+  .page_content .call_us {
+    background: url(/assets/contact_tel.png) left no-repeat;
+    padding: 10px 0 5px 30px;
+  }
+  .page_content .write_to_us {
+    background: url(/assets/contact_write.png) left no-repeat;
+    padding: 10px 0 5px 30px;
+  }
+
+  .page_content .carrier_pigeon {
+    background: url(/assets/contact_smiley.png) left no-repeat;
+    padding: 10px 0 5px 30px;
+  }
+  .page_content .contact_info h4 {
+    font-weight: bold;
+    // color: #505153 !important;
+  }
+  .page_content h4 {
+    color: #fff;
+    padding: 5px 0 5px 0px;
+    line-height: 20px;
+    vertical-align: top;
+  } 
+
+  .page_content.faq_content .answers{ padding-left: 35px;}
+
+  .page_content .brand_mark{
+    background: image-url('brand_mark.png') left no-repeat;
+    height: 20px; width: 20px; display: inline-block;
+  }
+  .back_button{
+    background: image-url('btn_back.png') left no-repeat; height: 20px; width: 20px; display: inline-block;
+  }
+
+}
+.off-image-old{ width: 200px; height: 150px;}
+.remove-offer-image{ margin-left: -12px; position: absolute; color: #FA9999; cursor: pointer;}

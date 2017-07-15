@@ -1,0 +1,41 @@
+<%= render "shared/restaurant_manage_tabs" %>
+
+<div class="well">
+  <%= search_form_for @search, :url => "/admin/change_photo_request" do |f| %>
+      <%= f.condition_fields do |c| %>
+        <%= render "condition_fields", f: c, is_new: false %>
+      <% end %>
+      <div class="actions">
+        <%= link_to_add_fields " Add Conditions", f, :condition %>
+        <%= f.submit "Search", :class => "btn btn-success icon-search" %>
+      </div>
+  <% end %>
+</div>
+
+<table id="change_photo_request_page" class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th width="225px">Restaurant name</th>
+      <th><%= sort_link @search, :name, "Photos" %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @restaurants.each_with_index do |restaurant, index| %>
+      <tr>
+        <td><%= link_to restaurant.name, restaurant_info_path(restaurant.slug) %></td>
+        <td id="restaurant-photos-carousel-box">
+          <%= render partial: "restaurant-photos-carousel", locals: {restaurant: restaurant} %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p>
+<%= paginate @restaurants, :theme => "twitter-bootstrap-3"%>
+</p>
+
+<script>
+  $('.carousel').carousel({
+    interval: false
+  })
+</script>

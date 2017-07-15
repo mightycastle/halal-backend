@@ -1,0 +1,36 @@
+
+<div class="pnl_img_top">
+    <%= random_image_other_page %>
+</div>
+<div class="auto_height basic-page">
+  <div class="page">  
+    <i class="back_button"></i>
+    <%= back_to_search %>
+    <h1 class="title-page"><%=t("layout.advertise_your_restaurant")%></h1>
+    <div class="page_content">
+      <div class="talk_to_us"></div>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr valign="top">
+          <td>
+            <%= form_tag '/send_advertise_restaurant_message',:class=>'advertise_your_restaurant' do%>
+              <h4 class="title">Send us your details and we will get in touch</h4>
+              <p><%= text_field_tag "name", params[:name],:placeholder=>"Name", class: 'form-control' %></p>
+              <p><%= text_field_tag "email", params[:email],:placeholder=>"Email", class: 'form-control'  %></p>
+              <p><%= text_field_tag "restaurant_name", params[:restaurant_name],:placeholder=>"Restaurant name", class: 'form-control' %></p>
+              <p><%= text_field_tag "phone", params[:phone],:placeholder=>"Phone", class: 'form-control' %></p>
+              <br/>
+              <div id="refresh_captcha" title="Click here to get new image."><%= link_to(image_tag("refresh_captcha.gif"),refresh_captcha_path, :remote=>true)%></div>
+              <%= render "simple_captcha"%>
+              <p><%= submit_tag "Submit", class: 'default-btn' %></p>
+            <% end %>
+          </td>
+          <!-- <td>
+            <div class="contact_info">
+              <%# render partial: "page_content", locals: {page:@page}%>
+            </div>
+          </td> -->
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

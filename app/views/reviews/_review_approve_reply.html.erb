@@ -1,0 +1,17 @@
+
+<div class="btn-group btn-group-xs">
+  <% if review.approve_reply == nil %>
+    <%=link_to  (content_tag :span," Approve", class: 'open-san'),change_approve_reply_review_path(review.id,"1"),method: "post", class: 'btn btn-success fa fa-check-circle ', remote: true, title: 'Approve'%>
+    <%=link_to  (content_tag :span," Reject", class: 'open-san'),change_approve_reply_review_path(review.id,"0"),method: "post", class: 'btn btn-danger fa fa-ban', remote: true, title: 'Reject'%>
+  <%elsif review.approve_reply == true%>
+    <%=link_to  (content_tag :span," Approve", class: 'open-san'),change_approve_reply_review_path(review.id,"1"),method: "post", class: 'btn btn-success fa fa-check-circle disable_btn ', remote: true, title: 'Approve'%>
+    <%=link_to  (content_tag :span," Reject", class: 'open-san'),change_approve_reply_review_path(review.id,"0"),method: "post", class: 'btn btn-danger fa fa-ban', remote: true, title: 'Reject'%>
+  <%elsif review.approve_reply == false%>
+    <%=link_to  (content_tag :span," Approve", class: 'open-san'),change_approve_reply_review_path(review.id,"1"),method: "post", class: 'btn btn-success fa fa-check-circle ', remote: true, title: 'Approve'%>
+      <%=link_to  (content_tag :span," Reject", class: 'open-san'),change_approve_reply_review_path(review.id,"0"),method: "post", class: 'btn btn-danger fa fa-ban disable_btn ', remote: true, title: 'Reject'%>
+  <% end %>
+</div>
+
+<div class="btn-group btn-group-xs mg-t-5">
+  <%= link_to (content_tag :span, " Edit", class: 'open-san'), "#", class: 'btn btn-default fa fa-edit edit_review_reply_content', id: review.id %>
+</div>

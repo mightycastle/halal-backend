@@ -1,0 +1,14 @@
+.map-part{
+  overflow: hidden;
+  // position:relative;
+}
+#marker-tooltip {
+  position: absolute;
+  background-color: #000;
+  color: #fff;
+  min-height: 20px;
+  width: 160px;
+  margin-left: -80px;
+  margin-bottom: 76px;
+  text-align: center;
+}

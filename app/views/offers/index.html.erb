@@ -1,0 +1,56 @@
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="title"><%= t'offer.management' %></h1>
+
+  </div>
+</div>
+
+<%= search_form_for @search, :url => "/admin/offers" do |f| %>
+    <div class="well">
+      <%= f.condition_fields do |c| %>
+          <%= render "condition_fields", f: c, is_new: false %>
+      <% end %>
+      <div class="actions">
+
+        <%= link_to_add_fields " Add Conditions", f, :condition %>
+        <%= f.submit "Search", :class => "btn btn-success icon-search" %>
+      </div>
+    </div>
+<% end %>
+
+<table class="table table-condensed table-striped">
+  <thead>
+  <tr>
+
+    <th><%= sort_link @search, :offer_content, t('offer.content') %></th>
+    <th><%= t('offer.restaurant_name') %></th>
+    <th><%= sort_link @search, :time_available, t("offer.time_available") %></th>
+    <th width="300px"><%= t("offer.time_publish") %></th>
+    <th><%= sort_link @search, :disabled, "Status" %></th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @offers.each_with_index do |offer, index| %>
+      <tr id='offer_admin_<%= offer.id %>'>
+        <td><%= link_to offer.offer_content %></td>
+        <td><%= offer.restaurant.name  %></td>
+        <td><%= offer.get_time_valilable %></td>
+        <td><%= offer.get_time_publish %></td>
+        <td id="status_label_<%= offer.id%>"><%= render partial: "status_label", locals: {approve: offer.approve, reject: offer.reject} %></td>
+        <td width="150px">
+          <div class="btn-group btn-group-xs">
+            <%= link_to (content_tag :span, " #{t('approve')}", class: 'open-san'), approve_offer_path(offer.id), :remote => true, :method => 'post', class: 'btn btn-success fa fa-check-circle btn-approve-offer', disabled: offer.approve %>
+            <%= link_to (content_tag :span, " #{t('reject')}", class: 'open-san'), reject_offer_path(offer.id), :remote => true,  :method => 'post', class: 'btn btn-danger fa fa-ban btn-reject-offer', disabled: offer.reject %>
+          </div>
+        </td>
+
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<p>
+  <%= paginate @offers, :theme => "twitter-bootstrap-3"%>
+</p>

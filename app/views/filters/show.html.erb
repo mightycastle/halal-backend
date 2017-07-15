@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Group:</b>
+  <%= @filter.code %>
+</p>
+
+<p>
+  <b>Filter Name:</b>
+  <%= @filter.name %>
+</p>
+
+
+<p>
+  <b>Description:</b>
+  <%= @filter.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_filter_path(@filter) %> |
+<%= link_to 'Back', filters_path %>

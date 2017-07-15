@@ -1,0 +1,5 @@
+$('#review_reply_content_show_<%= @review.id %>').html('<%= @review.reply_content %>')
+$('#review_reply_content_show_<%= @review.id %>').attr('alt', '<%= @review.reply_content %>');
+$('#form_reply_content_<%= @review.id %>').addClass('hide');
+$('#review_reply_content_show_<%= @review.id %>').removeClass('hide');
+$('#<%= @review.id %>.edit_review_reply_content').removeAttr("disabled");

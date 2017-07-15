@@ -1,0 +1,9 @@
+<%= if @offer.present? %>
+  $('#offer_admin_<%= @offer.id %>').find('.btn-approve-offer').addClass('disable_row_offer');
+  $('#offer_admin_<%= @offer.id %>').find('.btn-reject-offer').removeClass('disable_row_offer');
+  $("#status_label_<%= @offer.id%>").html("<%= escape_javascript render partial: '/offers/status_label', locals: {approve: @offer.approve, reject: @offer.reject}%>");
+
+
+  $("#offer_admin_<%= @offer.id%> .btn-approve-offer").removeAttr('disabled');
+  $("#offer_admin_<%= @offer.id%> .btn-reject-offer").removeAttr('disabled');
+<%= end %>

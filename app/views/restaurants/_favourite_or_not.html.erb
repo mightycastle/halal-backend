@@ -1,0 +1,37 @@
+<div id="favourite_status_<%= restaurant.id %>" style="float:left;">
+  <% if favourite_or_not %>
+    <%=link_to "",remove_favourite_restaurant_path(restaurant),method: "post", remote: true,:class=>"remove_favourite"%>
+  <% else %>
+    <%=link_to "",((current_user)? add_favourite_restaurant_path(restaurant.id):new_user_session_path),method: ((current_user)?"post":""), remote: ((current_user)?true:false),:class=>"save_to_favourites"%>
+  <% end %>
+</div>
+<% if onClick %>
+  <%
+    type = "alert-info"
+    message = I18n.t 'restaurant.remove_favourite'
+    if favourite_or_not
+      type = "alert-success"
+      message = I18n.t 'restaurant.add_favourite'
+    end
+  %>
+  <div id="popup_message" style="text-align:center;">
+    <div class="message_common <%= type %>" >
+      <!--<button class="close" data-dismiss="alert">×</button>-->
+      <%= message %>
+    </div>
+  </div>
+<% end %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    setTimeout(function(){
+        $("#popup_message").animate({
+            top:'-'+$(this).height()
+        },{
+            duration: 25000,
+            complete: function(){
+                $(this).html('');
+            }
+        })
+    },3000)
+  });
+</script>

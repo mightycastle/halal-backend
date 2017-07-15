@@ -1,0 +1,61 @@
+<script type="text/javascript">
+/* AJAX Init */
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
+  }
+});
+</script>
+
+<div id="manager-header">
+  <div class="manager-header-table">
+    <ul>
+      <li>
+        <%= link_to "DASHBOARD", manager_dashboard_path(params[:restaurant_id]) %>
+      </li>
+
+      <li>
+        <%= link_to "STATISTICS", manager_statistics_path(params[:restaurant_id]) %>
+      </li>
+
+      <li>
+        <%= link_to "REVIEWS &amp; RATINGS".html_safe, manager_reviews_path(params[:restaurant_id]) %>
+      </li>
+
+      <li>
+        <%= link_to "RESTAURANT INFO", manager_restaurant_info_path(params[:restaurant_id]) %>
+      </li>
+
+      <li>
+        <%= link_to "OFFERS", manager_offers_path(params[:restaurant_id]) %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="restaurant-info">
+
+  <div class="row">
+    <div class="col-md-8">
+
+      <h2><%= current_restaurant.name %></h2>
+      <h4><%= "#{current_restaurant.short_address}, #{current_restaurant.postcode}" %></h4>
+    </div>
+
+
+    <div class="col-md-4 right-container">
+      <div class="dropdown">
+        <button type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          manage another restaurant
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <% current_user.restaurants.each do |r| %>
+            <li><a href="<%= manager_restaurant_root_path(r.id) %>"><%= r.name %></a></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>

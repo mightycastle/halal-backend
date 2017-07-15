@@ -1,0 +1,142 @@
+<h4 class='filter-title san-pro-medium filter-lable'><%= t('filter_option') %></h4>
+<ul class="filter" id="search_filter">
+
+  <%# render 'search_filter' %>
+
+  <% FilterType.all_order_by_index.each do |ft| %>
+    <li class="li-filter">
+      <p class=" <%= ft.code%> open-sans filter-option-title filter-title" id="ft_<%= ft.id %>">
+        <%= ft.name %>
+        <i class="pull-right fa fa-angle-up icon-top-tongle"></i>
+      </p>
+      <div class="content_filter <%= ft.code%>" id="ft_<%= ft.id %>_content" <%= 'style=display:block;' if collapse_css_class(ft.id) == 'expanse'%>>
+
+      <% ft.filters.sort_alphabet.each_with_index do |c,index| %>
+          <label id="label_cuisine_filter_<%= c.id %>" class="<%= 'hide' if index >= 4 %>" >
+                    <%= left_filter_checkbox c, params[:filter_ids]%>
+          </label>
+      <% end %>
+      <% if ft.code == 'price' %>
+        <p>Price for an average starter and main</p>
+      <% end %>
+      <% if ft.code == 'open_hour' %>
+        <div class="input-append bootstrap-timepicker-component selelct-option-filter">
+           <%= select_tag :filter_wday, "
+           <option value=''>Day</option>
+            <option value='1'>Monday</option>
+            <option value='2'>Tuesday</option>
+            <option value='3'>Wednesday</option>
+            <option value='4'>Thursday</option>
+            <option value='5'>Friday</option>
+            <option value='6'>Saturday</option>
+            <option value='0'>Sunday</option>".html_safe , :class => "input-small", :id => 'rest_hour_filter' %>
+          <%= select_tag :filter_time, options_from_collection_for_select(Schedule::TIME_SHEET, :first , :last, ""), prompt: "Time", class: 'select-time-hour', :style => "width: 100px;", :id => 'filter_time' %> 
+      
+        </div> 
+      <% end %>
+      <% if ft.filters.count > 4 %>
+        <button class="show_more_popup more btn btn-link" data-toggle="modal" data-target="#myModal" id="ft_sm_<%= ft.id %>"><%=t :show_more %></button>
+        
+      <% end %>
+      </div>
+      <% if ft.filters.count > 4 %>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <p for="" class="title-page">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <%= ft.name %>
+                </p>
+              </div>
+              <div class="modal-body">
+                
+                <div class="row">
+
+                <% ft.filters.sort_alphabet.each_with_index do |c,index| %>
+                  <div class="col-md-6 col-lg-6">
+                  <label class='filter-item'>
+                    <%= left_filter_checkbox c, params[:filter_ids]%>
+                  </label>
+                  </div>
+                <% end %>
+                </div>
+              </div>
+              <div class="modal-footer">
+
+                <button name="button"  class="default-btn btn-submit search">
+                  <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i>  -->
+                  <%= t('layout.search') %>
+                </button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+      <% end %>
+    </li>
+  <% end %>
+  <li class='action-filter visible-xs'>
+    
+    <button class='default-btn btn-halagems btn-action-filter ' >
+          <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i> -->
+          <%= t('layout.submit') %>
+    </button>
+  </li>
+</ul>
+
+
+
+<label style="padding: 10px 10px;">
+    <input id="rds" name="rds" style="margin: -3px 0 0 0;" type="checkbox" value="true"  />
+    <%=t :redo_search_in_map %>
+  </label>
+
+  <!-- map autocomplet -->
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDviEQ_rkCCFJzwyrbtFREw39Cwu-oAIcg&sensor=true&libraries=places" type="text/javascript"></script>
+<script type="text/javascript">
+  // Address Autocomplete
+  var options = {
+    types: ['geocode']
+  }
+  var input = document.getElementById('ln');
+  var options = {
+   types: ['(regions)'],
+   componentRestrictions: {country: 'uk'}
+  };
+  var autocomplete = new google.maps.places.Autocomplete(input, options);
+  
+  // Autocomplete Listener
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    var place = autocomplete.getPlace();
+    
+    $("#lt").val(place.types);
+    $("#llat").val(place.geometry.location.lat());
+    $("#llng").val(place.geometry.location.lng());
+  });
+</script>
+
+<script>
+
+arr = $('.content_filter.cuisine').children('label');
+
+for (var i = 0; i < 4; i++) {
+  if ($('#'+arr[i].id).find('input').is(':checked') == false)
+  {
+    for (var j = i+1; j < arr.length; j++) {
+      if ($('#'+arr[j].id).find('input').is(':checked') == true)
+      {
+        $('#'+arr[j].id).removeClass('hide');
+        $('.content_filter.cuisine').prepend($('#'+arr[j].id));
+        if ($('.content_filter.cuisine label:not(.hide)').length > 4){
+          $('#'+arr[i].id).addClass('hide');
+        }
+      }
+    };
+  }
+};
+</script>

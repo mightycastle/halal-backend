@@ -1,0 +1,231 @@
+<%= simple_form_for(@restaurant, wrapper: 'restaurant', :multipart => true, :validate => true) do |f| %>
+  <% if @restaurant.errors.messages[:"schedules.time_closed"] %>
+  <div class="alert alert-error"><%=t 'schedules.time_closed' %> <%= @restaurant.errors.messages[:"schedules.time_closed"][0].to_s %></div>
+  <% end %>
+  <div class="row ">
+    <div class='col-md-4'>
+      <%= hidden_field_tag 'admin', true %>
+      <%= f.input :disabled, :as => :hidden, :input_html => { :value => false } %>
+      <%= f.input :name, placeholder: "Name",input_html: { class: 'form-control' } %>
+      <%= f.input :phone, placeholder: "Phone" ,input_html: { class: 'form-control' }%>
+      <%= f.input :email, placeholder: "Email",input_html: { class: 'form-control' } %>
+      <%= f.input :website, placeholder: "Website" ,input_html: { class: 'form-control' } %>
+      <%= f.input :user_id, as: 'hidden' %>
+      <%= f.input :user_name, :url => autocomplete_user_username_restaurants_path, :as => :autocomplete,
+          :id_element => '#restaurant_user_id', placeholder: "Owner" ,input_html: { class: 'form-control' }%>
+      <span class='color-red hide label-validate-username' >User does not exist!</span>
+      <%= f.input :description, placeholder: "Description",input_html: { class: 'form-control',:rows=>5 } %>
+      <%= f.input :direction, placeholder: "Directions",input_html: { class: 'form-control',:rows=>5 } %>
+      <% if params[:action] == 'edit' || params[:action] == 'update' %>
+        <%= f.input :slug, placeholder: "URL" ,input_html: { class: 'form-control' }%>
+      <% end %>
+
+    </div>
+    <div class='col-md-4'>
+      <div class="control-group">
+        <div valign="controls">
+          <%= text_field_tag :location_search, @location_search, :size => 60, :type => "search" ,placeholder: "Enter Location", class: 'form-control' %>
+        </div>
+      </div>
+        <%= f.input :address, placeholder: "Location" ,input_html: { class: 'form-control' } %>
+        <%= f.input :short_address, placeholder: "Short Address",input_html: { class: 'form-control' } %>
+
+        <%= f.input :district, placeholder: "District" ,input_html: { class: 'form-control' } %>
+        <%= f.input :city, placeholder: "City",input_html: { class: 'form-control' }  %>
+        <%= f.input :postcode, placeholder: "Postcode",input_html: { class: 'form-control' }  %>
+        <%= f.input :country, as: "string", placeholder: "Country" ,input_html: { class: 'form-control' } %>
+        <%= f.input :lat, placeholder: "Latitude", as: "string",input_html: { class: 'form-control' }  %>
+        <%= f.input :lng, placeholder: "Longitude", as: "string" ,input_html: { class: 'form-control' } %>
+    </div>
+    <div class="col-md-4 pad-top-5">
+      <div rowspan="9"><%= render :partial => "googlemap" %></div>
+    </div>
+  </div>
+
+
+  <div id="hala_status">
+    <h4>Halal Status</h4>
+    <div class="row">
+      <div class="col-lg-6 col-xs-12 col-sm-6 col-md-6">
+        <% if @filter_status %>
+          <% @filter_status.each do |f_s| %>
+            <%= restaurant_filter_checkbox f_s, @filter_ids %>
+          <% end %>
+          <% end %>
+      </div>
+    </div>
+    <label class="label-text">Halal status comment</label>
+    <div class="row">
+      <div class="col-lg-6 col-xs-12 col-sm-6 col-md-6">
+        <%= f.text_area :halal_status, class: "form-control", :rows => "7" %>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <h4><%= t('cuisine') %></h4>
+
+  <div class="row mg-t-15">
+    <div class="col-lg-6 col-xs-12 col-sm-6 col-md-6">
+      <div id="select_cuisines">
+        <%= select_tag "restaurant[filter_ids][]", options_from_collection_for_select(@filter_cuisines, "id", "name", @filter_ids) , :prompt => t('choose_options'), multiple: true, :id => 'filter_cuisines' %>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="acohol_allowance">
+    <h4><%= t('alcohol')%></h4>
+
+    <div class="row">
+      <div class="col-lg-6 col-xs-12 col-sm-6 col-md-6">
+        <% @filter_alcohol.each do |f_a| %>
+          <%= restaurant_filter_radio_button(f_a, @filter_ids,'restaurant[filter_ids][]') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div id="prices">
+    <h4><%= t('price')%></h4>
+
+    <div class="row">
+      <div class="col-lg-6 col-xs-12 col-sm-6 col-md-6">
+        <% @filter_prices.each do |f_i| %>
+          <%= restaurant_filter_radio_button(f_i, @filter_ids,'restaurant[filter_id_price]') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="facilities">
+    <h4>
+      <%= t('features') %>
+    </h4>
+    <div class="row">
+      <div class="col-lg-6 col-xs-12 col-sm-6 col-md-6">
+        <% @filter_features.each do |f_i| %>
+          <%= restaurant_filter_checkbox f_i, @filter_ids %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div id="opening_times">
+    <h4><%= t('opening_times') %></h4>
+
+  </div>
+  <div id="time_box" class="backend">
+    <div class="row">
+      <div class="col-lg-6 col-xs-12 col-sm-6 col-md-6 padding-r-35">
+        <div class="col-md-12 col-xs-12 col-sm-12 pad-right-0">
+          <div class="daily text-time inline-bl">
+            <span><%=t('day_time') %></span>
+
+          </div>
+          <button id='btn-apply-to-all-daily' class='btn btn-link btn-apply-all' type='button'>
+              <%= t('layout.apply_to_all')%>
+            </button>
+        </div>
+        <table id='opening_hours' class='table-open-time' border="0" style="margin-left: 15px; margin-right: 15px;" >
+
+          <%= f.simple_fields_for :schedules, wrapper: "none" do |p| %>
+            <% if p.object.schedule_type.blank? || p.object.schedule_type == 'daily' %>
+
+              <tr>
+                <td width="40px" >
+                  <%= Schedule::DAY_SHEET["#{p.object.day_of_week}"] %>
+                </td>
+                <td class='select'>
+                  <%= p.input :day_of_week, as: 'hidden' %>
+                  <%= p.input :time_open, collection: Schedule::TIME_SHEET.invert, input_html: {class: "select-opentime from daily #{p.object.day_of_week}", title: t('title_time')} %>
+                  <%= p.input :schedule_type,  as: 'hidden', input_html: { value: 'daily' }%>
+                </td>
+                <td width="30px" align="center">
+                  to
+                </td>
+                <td class='select'>
+                  <%= p.input :time_closed, collection: Schedule::TIME_SHEET.invert, input_html: {class: "select-opentime to daily #{p.object.day_of_week}", title: t('title_time')} %>
+                </td>
+                <td width="60px" align="center">
+                  <button class='btn btn-link time-closed' type='button' data-value=".select-opentime.daily.<%= p.object.day_of_week %>">
+                    <%= t('layout.closed') %>
+                  </button>
+                </td>
+              </tr>
+            <% end %>
+          <%end%>
+        </table>
+      </div>
+
+      <div class="col-lg-6 col-xs-12 col-sm-6 col-md-6 padding-r-35">
+        <div class="col-md-12 col-xs-12 col-sm-12 pad-right-0">
+          <div class="evening text-time inline-bl">
+            <span><%=t('evening') %></span>
+
+          </div>
+          <button id='btn-apply-to-all-evening' class='btn btn-link btn-apply-all' type='button'>
+              <%= t('layout.apply_to_all') %>
+            </button>
+        </div>
+        <table id='opening_hours' class='table-open-time' border="0" style="margin-left: 15px;">
+          <%= f.simple_fields_for :schedules, wrapper: "none" do |p| %>
+            <% if p.object.schedule_type.blank? || p.object.schedule_type == 'evening' %>
+              <tr>
+                <td width="40px">
+                  <%= Schedule::DAY_SHEET["#{p.object.day_of_week}"] %>
+                </td>
+                <td class='select'>
+                  <%= p.input :day_of_week, as: 'hidden' %>
+                  <%= p.input :time_open, collection: Schedule::TIME_SHEET_EVENING.invert, input_html: {class: "select-opentime from evening #{p.object.day_of_week}", title: t('title_time')} %>
+                  <%= p.input :schedule_type,  as: 'hidden', input_html: { value: 'evening' }%>
+                </td>
+
+                <td width="30px" align="center">
+                  to
+                </td>
+                <td class='select'>
+                  <%= p.input :time_closed, collection: Schedule::TIME_SHEET_EVENING.invert, input_html: {class: "select-opentime to evening #{p.object.day_of_week}", title: t('title_time')}%>
+                </td>
+                <td width="60px" align="center">
+                  <button class='btn btn-link time-closed' type='button' data-value=".select-opentime.evening.#{p.object.day_of_week}">
+                    <%= t('layout.closed') %>
+                  </button>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="backend">
+    <button id='submit_restaurant' class="btn btn-submit" type="submit">
+      <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i>  -->
+      <%= t('layout.submit') %>
+    </button>
+  </div>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    if($('.select-opentime.from.daily').val().length == 0){
+      $('.select-opentime.from.daily').val('1200');
+      $('.select-opentime.from.daily').selectpicker('refresh');
+      $('.select-opentime.to.daily').val('2300');
+      $('.select-opentime.to.daily').selectpicker('refresh');
+    }
+  })
+
+</script>

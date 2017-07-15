@@ -1,0 +1,60 @@
+
+- if reviews.present? && reviews.first.present?
+	- reviews.each do |review|
+		.row.reply-info
+			col-lg-2.col-md-2.col-sm-2.col-xs-3
+				= image_tag avatar_url review.user, "60x62#"
+			col-lg-10.col-md-10.col-sm-2.col-xs-9
+				.name-users 
+					= review.user ? review.user.full_name	: "No Name"
+		.review-comments 
+			p.review-content = review.content 
+			.rating_box
+				.row
+					.col-xs-12.col-sm-12.col-md-4.col-lg-4
+						.label_stars Service
+						.stars_color
+							= render :partial=>"restaurants/rating", :locals =>{:rate_count=>review.service, :is_rating =>false} 
+					#border-quality.col-xs-12.col-sm-12.col-md-4.col-lg-4
+						.label_stars Quality
+						.stars_color
+					 		= render :partial=>"restaurants/rating", :locals => {:rate_count => review.quality, :is_rating => false} 
+					.col-xs-12.col-sm-12.col-md-4.col-lg-4
+						.label_stars Value
+						.stars_color
+							= render :partial=>"restaurants/rating", :locals => {:rate_count => review.value, :is_rating => false} 
+							
+			.time-visited
+				= t('layout.visited') 
+				=< review.month_ago 
+		#reply_area
+			- if review.reply_content != nil && review.approve_reply == true
+					blockquote.manager_reponded
+						#icon_reply 
+							= image_tag('icon_manager_responded.png')
+						h4 
+							= t('layout.manager_responded')
+						.text_content 
+							= review.reply_content
+
+						.replied_time
+							= t('layout.visited') 
+							=< review.time_replied 
+			- elsif review.reply_content != nil && !review.is_approved_reply? && review.is_show?(current_user)
+				p.not-yet-approved-reply "#{t('review.not_yet_approved_reply')}"
+			.reply-owner id="reply_review_owner_#{review.id}"
+				- if review.reply_content == nil && review.restaurant.user_id == current_user.id
+						label = t('layout.type_reply_here')
+						= form_tag user_restaurants_reply_review_path, :remote => true, id: 'reply_owner_form' do |r|
+							= text_area_tag "reply_review[reply_content]" ,nil, :class=> "form-control", :size=> "80x5", onkeyup: "countChar(this)", :maxlength => "5000"
+							span.content_character_count.pull-right
+								| 0/5000
+							p.error-message
+								label.error.hide for="review_reply_content" generated="true"
+									| Please fill your reply content.
+							= hidden_field_tag "review_id", review.id
+							br
+							button#btn-reply.default-btn.btn-details type="submit"
+								/ i.fa.fa-angle-right.fa-lg.arrow-left 
+								= t('reply')
+

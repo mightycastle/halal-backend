@@ -1,0 +1,23 @@
+<div class="modal fade" id="send_email_to_owner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+      <form accept-charset="UTF-8" action="/users/send_email_restaurant_owner" class="form_share_restaurant_email" id="form_send_email_to_restaurant_owner" method="post" data-remote='true' novalidate="novalidate"  >
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title" id="myModalLabel" style="text-align: center;"><%= t('restaurant.model_header_send_to', restaurant_name: @restaurant.name)%></h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input type='hidden' name='user[restaurant_email]' value='<%= @restaurant.email || @restaurant.user.email %>'>
+            <textarea class="form-control" name='user[message]' rows="5" placeholder="<%= t('layout.type_your_message')%>" style="resize: none;"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="default-btn btn-details"> Send</button>
+        </div>
+      </form>
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

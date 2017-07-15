@@ -1,0 +1,65 @@
+<div class="manager-container">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>REVIEWS &amp; RATINGS</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-5 info-box review-list-columns">
+      <%= render "review_list" %>
+    </div>
+
+    <div class="col-lg-7 info-box">
+      <div id="review-pane">
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="text/javascript">
+
+  var get_review = function(rev_id) {
+    path = paths.reviews + "/" + rev_id.toString()
+    $.get(path, function(data, status) {
+      window.history.pushState({path: path},'', path );
+    }, "script")
+    .fail(function(data) {
+      error = data;
+      alert("Internal server error")
+    });
+  };
+
+  /* Check if review is already selected */
+  $(function() {
+    var rev_id = parseInt(getParameterByName("r"));
+
+    if (!rev_id) {
+      return;
+    }
+
+    /* Find review, and make review list large enough to include the specific review */
+
+    for (var i = 0; i < reviews.length; i++) {
+      var rev = reviews[i];
+
+      index = i + 1
+
+      if (rev.id == rev_id) {
+        if (review_count < index) {
+          add_reviews(Math.min(index - review_count, reviews.length - review_count));
+
+          // Scroll to bottom
+          $(".review-list-container").scrollTop($(".review-list-container")[0].scrollHeight);
+        }
+
+        select_review(rev_id);
+        get_review(rev_id);
+      }
+    }
+  })
+
+</script>

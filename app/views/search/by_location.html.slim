@@ -1,0 +1,55 @@
+.auto_height.search_result
+
+  #search_form
+    .result-search-part
+      .container.row
+        .padding-bottom-50
+
+          .search-result-part
+            #search_bar.mobile_site.col-lg-6.col-md-6.col-sm-6.col-xs-12
+              .search-left
+                .map-part
+                  .map
+                    = render "googlemap"
+
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12.results-right-part
+              = form_tag({controller: "search", action: "by_location"}, method: "get", remote: true, id: "search_filter_form") do
+                input#zl.hidden name='zl' value="#{@zoom_level}"
+                input#drage.hidden name='drage'
+                input#llat.hidden name='llat' value="#{params[:llat]}"
+                input#llng.hidden name='llng' value="#{params[:llng]}"
+                .box-search
+                  .input-group.input-group-lg
+                    = text_field_tag :ln, @ln_name, :type => "search", placeholder: t(:search_placeholder), class: "home_search_input search_home form-control", tabindex: "1", id: "ln1"
+                    span.input-group-btn
+                      button.btn.btn-default.search_submit_btn type="submit"
+
+                  javascript:
+                    var input = document.getElementById('ln1');                    
+
+                    var options = {
+                      //types: ['(regions)'],
+                      //componentRestrictions: {country: 'uk'}
+                    };
+                    var autocomplete = new google.maps.places.Autocomplete(input, options);
+                    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                      var place = autocomplete.getPlace();
+                      $("#llat").val(place.geometry.location.lat());
+                      $("#llng").val(place.geometry.location.lng());
+                    });
+                    $(window).keydown(function(event){
+                      if(event.keyCode == 13) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        return false;
+                      }
+                    });
+                .result_table
+                  .search_not_mobile
+                    #search_home.transpent_pnl_form
+                      = render "filter_bk"
+                #result_table
+                  - if @restaurants.length == 0 && @location_name.present? && @filter_ids.blank?
+                    = render 'no_result'
+                  - else
+                    = render "result"

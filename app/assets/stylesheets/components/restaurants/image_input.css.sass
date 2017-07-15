@@ -1,0 +1,30 @@
+.finder-checkbox-image
+  &[class*="col-"]
+    padding-left: 0px
+    padding-right: 0px
+  
+  &:not(.col-xs-6)
+    display: inline-block
+    margin-right: 45px
+  input
+    display: none  
+  label
+    display: inline-block
+    line-height: 14px
+    padding: 8px 0 8px 40px
+    text-shadow: 0 0 #fff
+  
+$array_finder: (cuisine checkbox) (price, checkbox) (alcohol_served, alcohol_icon) (bring_your_own, byo_icon) (alcohol_not_allowed, no_alcohol_icon) (shisha_allowed, shisha_icon) (wifi_available, wifi_available_icon) (wheelchair_accessible, wheelchair_accessible_icon) (delivery_available, delivery_icon) (staff_confirmation, staff_confirmation_icon) (sign_in_window, sign_in_window_icon) (certificate, certificate_icon) (offer, offer_icon) (organic, organic_icon) (no_pork, no_pork_icon)
+
+.finder-checkbox-image
+  @each $clss in $array_finder
+    .image-#{nth($clss, 1)}
+      background: image-url("restaurant_finder/#{nth($clss, 2)}.png") no-repeat left center transparent
+    input[type=checkbox]:checked + .image-#{nth($clss, 1)}
+      background: image-url("restaurant_finder/#{nth($clss, 2)}_hover.png") no-repeat left center transparent
+
+  .image-cuisine, .image-price
+    padding: 6px 0 6px 24px
+    font-size: 11px
+  label
+    cursor: pointer

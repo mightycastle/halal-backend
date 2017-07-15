@@ -1,0 +1,34 @@
+<div class="my_purchases">
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <h1 class='title-page'><%= t('menu_tab.history_subscription') %></h1>
+
+      
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th><%= t('my_purchase.date_start') %></th>
+              <th><%= t('my_purchase.subscription_type') %></th>
+              <th><%= t('my_purchase.amount') %></th>
+              <th><%= t('my_purchase.date_next_payment') %></th>
+              <th class="text-center"><%= t('my_purchase.status') %></th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <% @subscriptions.each_with_index do |subscription, index| %>
+              <tr class="<%= cycle('blue_background', 'info') %>">
+                <td><%= format_DMY(subscription.created_at) %></td>
+                <td><%= subscription.plan.plan_type.name %></td>
+                <td><%= subscription.amount %></td>
+                <td><%= format_DMY(subscription.next_payment) %></td>
+                <td class="text-center"><%= subscription.status %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

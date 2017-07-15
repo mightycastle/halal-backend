@@ -1,0 +1,203 @@
+<div id="map" style="width: 360px; height: 380px;"></div>
+
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDviEQ_rkCCFJzwyrbtFREw39Cwu-oAIcg&sensor=true&libraries=places" type="text/javascript"></script>
+
+<script type="text/javascript">	
+<!--
+  var defaultZoom = 16; // Why zoomed in? Because it looks good.
+  var styles = [
+    {
+      stylers: [
+        { hue: "#00ffe6" },
+        { saturation: -20 }
+      ]
+    },{
+      featureType: "road",
+      elementType: "geometry",
+      stylers: [
+        { lightness: 100 },
+        { visibility: "simplified" }
+      ]
+    },{
+      featureType: "road",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];
+  var styledMap = new google.maps.StyledMapType(styles,
+    {name: "Styled Map"});
+  // create map and add controls
+  var mapOptions = {
+    center: new google.maps.LatLng("#{@restaurant.lat}", "#{@restaurant.lng}"),
+    zoom: defaultZoom,
+    // mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeControlOptions: {
+      // mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+    }
+  };
+  var map = new google.maps.Map(document.getElementById('map'),mapOptions);
+  // comment for styled map *************************
+	// map.mapTypes.set('map_style', styledMap);
+  // map.setMapTypeId('map_style');
+
+	// I'm Centering the map in Bangkok
+	// '13.731547730050778'
+	// '100.56798934936523'
+	var mylat = '<%= @restaurant.lat %>';
+	var mylng = '<%= @restaurant.lng %>';
+	if (jQuery.isEmptyObject(mylat)) {
+	  var mylat = '10.79878';
+	  var mylng = '106.64892199999997';
+	  var defaultZoom = 18; // decrease zoom to 13 if there is no selection from user.
+	};
+
+	// set center point of map to be of the Marker or the Default City
+  var centrePoint = new google.maps.LatLng(mylat, mylng);
+  
+  map.setCenter(centrePoint);
+  map.setZoom(defaultZoom); 
+	
+	// add a draggable marker
+  marker = new google.maps.Marker({
+    map:map,
+    draggable:true,
+    animation: google.maps.Animation.DROP,
+    position: centrePoint
+  });
+  var defaultImage = new google.maps.MarkerImage(
+      "http://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+      new google.maps.Size(71, 71),
+      new google.maps.Point(0, 0),
+      new google.maps.Point(17, 34),
+      new google.maps.Size(35, 35));
+	marker.setIcon(defaultImage);
+	
+  google.maps.event.addListener(marker, 'click', toggleBounce);
+	
+  
+  // Address Autocomplete
+  var input = document.getElementById('location_search');
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+  
+	// add a drag listener to the map
+	google.maps.event.addListener(marker, "dragend", function() {
+		var point = marker.getPosition();
+		map.panTo(point);
+		document.getElementById("restaurant_lat").value = point.lat();
+		document.getElementById("restaurant_lng").value = point.lng();
+    marker.setIcon(defaultImage);
+  });
+  
+  // Autocomplete Listener
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    var place = autocomplete.getPlace();
+    marker.setPosition(place.geometry.location);
+    map.panTo(place.geometry.location);
+    map.setZoom(16);
+		document.getElementById("restaurant_lat").value = place.geometry.location.lat();
+		document.getElementById("restaurant_lng").value = place.geometry.location.lng();
+		
+		// Sets the proper image on the marker. ie. school/hospital marker
+		var image = new google.maps.MarkerImage(
+        place.icon,
+        new google.maps.Size(71, 71),
+        new google.maps.Point(0, 0),
+        new google.maps.Point(17, 34),
+        new google.maps.Size(35, 35));
+    marker.setIcon(image);
+    marker.setPosition(place.geometry.location);
+
+    var address = '';
+    if (place.address_components) {
+      address = [(place.address_components[0] &&
+                  place.address_components[0].short_name || ''),
+                 (place.address_components[1] &&
+                  place.address_components[1].short_name || ''),
+                 (place.address_components[2] &&
+                  place.address_components[2].short_name || '')
+                ].join(' ');
+    }
+
+    // Autofill the fields in the form. TODO: improve parsing of the returned JSON data.
+    var address = place.address_components;
+    var postcode, country, city, district, short_address;
+    var addr, include_type, _fn, _i, _len;
+    
+    include_type = function(types) {
+      var type, _j, _len1;
+      for (_j = 0, _len1 = types.length; _j < _len1; _j++) {
+        type = types[_j];
+        switch (type) {
+          case 'country':
+            return 'country';
+          case 'street_number':
+            return 'street_number';
+          case 'route':
+            return 'route';
+          case 'locality':
+          case 'postal_town':
+          case 'city':
+          case 'administrative_area_level_1':
+            return 'city';
+          case 'sublocality':
+          case 'administrative_area_level_2':
+            return 'district';
+          case 'postal_code':
+            return 'postcode';
+        }
+      }
+    };
+   
+    for (_i = 0, _len = address.length; _i < _len; _i++) {
+      addr = address[_i];
+      switch (include_type(addr.types)) {
+        case 'postcode':
+          postcode = addr.long_name;
+          break;
+        case 'country':
+          country = addr.long_name;
+          break;
+        case 'city':
+          city = addr.long_name;
+          break;
+        case 'district':
+          district = addr.long_name;
+          break;
+        case 'street_number':
+          short_address = addr.long_name;
+          break;
+        case 'route':
+          short_address += ' ' + addr.long_name;
+          break;
+      }
+    };
+    
+    var location_name = place.name;
+    var formatted_address = place.formatted_address;
+    var formatted_phone_number = place.formatted_phone_number;
+    
+    $("#restaurant_postcode").val(postcode);
+    $("#restaurant_city").val(city);
+    $("#restaurant_country").val(country);
+    $("#restaurant_district").val(district);
+    $("#restaurant_address").val(formatted_address);
+    $("#restaurant_short_address").val(short_address);
+
+  });
+  
+  // This is the function to animate the marker after dropping it.
+  function toggleBounce() {
+    if (marker.getAnimation() != null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  };
+
+//-->
+</script>
+
+<br />

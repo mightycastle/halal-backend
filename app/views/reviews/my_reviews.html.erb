@@ -1,0 +1,56 @@
+<h1>Listing My Reviews</h1>
+
+<table class="table">
+  <tr>
+    <th>User</th>
+    <th>Restaurant</th>
+    <th>Title</th>
+    <th>Content</th>
+    <th>Service</th>
+    <th>Quality</th>
+    <th>Value</th>
+    <th>Rating</th>
+    <th>Status</th>
+  </tr>
+
+<% @reviews.each do |review| %>
+  <%
+    restaurant =review.restaurant
+    if restaurant && restaurant.photos
+      image_path = restaurant.photos.first(:conditions=>{:cover=>true}).image.thumb('160x140#').url
+    else
+      image_path = "#"
+    end
+  %>
+  <tr>
+    <td><%= review.user.username %></td>
+    <td><%= link_to(image_tag(image_path), restaurant_info_path(restaurant.slug),:title=>"Go to edit restaurant page.")%>&nbsp;<%= link_to(review.restaurant.name, restaurant_info_path(review.restaurant.slug)) if review.restaurant %><br />
+    <%= review.restaurant.address if review.restaurant %></td>
+    <td><%= review.title %></td>
+    <td><%= review.content %></td>
+    <td><%= review.service %></td>
+    <td><%= review.quality %></td>
+    <td><%= review.value %></td>    
+    <td><%= review.rating %></td>
+    <%
+      label = ""
+      status = "Draft"
+      if review.status == true
+        label = "label-success"
+        status = "Approved"
+      elsif review.status == false
+        label = "label-important"
+        status = "Rejected"
+      end
+    %>
+    <td>
+      <div id="status_review_<%=review.id.to_s%>">
+        <span class="label <%=label%>"><%=status%></span>
+      </div>
+    </td>
+  </tr>
+<% end %>
+</table>
+<%= paginate @reviews, :theme => "twitter-bootstrap"%>
+<br />
+

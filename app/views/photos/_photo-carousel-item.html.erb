@@ -1,0 +1,11 @@
+
+<%= image_tag(photo.image.thumb("160x80#").url, {:width=>"160", :height=>"80"}) %>
+<div class="clearfix"></div>
+<div class="photo-item-buttons btn-group btn-group-xs">
+  <%= link_to approve_photo_path(photo), method: :post, remote: true, class: "btn btn-success fa fa-check-circle", title: 'Approve', disabled: photo.status == 1 do %>
+    <%= content_tag :span, ' Approve', class: 'open-san' %>
+  <% end %>
+  <%= link_to reject_photo_path(photo), method: :post, remote: true, confirm: 'Do you really want to reject(delete) this photo?', class: "btn btn-danger fa fa-ban", title: 'Reject', disabled: photo.status == 2 do %>
+    <%= content_tag :span, ' Reject', class: 'open-san' %>
+  <% end %>
+</div>

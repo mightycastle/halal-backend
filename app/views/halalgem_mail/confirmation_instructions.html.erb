@@ -1,0 +1,7 @@
+<p>Dear <%= @resource.username %>, You're almost there!</p>
+<p>
+Please click on this link so that we know you're real. <%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %> Once you do this you'll be able to write reviews, save your favourite restaurants and receive special offers and exclusive news.</p>
+
+<p>We're excited to have you join us!</p>
+<p>Yours,<br>
+<span>Sara</span> halalgems admin team</p>

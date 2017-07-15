@@ -1,0 +1,24 @@
+<div class='result-search'>
+  <% @restaurants.in_groups_of(3).each do |group|%>
+    <% group.each_with_index do |restaurant, index| %>
+      <%= render partial: "restaurant", object: restaurant, locals: { index: index, restaurant: restaurant }%>
+    <% end %>
+  <% end %>
+
+</div>
+<div class="bottom">
+  <div class="numof "><%= raw page_entries_info @restaurants %></div>
+  <div class="pagination pagination-right">
+    <%= paginate @restaurants, :theme => 'twitter-bootstrap-3',
+                 :pagination_class => "pagination", :remote => true %>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".jtooltip").tooltip({
+      position: { my: "top center", at: "top-30" } 
+    })  
+  });
+</script>
+  
+  

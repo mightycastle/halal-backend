@@ -1,0 +1,2 @@
+$("table#recurring-offers-table tbody").html("<%= escape_javascript(render partial: 'offers', locals: {offers: @offers, type: 'recurring'}) %>")
+$("table#onetime-offers-table tbody").html("<%= escape_javascript(render partial: 'offers', locals: {offers: @offers, type: 'onetime'}) %>")

@@ -1,0 +1,56 @@
+<div class=" my_purchases">
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <h3 class='title'>Subscriptions</h3>
+
+      <div class="table-responsive">
+
+        <%= search_form_for @search, :url => "/admin/admin_subscriptions/" do |f| %>
+            <div class="well">
+              <%= f.condition_fields do |c| %>
+                  <%= render "condition_fields", f: c, is_new: false %>
+              <% end %>
+              <div class="actions">
+                <%= link_to_add_fields " Add Conditions", f, :condition %>
+                <%= f.submit "Search", :class => "btn btn-success icon-search" %>
+              </div>
+            </div>
+        <% end %>
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th><%= t('my_purchase.date_start') %></th>
+              <th><%= t('layout.user') %> </th>
+              <th><%= t('my_purchase.phone_contact') %></th>
+              <th><%= t('my_purchase.subscription_type') %></th>
+              <th><%= t('my_purchase.amount') %> </th>
+              <th><%= t('my_purchase.date_next_payment') %></th>
+              <th class="text-center"><%= t('my_purchase.paypal_status') %></th>
+
+              <th class="text-center" colspan="3"><%= t('my_purchase.action') %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @subscriptions.each_with_index do |subscription, index| %>
+              <tr class="<%= cycle('blue_background', 'info') %>">
+                <td><%= format_DMY(subscription.created_at) %></td>
+                <td><%= subscription.user.username %></td>
+                <td><%= subscription.user.phone %></td>
+                <td><%= subscription.plan.plan_type.name %></td>
+                <td class="text-center"><%= subscription.amount %></td>
+                <td><%= format_DMY(subscription.expire_time)%></td>
+                <td class="text-center"><%= Subscription::CONVERT_STATUS["#{subscription.paypal_status}"] %></td>
+
+                <td class="text-center " id="recurring_action_<%= subscription.id %>">
+                  <div class="btn-group btn-group-xs paypal_action">
+                    <%= link_to_action_purchase(subscription) %></td> 
+                  </div>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

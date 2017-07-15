@@ -1,0 +1,61 @@
+
+
+
+<% reviews.each_with_index do |review, index| %>
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 column_reviews two-review-default">
+    <div class="row">
+      <div class="col-xs-10 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+          <div class="col-xs-3 col-sm-4 col-md-2 col-lg-2">
+            <div id="avatar"><%= image_tag avatar_url review.user, "61x57#" %></div>
+          </div>
+          <div class="col-xs-9 col-sm-8 col-md-10 col-lg-10 none-padding">
+            <h4><%= review.user ? review.user.full_name  : "No Name" %>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-2 col-sm-3 col-md-2 col-lg-2">
+        <div class="pull-right rating-number">
+          <p class="p1">Rated</p>
+          <p class="p2"><%= review.rating.to_i%></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text_contentt">
+      <%= truncate(review.content, :length=>5000, :omission=>"... (see more)")%>
+    </div>
+
+    <div class="reviewed_time">Visited <%= review.month_ago %></div>
+
+    <div class="rating_box">
+      <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 start-review">
+          <div class="label_stars">Service</div>
+          <div class="stars_color">             
+          <%= render :partial=>"rating", :locals =>{:rate_count=>review.service, :is_rating =>false} %></div>
+        </div>
+        <div id="border-quality" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 start-review">
+          <div class="label_stars">Quality</div>
+          <div class= "stars_color"><%= render :partial=>"rating", :locals =>{:rate_count=>review.quality, :is_rating =>false} %></div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 start-review">
+          <div class="label_stars">Value</div>
+          <div class="stars_color"><%= render :partial=>"rating", :locals =>{:rate_count=>review.value, :is_rating =>false} %></div>
+        </div>          
+      </div>
+    </div>
+
+    <% if review.reply_content != nil && review.approve_reply == true && current_user %>
+      <div class="manager_reponded">
+        <div id="icon_reply"><%= image_tag('icon_manager_responded.png')%></div>
+        <div><h4><%= t('manager_responded')%></h4></div>
+        <div class="text_content"><%= review.reply_content %></div>
+        <div class="reviewed_time">Visited <%= review.time_replied%></div>
+      </div>
+    <% end%>
+  </div>
+  <% if index%2 ==1 %>
+    <div class="clearfix"></div>
+  <%end%>
+<%end%>

@@ -1,0 +1,15 @@
+.background-color-dark{
+  .login-page{
+    background: none #000;
+    .title-login-page{
+      padding-top: 0;
+    }
+    .title-login-page, p, label, a{
+      color: #fff;
+      &.error {
+        font-weight: normal;
+        color: #f11458;
+      }
+    }
+  }
+}

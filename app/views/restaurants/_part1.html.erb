@@ -1,0 +1,201 @@
+<div class="part1 restaurant-photos">
+
+    <div class="row mobile-ui">
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pull-left slide-part">
+        <div class="tn3-slide-part">
+          <%= render "slideshow"%>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pull-left detail-page-info">
+        <div class="infor1">
+          <div id="favourite_status_<%=@restaurant.id %>" class="pull-right fv">
+            <% if @favourite_or_not %>
+              <%=link_to image_tag('star_icon.png', class: 'image-favorite'), remove_favourite_restaurant_path(@restaurant.slug),method: "post", remote: true %>
+            <% else %>
+              <%=link_to image_tag('star_icon_outline.png', class: 'image-favorite'),((current_user)? add_favourite_restaurant_path(@restaurant.id) :new_user_session_path),method: ((current_user)? "post" :""), remote: ((current_user)? true : false) %>
+            <% end %>
+          </div>
+          <h1 class='title-page'><%= @restaurant.name %></h1>
+          <h5 class='sub-title'><%= @restaurant.city%></h5>
+        </div>
+
+
+        <div class="infor4">
+          <div class="row avg-review">
+            <div class="col-sm-12">
+              <span class="stars_color">
+              <%= render :partial=>"rating", :locals =>{:rate_count=>@restaurant.rating_avg, :is_rating =>false} %></span>
+              <span class="label_stars"><%= @reviews_count %> reviews</span>
+
+            </div>
+          </div>
+        </div>
+
+        <%= render "modals/send_email_to_owner_restaurant" %>
+
+        <div class="infor2">
+
+          <div class="row ">
+            <div class="col-sm-3 col-xs-12">
+              <b>Address</b>
+            </div>
+            <div class="col-sm-9 col-xs-12">
+              <%= @restaurant.address %>
+              <div class="pull-right map_view">
+                <a href="#" class="lowercase default-link" data-toggle="modal" data-target="#show_map">Show map</a>
+              </div>
+              <%= render 'map_restaurant' %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-3">
+              <b>Telephone</b>
+            </div>
+            <div class="col-xs-12 col-sm-9"><%= @restaurant.phone %></div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-3">
+              <b>Website</b>
+            </div>
+            <div class="col-xs-12 col-sm-9">
+              <% if @restaurant.website && !@restaurant.website.strip().empty? %>
+                <%= link_to @restaurant.website, format_hyperlink(@restaurant.website), class:'website', target: "blank" %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-3">
+              <b>Email</b>
+            </div>
+            <div class="col-xs-12 col-sm-9">
+              <%= @restaurant.email %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-3">
+              <b>Opening hours</b>
+            </div>
+            <div class="col-xs-12 col-sm-9">
+              <div class="open_hours">
+                <% if @restaurant.schedules && @restaurant.schedules.is_set_daily.count > 0 %>
+                  <%= @restaurant.opening_time_daily.html_safe %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-3">
+            <b>Price</b>
+            </div>
+            <div class="col-xs-12 col-sm-9">
+              <div class="price">
+                <%= @restaurant.get_price_restaurant %>
+              </div>
+            </div>
+          </div>
+
+        <div class="row infor3">
+
+          <div class="col-xs-12 col-sm-9 col-sm-offset-3">
+            <% if @restaurant.offers.approved.length > 0 %>
+              <% @restaurant.offers.approved.each do |offer| %>
+                <% if !offer.is_onetime or offer.time_start_offer.to_date < Date.today %>
+                  <% next %>
+                <% end %>
+
+                <div class="text-offer" style="text-transform: none">
+                  <% offer_content_popover = if offer && offer.image then offer_content_popover = offer.image.url else "" end %>
+                  <% if offer_content_popover.present? %>
+                    <%= image_tag "restaurant_detail/offer_icon.png", class: "pull-left tpopover", "data-placement"=>"top", "data-content"=> "<img class='offer-img' src='#{offer_content_popover}' />" %>
+                  <% else %>
+                    <%= image_tag "restaurant_detail/offer_icon.png", class: "pull-left tpopover", "data-placement"=>"top", "data-content"=> "There 's no image offer" %>
+                  <% end %>
+                  <div class="get_offer_content"><%= "#{offer.offer_content} (one-time offer) <br> <div class='lowercase'>#{offer.get_time_valilable}</div>".html_safe %></div>
+                </div>
+              <% end %>
+
+              <% @restaurant.offers.approved.each do |offer| %>
+                <% if offer.time_start_offer.to_date > Date.today or offer.is_onetime %>
+                 <% next %>
+                <% end %>
+
+                <div class="text-offer" style="text-transform: none">
+                  <% offer_content_popover = if offer && offer.image then offer_content_popover = offer.image.url else "" end %>
+                  <% if offer_content_popover.present? %>
+                    <%= image_tag "restaurant_detail/offer_icon.png", class: "pull-left tpopover", "data-placement"=>"top", "data-content"=> "<img class='offer-img' src='#{offer_content_popover}' />" %>
+                  <% else %>
+                    <%= image_tag "restaurant_detail/offer_icon.png", class: "pull-left tpopover", "data-placement"=>"top", "data-content"=> "There 's no image offer" %>
+                  <% end %>
+
+                  <div class="get_offer_content"><%= "#{offer.offer_content} <br> <div class='lowercase'>#{offer.get_time_valilable}</div>".html_safe %></div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-3">
+            <b class="line-h-32"><%= t('layout.hala_status')%></b>
+          </div>
+          <div class="col-xs-12 col-sm-9">
+            <div class="list_status">
+              <% if @restaurant.is_staff_confirmation? %>
+                <img src="<%= image_path('restaurant_detail/staff_comfirmation_icon.png')%>" alt="Staff Confirmation" class="jtooltip" title="Staff Confirmation" />
+              <%end%>
+
+              <% if @restaurant.is_sign_in_windown? %>
+                <img src="<%= image_path('restaurant_detail/sign_in_window_icon.png')%>" alt="Sign In Window" class="jtooltip" title="Sign In Window" />
+              <%end%>
+
+              <% if @restaurant.is_certificate_available? %>
+                <img src="<%= image_path('restaurant_detail/certificate_icon.png')%>" alt="Certificate available" class="jtooltip" title="Certificate available" />
+              <% end%>
+            </div>
+          </div>
+        </div>
+
+        <div class="row highlights">
+          <div class="col-xs-12 col-sm-3"><b class="line-h-32"><%= t('layout.features')%></b></div>
+          <div class="col-xs-12 col-sm-9">
+            <%= @restaurant.is_shisha? ? image_tag("restaurant_detail/shisha.png", alt:"Shisha", class:"jtooltip", title:"Shisha" ) : '' %>
+            <%= @restaurant.is_deliver? ?  image_tag("restaurant_detail/delivery.png", alt:"Deliery", class:"jtooltip", title:"Deliery") :  '' %>
+            <%= @restaurant.is_wifi? ? image_tag("restaurant_detail/wifi_icon.png", alt:"Wifi", class:"jtooltip", title:"Wifi" ) : '' %>
+            <%= @restaurant.is_wheel_chair_access? ? image_tag("restaurant_detail/wheelchair_accessiable_icon.png", alt:"Accessible", class:"jtooltip", title:"Accessible") : '' %>
+            <%= @restaurant.is_organic? ? image_tag("restaurant_detail/organic_icon.png", alt:"Organic", class:"jtooltip", title:"Organic") : '' %>
+            <%= alcohol_filter(@restaurant) %>
+          </div>
+        </div>
+
+        <div class="dotted-line line-part-1"></div>
+        <div class="row">
+          <div id="social-space" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <b class='uppercase share-title'>Share</b>
+          </div>
+          <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+            <!-- AddThis Button BEGIN -->
+            <div class="addthis_toolbox addthis_default_style addthis_32x32_style" addthis:url='<%= full_url(restaurant_info_path(@restaurant.slug)) %>'  addthis:title="Check out this restaurant">
+              <a class="addthis_button_facebook social facebook" style="margin: 0 5px;"><%= image_tag "restaurant_detail/facebook_icon_big.png"%></a>
+              <a class="addthis_button_twitter social twitter" style="margin: 0 10px;"><%= image_tag "restaurant_detail/twiter_icon_big.png"%></a>
+
+              <a class='social' data-toggle="modal" data-target="#share_restaurant_via_email" style="cursor: pointer; margin: 0 10px;" ><%= image_tag("restaurant_detail/mail_icon_big.png") %></a>
+            </div>
+            <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4ebb71dd7f06215d"></script>
+            <!-- AddThis Button END -->
+            <%= render "modals/share_restaurant_via_email" %>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+.login-page
+  .container
+    .row
+      .col-xs-12.col-sm-6.col-md-6.col-lg-6
+        h1.title-login-page
+          = t('layout.forgot_password_title')
+
+        = form_for(resource , :as => resource_name, :url => password_path(resource_name), :html =>{:method => :post}) do |f|
+          .form-group.no-mg-bt
+            = f.label :email, :class => 'title-text'
+            = f.email_field :email, :class => 'form-control'
+
+          .form-group
+            button.default-btn.btn-halagems.login-btn name="button" type="submit" 
+              / i class="fa fa-angle-right fa-lg arrow-left" 
+              = t('layout.submit')

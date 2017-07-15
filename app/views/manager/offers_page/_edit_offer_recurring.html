@@ -1,0 +1,55 @@
+
+<%= form_for @new_offer, action:"put", url: manager_offers_update_path(current_restaurant_id) do |f| %>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 style="color: #d2c5af">Edit recurring offer</h3>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <%= f.hidden_field :id, class: "offer_id" %>
+
+      <%= f.label "Title" %>
+      <%= f.text_field :offer_content, class: "offer-input offer-title", required: true %>
+
+      <label id="start-date-label">Start Date</label>
+      <input class="offer-start-date offer-input" type="date" name="offer[time_start_offer]" required></input>
+
+      <%= f.label "Select times for offer to be valid" %>
+      <div class="dates-warning fill_dates_warning" style="display: none; font-weight: bold; color: #F00; margin-bottom: 5px;">Must fill in these fields</div>
+      <div class="dates-warning invalid_date_warning" style="display: none; font-weight: bold; color: #F00; margin-bottom: 5px;">The day on the left must be earlier than the day on the right</div>
+
+      <div class="offer-time-select">
+        <%= f.select :start_date, [['Monday', 1], ['Tuesday', 2],['Wednesday', 3], ['Thursday', 4], ['Friday', 5], ['Saturday', 6], ['Sunday', 7]] , { prompt: 'Day'}, required: true, :class => "offer-input offer-start-date select_day_from select_time_open", :id => 'offer_start_date' %>
+        <p>to</p>
+        <%= f.select :end_date, [['Monday', 1], ['Tuesday', 2],['Wednesday', 3], ['Thursday', 4], ['Friday', 5], ['Saturday', 6], ['Sunday', 7]] , { prompt: 'Day' }, required: true, :class => "offer-input offer-end-date select_day_to select_time_open", :id => 'offer_end_date' %>
+        <br />
+
+        <%= f.select :start_time, Schedule::TIME_SHEET.invert, {:prompt => t('title_time')}, :class => 'offer-input offer_start_time select_time_open select_time_from', required: true, :id => 'offer_start_time' %>
+        <p>to</p>
+        <%= f.select :end_time, Schedule::TIME_SHEET.invert, {:prompt => t('title_time')}, :class => 'offer-input offer_end_time select_time_open select_time_to', required: true, :id => 'offer_end_time' %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <%= f.label :image, allow: "application/pdf,image/*" %>
+      <%= f.file_field :image, class: "offer-input offer-image", name: "offer[image]", accept: "application/pdf,image/*", :multiple => true %>
+      <br />
+      <%= f.label "Preview" %>
+      <img style="border: 1px solid #000; min-width: 200px; min-height: 200px" class="preview-image"></img>
+    </div>
+
+  </div>
+
+  <div class="row" style="margin-top: 30px">
+    <div class="col-sm-12">
+      <%= f.submit "Edit offer", class: "default-btn btn-details btn-edit-profile", mode: "create", onclick: "return must_fill_dates_warning()" %>
+
+      <button class="default-btn btn-details btn-edit-profile" type="button" onclick="close_offer_panel()">Cancel</button>
+    </div>
+  </div>
+
+<% end %>

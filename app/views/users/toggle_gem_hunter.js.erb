@@ -1,0 +1,7 @@
+
+<% if @user.blank? || @user.errors.present? %>
+  alert("Update failed!")  
+<% end %>
+$("#user_change_gem_hunter_<%= @user.id%>").html("<%= escape_javascript toggle_gem_hunter_button(@user.gem_hunter, @user.id) %>");
+$(".modal-backdrop").fadeOut("fast");
+

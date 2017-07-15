@@ -1,0 +1,7 @@
+<p>Hi <%= @email %>!</p>
+
+<p>Here is direction to <%= link_to @restaurant.name, restaurant_url(@restaurant)%>:</p>
+
+<p><%= @restaurant.direction %></p>
+
+<p><%= raw @text %></p>

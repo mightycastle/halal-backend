@@ -1,0 +1,13 @@
+<div id="status_btn_<%= user.id%>"class="btn-group">
+  <button class="btn btn-mini <%= user_status_color_btn user.status %>"><%= user.status.capitalize %></button>
+  <button class="btn btn-mini <%= user_status_color_btn user.status %> dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <% User::STATUS.each do |status| %>
+    <li>
+      <%= link_to status, change_status_user_path(user.id,status), method: 'post', remote: true%>
+    </li>
+    <% end %>
+  </ul>
+</div>

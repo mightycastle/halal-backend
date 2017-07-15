@@ -1,0 +1,52 @@
+
+
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDviEQ_rkCCFJzwyrbtFREw39Cwu-oAIcg&sensor=true&libraries=places" type="text/javascript"></script>
+<script type="text/javascript">
+	// Address Autocomplete
+	var options = {
+		types: ['geocode']
+	}
+	var input = document.getElementById('ln');
+  var options = {
+   types: ['(regions)'],
+   componentRestrictions: {country: 'uk'}
+  };
+	var autocomplete = new google.maps.places.Autocomplete(input, options);
+	
+	// Autocomplete Listener
+	google.maps.event.addListener(autocomplete, 'place_changed', function() {
+		var place = autocomplete.getPlace();
+		$("#lt").val(place.types);
+		$("#llat").val(place.geometry.location.lat());
+		$("#llng").val(place.geometry.location.lng());
+	});
+</script>
+
+
+
+<div class="map-part  ">
+  <div class="map"><%= render "googlemap" %></div>
+  
+</div>
+
+
+<script>
+
+// arr = $('.content_filter.cuisine').children('label');
+
+// for (var i = 0; i < 4; i++) {
+//   if ($('#'+arr[i].id).find('input').is(':checked') == false)
+//   {
+//     for (var j = i+1; j < arr.length; j++) {
+//       if ($('#'+arr[j].id).find('input').is(':checked') == true)
+//       {
+//         $('#'+arr[j].id).removeClass('hide');
+//         $('.content_filter.cuisine').prepend($('#'+arr[j].id));
+//         if ($('.content_filter.cuisine label:not(.hide)').length > 4){
+//           $('#'+arr[i].id).addClass('hide');
+//         }
+//       }
+//     };
+//   }
+// };
+</script>

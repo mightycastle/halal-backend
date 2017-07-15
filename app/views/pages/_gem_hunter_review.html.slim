@@ -1,0 +1,21 @@
+- restaurant = review.restaurant
+- user = review.user
+
+.col-sm-4.col-xs-12
+  .wrap-img= image_tag avatar_url user, "345x260#"
+  h4= "GEMHUNTER #{user.present? ? user.full_name : "No Name"}"
+  / = link_to 'View profile', user.gem_hunter_wordpress_url, class:'default-link'
+  = link_to 'View profile', formated_url(user.gem_hunter_wordpress_url), class:'default-link'
+  .dotted-line
+  h5
+    = link_to restaurant.name, restaurant_info_path(restaurant.slug)
+  
+  .stars_color
+    = render :partial=>"rating", :locals =>{:rate_count=>review.rating, :is_rating =>false}
+  p= "#{restaurant.city}, #{restaurant.country}"
+  p.uppercase= restaurant.cuisine.length > 1 ? restaurant.cuisine.uniq.join(", ") : restaurant.cuisine.join("")
+
+  .content
+    = review.content.truncate(300)
+    
+  = link_to t("restaurant.read_more"), show_reviews_path(restaurant_id: restaurant.id),class: "default-link"

@@ -1,0 +1,30 @@
+<h1 class="title">Listing Admin Photos</h1>
+
+<div style="margin-left:10px;"><%= render "upload_photos" %></div>
+
+<table class="table">
+  <tr>
+    <th>User</th>
+    <th>Cover</th>
+    <th>Image uid</th>
+    <th>Image name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @admin_photos.each do |admin_photo| %>
+  <tr>
+    <td><%= admin_photo.user.full_name %></td>
+    <td><%= image_tag(admin_photo.image.thumb("50x40#").url) %></td>
+    <td><%= admin_photo.image_uid %></td>
+    <td><%= admin_photo.image_name %></td>
+    <td><%= link_to 'Show', admin_photo %></td>
+    <td><%= link_to 'Edit', edit_admin_photo_path(admin_photo) %></td>
+    <td><%= link_to 'Destroy', admin_photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+<%= paginate @admin_photos, :theme => "twitter-bootstrap" %>
+<br />
+

@@ -1,0 +1,161 @@
+= form_for(@new_offer, html: {  id: "new_offer" }) do |f|
+  .membership.offer_time_public
+    div
+      #title_membership
+        h2
+          = t('layout.create_an_offer')
+      #offer_area
+        .row.offer-public-time-row
+          .column-offer.col-xs-12.col-sm-12.col-md-4.col-lg-4
+            .p1
+              .arrow_box.bottom-center
+                .title_part
+                  h4
+                    = t('choose_offer')
+              #choose_offer.section-open.padding-10.padding-top-30
+                .select_offers
+                  = f.select :id, @restaurant.offers.approved.collect {|o| [ o.offer_content, o.id]}, { prompt: 'Choose your offers' }, id: 'offer_select'
+                .or_part
+                  .line-or
+                  .text-or
+                    p
+                      = t('line_or')
+                  .line-or
+                h5
+                  = t('create_your_own')
+                  span *
+
+                #create_own_offer
+                  = text_field_tag :offer_content_new,nil, class: "form-control", placeholder: "Type here", id: "own_offer_content"
+                  = hidden_field_tag 'rest_id', @restaurant.id
+                h6
+                  span *
+                  = t('admin_approval_required')
+                label.error-message for="choice_or_create_offer" generated="true"
+
+                .upload_photo
+                  = f.label :photo, "Choose image", class: "btn btn-default"
+                  = f.file_field :photo, :multiple => true , :name => "offer[image]", class: 'form-control offer_image hide', accept: "application/pdf,image/*"
+                .image-preview
+                  img.img-preview
+
+                .old_image_offer.hide
+                  img.off-image-old
+                  i.fa.fa-times-circle-o.remove-offer-image
+
+                .next
+                  label.next-offer-public-first.next-btn.btn-link
+                    i.fa.fa-angle-right.fa-lg =<
+                    =t('next')
+              #section_first.section_completed.padding-10.hide
+                p
+                  = t('section_completed')
+                .edit
+                  label.edit-btn.edit-section-btn.btn-link
+                    i.fa.fa-angle-right.fa-lg =<
+                    = t('edit')
+          .column-offer.col-xs-12.col-sm-12.col-md-4.col-lg-4.col-second.opacity-disable
+            .p2
+              .block-action
+              .arrow_box.bottom-center
+                .title_part
+                  h4
+                    = t('choose_time')
+              #choose_time.section-open.padding-10.padding-top-30
+                h5.title-top
+                  = t('how_long_offer_last')
+                #options_time
+                  - [t('weekdays'), t('weekdays_all_day'), t('weekends'), t('all_the_time') ].each do |t|
+                    label.text-666
+                      = f.radio_button(:time_available, t, :class => 'time-choice-offer')
+                      = t.humanize
+                    br
+
+                .or_part.padding-0
+                  .line-or
+                  .text-or
+                    p
+                      = t('line_or')
+                  .line-or
+
+                h5
+                  = t('custom_timing')
+                #custom_timing
+                  .choose_date_time
+                    .day_time_to
+                      .select_day_time
+                        = f.select :start_date, [['Monday', 1], ['Tuesday', 2],['Wednesday', 3], ['Thursday', 4], ['Friday', 5], ['Saturday', 6], ['Sunday', 7]] , { prompt: 'Day'}, :class => "select_day_from select_time_open", :id => 'offer_start_date'
+
+                    .text_to
+                      p
+                        = t('to')
+                    .day_time_to
+                      .select_day_time
+                        = f.select :end_date, [['Monday', 1], ['Tuesday', 2],['Wednesday', 3], ['Thursday', 4], ['Friday', 5], ['Saturday', 6], ['Sunday', 7]] , { prompt: 'Day' }, :class => "select_day_to select_time_open", :id => 'offer_end_date'
+
+
+                  .choose_date_time
+                    .day_time_to
+                      .select_day_time
+                        = f.select :start_time, Schedule::TIME_SHEET.invert, {:prompt => t('title_time')}, :class => 'select_time_open', :id => 'offer_start_time'
+                    .text_to
+                      p
+                        = t('to')
+                    .day_time_to
+                      .select_day_time
+                        = f.select :end_time, Schedule::TIME_SHEET.invert, {:prompt => t('title_time')}, :class => 'select_time_open', :id => 'offer_end_time'
+                    label.error-message for="choice_time_available" generated="true"
+                .next
+                  label.next-btn.next-offer-public-second.btn-link
+                    i.fa.fa-angle-right.fa-lg =<
+                    =t('next')
+              #section_second.section_completed.padding-10.hide
+                p
+                  = t('section_completed')
+                .edit
+                  label.edit-btn.edit-section-btn.btn-link
+                    i.fa.fa-angle-right.fa-lg =<
+                    = t('edit')
+          .column-offer.col-xs-12.col-sm-12.col-md-4.col-lg-4.col-three.opacity-disable
+            .p3
+              .block-action
+              .title_part
+                h4
+                  = t('active_publish')
+              #active_public.padding-10.padding-top-30.section-open
+                h5.title-top.font-normal
+                  = t('offer_publish_time')
+                .get-time-now
+                  #show-time
+                    = Time.now.strftime("%d-%m-%Y %R")
+                  #btn-now.default-btn.btn-details
+                    / i.fa.fa-angle-right.fa-lg.arrow-left
+                    = t('now')
+
+                  = f.hidden_field :time_start_offer, class: 'time_start_offer'
+
+                .or_part
+                  .line-or
+                  .text-or
+                    p
+                      = t('line_or')
+                  .line-or
+                h5
+                  = t('schedule_for_future')
+
+                .row.calendar-time-public#schedule_time_future
+                  .col-md-6.col-sm-6.col-xs-6
+                    .datepicker.date.datepicker-schedule-offer
+                      input.form-control.offer_date_public type='text' id="date_picker" name='offer[date_publish]'
+                      span.input-group-addon
+                        i.fa.fa-calendar id="icon_calendar"
+
+                  .col-md-6.col-sm-6.col-xs-6#custom_col
+                    .select_day_time
+                      = f.select :time_publish, Schedule::TIME_SHEET.invert , {:prompt=> t('title_time')}, :id => "offer_time_public"
+
+                label.error-message for="choice_time_public" generated="true"
+                br.clearfix
+                button.default-btn.btn-details.btn-submit-offer
+                  / i.fa.fa-angle-right.fa-lg.arrow-left
+                  = t('layout.submit')

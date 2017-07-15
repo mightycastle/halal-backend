@@ -1,0 +1,1 @@
+$("#photo-<%= @photo.id %>").html("<%= escape_javascript render partial: '/photos/photo-carousel-item', locals: {photo: @photo}%>");

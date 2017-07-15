@@ -1,0 +1,19 @@
+
+#reply_area_content
+  - if @review.reply_content != nil 
+    .manager_reponded
+      #icon_reply 
+        = image_tag('icon_manager_responded.png')
+      h4 
+        = t('manager_responded')
+      .text_content 
+        = @review.reply_content
+      replied_time
+        = t('layout.visited') 
+        =< review.time_replied
+      - unless @review.approve_reply
+        p.not-yet-approved-reply "#{t('review.not_yet_approved_reply')}"
+
+
+
+

@@ -1,0 +1,81 @@
+<%= render "shared/restaurant_manage_tabs" %>
+
+<div class="row">
+  <div class="col-lg-12">
+    <h3 id="restaurants_index" class="title"><%=t 'restaurant.management' %></h3>
+
+    <span class='new-restaurant-button'>
+      <%= link_to new_restaurant_restaurants_path, class: "btn btn-success fa fa-plus-circle" do %>
+        <span class="open-san"><%= t('restaurant.new') %></span>
+      <% end %>
+    </span>
+
+  </div>
+</div>
+<div class="col-lg-9">
+  <%= search_form_for @search do |f| %>
+    <div class="well">
+      <%= f.condition_fields do |c| %>
+        <%= render "condition_fields", f: c, is_new: false %>
+      <% end %>
+      <div class="actions">
+        <%= link_to_add_fields " Add Conditions", f, :condition %>
+        <%= f.submit "Search", :class => "btn btn-success icon-search" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<!-- <div class="col-lg-3">
+  <b>Filter restaurant by image</b>
+  <%= search_form_for @search, id: 'filter_restaurant', class: 'filter-restaurant' do |f| %>
+    <div class="filter-image">
+      <select class="selectpicker" id='filter_select' name='filter_id' >
+        <option value='0' <%= 'selected' if params[:filter_id].to_i == 0 %> >All</option>
+        <option value='1' <%= 'selected' if params[:filter_id].to_i == 1 %> >Has image</option>
+        <option value='2' <%= 'selected' if params[:filter_id].to_i == 2 %> >No image</option>
+      </select>
+    </div>
+  <% end %>
+</div> -->
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      
+      <th width="100px"><%= sort_link @search, :name, "Name" %></th>
+      <th>Cover</th>
+      <th width="150px"><%= sort_link @search, :address, "Address" %></th>
+      <th><%= sort_link @search, :phone, "Phone" %></th>
+      <th><%= sort_link @search, :email, "Email" %></th>
+      <th><%= sort_link @search, :user_username, "Owner" %></th>
+      <th width="300px"><%= sort_link @search, :description, "Description" %></th>
+      <th><%= sort_link @search, :disabled, "Status" %></th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @restaurants.each_with_index do |restaurant, index| %>
+      <tr>
+        
+        <td><%= link_to restaurant.name, edit_restaurant_path(restaurant.slug) %></td>
+        <td><%= link_to image_tag(backend_thumb_url(restaurant)), edit_restaurant_path(restaurant.slug) %></td>
+        <td><%= restaurant.address %></td>
+        <td><%= restaurant.phone %></td>
+        <td><%= restaurant.email %></td>
+        <td><%= restaurant.user.username if restaurant.user %></td>
+        <td><%= restaurant.description %></td>
+        <td id="status_label_<%= restaurant.id %>"><%= text_disabled restaurant.disabled %></td>
+        <td  style="width: 150px;">
+          <div class="btn-group btn-group-xs">
+            <%= link_to edit_restaurant_path(restaurant.slug), class: "btn btn-default fa fa-edit", title: 'Edit' do %>
+              <span class="open-san"><%= ' Edit' %></span>
+            <% end %>
+            <%= disable_restaurant_button restaurant %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p>
+<%= paginate @restaurants, :theme => "twitter-bootstrap-3"%>
+</p>

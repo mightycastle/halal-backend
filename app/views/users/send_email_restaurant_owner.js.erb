@@ -1,0 +1,10 @@
+$('#form_send_email_to_restaurant_owner').find('textarea').val('');
+$('#send_email_to_owner').modal('hide');
+
+html = ' <button class="close" data-dismiss="alert" ,"aria-hidden"="true">×</button> <div class="message_common alert-success">  <%= t('layout.email_send_restaurant_ok') %></div> '
+$('#popup_message').html(html)
+
+setInterval(function(){
+  $('#popup_message').html('');
+  
+},5000);

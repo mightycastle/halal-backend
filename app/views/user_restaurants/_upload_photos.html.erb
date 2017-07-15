@@ -1,0 +1,195 @@
+<%= form_for Photo.new, :html => { :multipart => true, :id => "fileupload"  } do |f| %>
+  <div>
+    <div class="fileupload-buttonbar">
+      <div class="progressbar fileupload-progressbar nofade"><div style="width:0%;"></div></div>
+      <span class="default-btn fileinput-button btn-details">
+        <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i> -->
+        <span>Upload new pictures</span>
+        <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.file_field :image, :multiple => true %>
+      </span>
+      <span class="fileupload-process"></span>
+
+      
+      <div class="col-lg-5 fileupload-progress fade pull-right">
+                <!-- The global progress bar -->
+                <div id="progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                </div>
+                <!-- The extended global progress state -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+
+    </div>
+  </div>
+  <br/>
+  <table width="100%" class="zebra-striped table_photo" cellpadding="5px">
+    <tr class='hide'>
+      <th>Photo</th>
+      <th>File Name</th>
+      <th>Status</th>
+      <th><div class="fileupload-buttonbar">Action &nbsp;</div></th>
+    </tr>
+    <tbody id="files" class="files" >
+      <tr class="row-no-img"><td colspan="4" class="align-c"><%= I18n.t("restaurant.no_img") %>
+    </tbody>
+  </table>
+  <div id="loading"></div>
+<% end %>
+<script>
+  var photo_count = 0;
+  var fileUploadErrors = {
+    maxFilestatus: 'File is too big',
+    minFilestatus: 'File is too small',
+    acceptFileTypes: 'Filetype not allowed',
+    maxNumberOfFiles: 'Max number of files exceeded',
+    uploadedBytes: 'Uploaded bytes exceed file status',
+    emptyResult: 'Empty file upload result'
+  };
+</script>
+
+<!-- IMPORTANT fade class makes fileupload depend on css transition effect REMOVE or RENAME it -->
+<script id="template-upload" type="text/html">
+  {% for (var i=0, files=o.files, l=files.length, file=files[0]; i<l; file=files[++i]) { %}
+  <tr class="template-upload nofade">
+    <td class="preview"><span class="nofade"></span></td>
+    <td class="name"><input name='menus[name]' value={%=file.name%}></td>
+    <td class="status">
+      <span class="label label-{%= span_class_name(file.status) %}">
+        {%= span_text(file.status) %}
+      </span>
+    </td>
+  
+    {% if (file.error) { %}
+    <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
+    {% } else if (o.files.valid && !i) { %}
+    <td class="start">{% if (!o.options.autoUpload) { %}<button class="btn primary"><%= t('photos.template.start') %></button>{% } %}
+    
+    </td>
+    <td class='cancel'>{% if (!i) { %}<button class="btn info"><%= t('photos.template.cancel') %></button>{% } %}</td>
+
+    {% } else { %}
+    <td colspan="2">
+    </td>
+    {% } %}
+  </tr>
+  {% } %}
+</script>
+<script id="template-download" type="text/html">
+  {% for (var i=0, files=o.files, l=files.length, file=files[0]; i<l; file=files[++i]) { %}
+  <tr class="template-download nofade">
+    {% if (file.error) { %}
+    <td></td>
+    <td class="name">{%=file.name%}</td>
+    <td class="status">
+      <span class="label label-{%= span_class_name(file.status) %}">
+        {%= span_text(file.status) %}
+      </span>
+    </td>
+    <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
+    {% } else { %}
+    <td class="preview">{% if (file.thumbnail_url) { %}
+      <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery"><img src="{%=file.thumbnail_url%}"></a>
+    {% } %}</td>
+    <td class="name">
+      <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
+    </td>
+    <td class="status">
+      <span class="label label-{%= span_class_name(file.status) %}">
+        {%= span_text(file.status) %}
+      </span>
+    </td>
+    {% } %}
+
+    <td class="delete">
+    {% if(file.status == 1){ %}
+      <a class='btn-to-cover' id="btn-cover-{%= file.id %}" data-method="POST" data-remote="true" href="{%=file.delete_url%}/to_cover" title='Set To Cover'>
+      <input type='checkbox' {%= file.is_cover ? 'checked' : '' %}/> cover
+      </a>&nbsp;
+    {% } else if(file.status == 0) { %}
+      <a class='btn-to-cover opacity-05 disable' id="btn-cover-{%= file.id %}" data-method="POST" data-remote="true" href="#" title='Need approved by admin before set cover'>
+        <input type='checkbox' {%= file.is_cover ? 'checked' : '' %}/> cover
+      </a>&nbsp;
+    {% } %}
+    <i class="fa fa-trash-o fa-lg" style="cursor: pointer;" data-type="{%=file.delete_type%}" data-confirm="<%=t 'restaurant.photo_delete_confirm' %>" data-url="{%=file.delete_url%}" title='Delete'></i>
+    </td>
+  </tr>
+  {% } %}
+</script>
+
+<script type="text/javascript" charset="utf-8">
+    $(function () {
+        // Initialize the jQuery File Upload widget:
+        $('#fileupload').fileupload({
+ 
+          autoUpload: true,
+          prependFiles: true,
+          progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+          }
+
+        })
+
+        // Load existing files:
+        $.getJSON($('#fileupload').prop('action') + "?r_id=<%= @restaurant.id%>", function (files) {
+          var fu = $('#fileupload').data('fileupload'), 
+            template;
+          fu._adjustMaxNumberOfFiles(-files.length);
+          template = fu._renderDownload(files)
+            .prependTo($('#fileupload .files'));
+          // Force reflow:
+          fu._reflow = fu._transition && template.length &&
+            template[0].offsetWidth;
+          template.addClass('in');
+          $('#loading').remove();
+        });
+
+        
+        var fu = $('#fileupload').data("fileupload");
+        var eventData = { fileupload: fu };
+        var clickEvent = 'click.' + fu.options.namespace;
+
+        $('#fileupload')
+            .off(clickEvent, '.delete i')
+            .on(clickEvent, '.delete i', eventData, function(e) {
+                var fileName = $(this).parent().siblings(".name").children().prop("title");
+                if (confirm("Are you sure you want to delete?")) {
+                    fu._deleteHandler.call($(this), e);
+                } else {
+                    return false;
+                }
+            });
+
+    });
+    function span_class_name (status){
+      result = ''
+      if (status == 0) {
+        result = "warning";
+      }
+      else if (status == 1){
+        result = "success";
+      }
+      else if (status == 2){
+        result = "danger";
+      }
+      return result;
+    }
+    function span_text (status){
+      result = ''
+      if (status == 0) {
+        result = "New";
+      }
+      else if (status == 1){
+        result = "Approved";
+      }
+      else if (status == 2){
+        result = "Rejected";
+      }
+      return result;
+    }
+</script>

@@ -1,0 +1,40 @@
+<% offers.each do |offer| %>
+  <% if type=="recurring" %>
+    <% if offer.is_onetime %>
+      <% next %>
+    <% end %>
+  <% end %>
+
+  <% if type=="onetime" %>
+    <% if !offer.is_onetime %>
+      <% next %>
+    <% end %>
+  <% end %>
+
+  <%
+    def time_format(t)
+      t = t.to_s.rjust(4, '0')
+      "#{t[0,2]}:#{t[2,2]}"
+    end
+  %>
+
+  <tr id="offer-id-<%=offer.id %>"> <!-- Add offer-id as an attribute to the row -->
+    <td><%= offer.offer_content %></td>
+    <td><%= offer.time_start_offer %></td>
+    <td><%= time_format offer.start_time %></td>
+    <td><%= time_format offer.end_time %></td>
+
+    <% if type=="recurring" %>
+      <% weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] %>
+      <td><%= "#{weekdays[offer.start_date.to_i]}-#{weekdays[offer.end_date.to_i]}" %></td>
+    <% end %>
+
+    <td>
+      <a class="default-btn btn-details btn-edit-profile" onclick="edit_offer(<%= offer.id %>)">Edit</a>
+    </td> <!-- Add offer-id as an attribute to the button -->
+
+    <td>
+      <a class="default-btn btn-details btn-edit-profile" onclick="remove_offer('<%= offer.id %>')">Delete</a>
+    </td> <!-- Add offer-id as an attribute to the button -->
+  </tr>
+<% end %>

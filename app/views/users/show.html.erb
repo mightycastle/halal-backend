@@ -1,0 +1,57 @@
+<div class="page-header">
+  <h1><%= @user.email %>'s information</h1>
+</div>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b>Username:</b>
+  <%= @user.username %>
+</p>
+
+<p>
+  <b>First name:</b>
+  <%= @user.first_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%= @user.last_name %>
+</p>
+
+<p>
+  <b>Middle name:</b>
+  <%= @user.middle_name %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%= @user.phone %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @user.address %>
+</p>
+
+<p>
+  <b>Avatar:</b>
+  <%= @user.avatar %>
+</p>
+
+<p>
+  <b>Im:</b>
+  <%= @user.im %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <span class="label <%= user_status_color @user.status%>"><%= @user.status %></span>
+</p>
+
+<%= link_to 'Back', users_path, class: "btn" %>

@@ -1,0 +1,61 @@
+#footer
+  .col-md-4.col-sm-6.col-block.text-center
+    = link_to image_tag("logo1.png", class: "halalgem-logo"), root_path
+    .clearfix
+    .text-left
+      = BasicsPage.footer_info.try(:html_safe)
+  .col-md-4.col-sm-6.col-block
+    .row
+      .col-xs-6
+        ul.list-unstyled.footer-nav-left
+          li
+            = link_to "Restaurants", root_path
+          li
+            a href="http://halalgems.com/gem-hunter-profiles"  Gemhunters
+          li
+            a href="http://halalgems.com/halal-gems/news"  News
+          li
+            a href="http://halalgems.com/halal-gems/magazine"  Magazine
+          li
+            a href="http://halalgems.com/halal-gems/blog"  Blog
+          li
+            = link_to "FAQ", faq_path
+          li
+            = link_to 'Contact Us', contact_us_path
+          li
+            = link_to "Terms & Conditions", terms_conditions_path
+
+      .col-xs-6
+        ul.list-unstyled.footer-nav-right
+          li
+            = link_to "Search Restaurants", root_path
+          li
+            = link_to "Add Restaurants", new_restaurant_path
+          li
+            a href="#" Advertising
+
+  .col-md-4.col-sm-6.col-block
+    p sign up for news and offers
+    = form_for 'notice', :url => '/newsletter', :html =>{:method => :post, remote: true, :class => 'form_submit_footer'} do |f|
+      .input-group
+        = f.email_field :email, :class => 'form-control input-email-footer', autocomplete: 'off', placeholder: "Enter your email"
+        span.input-group-btn
+          button.btn.btn-newsletter type="submit" Submit
+    #popup_message_newsletter style="text-align:center;" 
+
+    p follow us
+    ul.list-unstyled.list-inline.social-icons
+      li.social-icon.social-icon-facebook
+        = link_to "https://www.facebook.com/halalgems", target: "_blank"
+          .fa.fa-facebook-square.fa-2x
+      li.social-icon.social-icon-twitter
+        = link_to "https://twitter.com/halalgems", target: "_blank"
+          .fa.fa-twitter.fa-2x
+      li.social-icon.social-icon-instagram
+        = link_to "http://www.instagram.com/halalgems", target: "_blank"
+          .fa.fa-instagram.fa-2x
+      li.social-icon.social-icon-pinterest
+        = link_to "http://www.pinterest.com/halalgems", target: "_blank"
+          .fa.fa-pinterest.fa-2x
+    /! /input-group
+      

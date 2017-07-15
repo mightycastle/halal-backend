@@ -1,0 +1,50 @@
+= form_for @subscription do |f|
+  - if @subscription.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@subscription.errors.count, "error")} prohibited this subscription from being saved:"
+      ul
+        - @subscription.errors.full_messages.each do |message|
+          li = message
+  - if @subscription.express_token.blank?        
+    .field
+      = f.label :first_name
+      = f.text_field :first_name
+    .field
+      = f.label :last_name
+      = f.text_field :last_name
+    .field
+      = f.label :card_type
+      = f.select :card_type, [["Visa", "visa"], ["MasterCard", "master"], ["Discover", "discover"], ["American Express", "american_express"]]
+    .field
+      = f.label :card_number
+      = f.text_field :card_number
+    .field
+      = f.label :card_verification, "Card Verification Value (CVV)"
+      = f.text_field :card_verification
+    .field
+      = f.label :card_expires_on
+      = f.date_select :card_expires_on, discard_day: true, start_year: Date.today.year, :end_year => (Date.today.year+10), :add_month_numbers => true
+  - else
+    = f.hidden_field :express_token
+    p 
+      | Name: 
+      = @subscription.first_name
+      |<> 
+      = @subscription.last_name
+    p 
+      | Total: 
+      = "Your account will be charged £#{@subscription.amount} per #{check_text_confirm(@plan.plan_type_id)} for this subscription"
+    => check_box_tag 'accept' ,true ,true, :id => 'confirm_subscription_term' 
+    | Accept our 
+    =<> link_to "Terms and Conditions.", terms_conditions_path, class: 'title-text-sub'
+  .actions
+    button#btn_submit_subscription.default-btn Complete payment
+
+javascript:
+  $('#confirm_subscription_term').on('click', function(){
+    if($(this).prop('checked')) {
+      document.getElementById("btn_submit_subscription").disabled = false;
+    } else {
+      document.getElementById("btn_submit_subscription").disabled = true; 
+    }
+  })

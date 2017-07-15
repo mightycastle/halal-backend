@@ -1,0 +1,64 @@
+.membership-page
+  .pnl_img_top
+    = random_image_other_page 
+  .top-membership-page
+    .row.membership_allow
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        label.title-page
+          = t('membership.membership_allow')
+    .row.membership-alow
+
+      .connect-hal-foodies.col-xs-12.col-sm-4.col-md-4.col-lg-4.text-center
+        = image_tag('connect_foodies.png', class: 'image-content')
+        .title-text.san-pro-medium
+          = t('membership.title_connect_foodies')
+
+        .text-content.col-lg-10.col-lg-offset-1
+          = t('membership.text_connect_foodies')
+      .build-engagement.col-xs-12.col-sm-4.col-md-4.col-lg-4.text-center
+        = image_tag('engagement.png', class: 'image-content')
+        .title-text.san-pro-medium
+          = t('membership.title_build_engagement')
+        .text-content.col-lg-10.col-lg-offset-1
+          = t('membership.text_build_engagement')
+      .fill-empty-table.col-xs-12.col-sm-4.col-md-4.col-lg-4.text-center
+        = image_tag('empty_table.png', class: 'image-content')
+        .title-text.san-pro-medium
+          = t('membership.title_fill_empty_table')
+        .text-content.col-lg-10.col-lg-offset-1
+          = t('membership.text_fill_empty_table')
+  .row.paypal-part
+    .benefit.col-xs-12.col-sm-6.col-md-6.col-lg-6
+      label.title-page
+        = t('membership.benefit')
+      ul.benefit-item
+        li.text 
+          i.fa.fa-circle
+          = t('membership.completed_with_social_media')
+        li.text 
+          i.fa.fa-circle
+          = t('membership.post_offer')
+        li.text
+          i.fa.fa-circle
+          = t('membership.announce_membership')
+        li.text
+          i.fa.fa-circle
+          = t('membership.restaurant_window_dinner')
+
+    .payment.col-xs-12.col-sm-6.col-md-6.col-lg-6
+      label.title-page
+        = t('membership.sign_up_here')
+      = form_tag({controller: "subscriptions", action: "express"}, id: 'select-subscription-plan-form', method: "get", class: "")
+        - @plan.each_with_index do |plan, index|
+          .choice-plan
+            = radio_button_tag :plan, plan.id, (index == 0)
+            span.plan-text 
+              - if plan.name.include?('Annual')
+                = " £#{plan.amount}/year"
+              - else
+                = " £#{plan.amount}/month"
+            p = plan.description
+
+
+        button.submit-paypal
+          = image_tag('paypal_btn.png')

@@ -1,0 +1,64 @@
+<% if @reviews.blank? %>
+  <p>You haven't reviewed any restaurants yet. Soon enough you'll experience a meal good enough to write about. And when that day comes, we'll be waiting to hear about it.</p>
+<% else %>
+  
+  <% @reviews.in_groups_of(2, false) do |reviews| %>
+      <% for review in reviews %>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 column_reviews">
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-10 col-lg-10">
+              <div class="row">
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                  <% if review.restaurant.photos.blank? %>
+                    <%= link_to image_tag(asset_path 'no_restaurant.png'), restaurant_info_path(review.restaurant.slug), class: "avatar" %>
+                  <% else %>
+                    <%= link_to image_tag(get_image_url review.restaurant.cover), restaurant_info_path(review.restaurant.slug), class: "avatar" %>
+                  <% end %>
+
+                </div>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <h4 class="bold"><%= review.restaurant.name %></h4>
+
+                </div>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="reviewed_text">
+            <%= truncate(review.content, :length=>5000)%>
+          </div>
+
+          <div class="reviewed_time"><%= t('layout.visited')%>&nbsp<%= review.month_ago%></div>
+
+          <div class="rating_box">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="label_stars">Service</div>
+                <div class="stars_color">
+                <%= render :partial=>"restaurants/rating", :locals =>{:rate_count=>review.service, :is_rating =>false} %></div>
+              </div>
+              <div id="border-quality" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="label_stars">Quality</div>
+                <div class= "stars_color"><%= render :partial=>"restaurants/rating", :locals => {:rate_count => review.quality, :is_rating => false} %></div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="label_stars">Value</div>
+                <div class="stars_color"><%= render :partial=>"restaurants/rating", :locals => {:rate_count => review.value, :is_rating => false} %></div>
+              </div>
+            </div>
+          </div>
+          <hr>
+
+        </div>
+      <% end %>
+      <div class="clearfix"></div>
+  <%end%>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <%= paginate @reviews, :theme => "twitter-bootstrap-3", :params => {:tab_name => "my_reviews"}, :remote=>true %>
+      </div>
+    </div>
+  </div>
+<% end %>

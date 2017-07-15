@@ -1,0 +1,5 @@
+$('#filter_name_show_<%= @filter.id %>').html('<%= @filter.name %>')
+$('#filter_name_show_<%= @filter.id %>').attr('alt', '<%= @filter.name %>');
+$('#form_name_<%= @filter.id %>').addClass('hide');
+$('#filter_name_show_<%= @filter.id %>').removeClass('hide');
+$('#<%= @filter.id %>.edit_filter_name').removeAttr("disabled");

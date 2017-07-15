@@ -1,0 +1,10 @@
+<%= @user_email %> send you an report for restaurant named: <%= @restaurant_name %><br/>
+Reasons: 
+<ul>
+  <% @reasons.each do |reason| %>
+    <li><%= reason %></li>
+  <% end %>
+</ul>
+<% if !@more_details.blank? %>
+  More details: <%= @more_details %>
+<% end %>

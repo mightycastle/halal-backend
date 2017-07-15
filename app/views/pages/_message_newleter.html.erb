@@ -1,0 +1,10 @@
+<% if flash %>
+  <% flash.each do |type, message| %>
+    <%if message != true && is_newsletter %>
+      <div class="message_common <%= bootstrap_class_for(type) %>" >
+        <button class="close" data-dismiss="alert">×</button>
+        <%= message %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

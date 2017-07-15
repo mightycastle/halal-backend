@@ -1,0 +1,71 @@
+
+<%
+
+#canvas_id = "test"
+scale_type = "PERCENTAGE_X" # PERCENTAGE_XY PERCENTAGE_Y NOSCALE
+canvas_width = 100
+canvas_height = 260
+start_date = Time.now.strftime("%Y-%m-%d")
+days_to_display = 20
+
+left_margin = 20
+right_margin = 20
+top_margin = 20
+bottom_margin = 20
+
+circle_distance = 60
+
+%>
+
+<!--
+
+Arguments:
+canvas_id
+canvas_width
+canvas_height
+
+-->
+
+<h3 class="bar-chart-title"><%= chart_title.html_safe %></h3>
+
+<div class="bar-chart-legend">
+  <span style="color: #d2c5af;">
+    &#9632; Satisfied &nbsp; &nbsp;
+  </span>
+  <span style="color: #fff;">
+    &#9633; Unsatisfied &nbsp; &nbsp;
+  </span>
+</div>
+
+<canvas id="<%= canvas_id %>"></canvas>
+
+<script type="text/javascript">
+
+/* Initialize stats */
+
+var data = {
+  scale_type: "<%= scale_type %>",
+  canvas_width: "<%= canvas_width %>",
+  canvas_height: "<%= canvas_height %>",
+  start_date: "<%= start_date %>",
+  days_to_display: <%= days_to_display %>,
+  min_value: <%= min_value %>,
+  max_value: <%= max_value %>,
+  y_axis: <%= y_axis.to_s %>,
+  left_margin: <%= left_margin %>,
+  right_margin: <%= right_margin %>,
+  top_margin: <%= top_margin %>,
+  bottom_margin: <%= bottom_margin %>,
+  circle_distance: <%= circle_distance %>,
+  datasets: []
+};
+
+<% datasets.each do |data| %>
+
+data.datasets.push(<%= data.to_json.html_safe %>);
+
+<% end %>
+
+initiate_sectional_chart("<%= canvas_id %>", data);
+
+</script>

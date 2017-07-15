@@ -1,0 +1,16 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#popup_message").html("<div class='message_common alert-info')>You cannot add to favourite before your account is verified.</div>");
+    $("#popup_message").css('top','0px');
+    setTimeout(function(){
+        $("#popup_message").animate({
+            top:'-'+$(this).height()
+        },{
+            duration: 100,
+            complete: function(){
+                $(this).html('');
+            }
+        })
+    },3000)
+  });
+</script>

@@ -1,0 +1,211 @@
+<div id="map_script">
+  <div id="map" style="width: 100%; height: 681px;"></div>
+  <div id="marker-tooltip"></div>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#map').height( $(window).height() );
+    });
+    var defaultZoom = <%= @zoom_level %>; //12 Why zoomed in? Because it looks good.
+    var lat = '<%= params[:llat]%>';
+    var lng = '<%= params[:llng]%>';
+    var styles = [
+      {
+        stylers: [
+          { hue: "#9fcafe" },
+          { saturation: -50 }
+        ]
+      },
+      {
+        featureType: 'landscape',
+        elementType: 'geometry',
+        stylers: [
+          { hue: '#E5E3DF' },
+          { lightness: 100 },
+          { saturation: -50},
+          { visibility: "off" }
+        ]
+      }, {
+        featureType: 'poi.medical',
+        elementType: 'geometry',
+        stylers: [
+          { hue: '#ad1d18' },
+          { lightness: 50 },
+          { saturation: 100 },
+          { gamma: 0.5 }
+        ]
+      }, {
+        featureType: 'poi.park',
+        elementType: 'geometry',
+        stylers: [
+          { hue: '#cae1ad' },
+          { lightness: 50 },
+          { saturation: 50 },
+          { gamma: 0.5 }
+        ]
+      }, {
+        featureType: 'poi.school',
+        elementType: 'geometry',
+        stylers: [
+          { hue: '#E7DCBC' },
+          { lightness: 50 },
+          { saturation: 19 },
+          { gamma: 0.5 }
+        ]
+      }
+    ];
+
+    var styledMap = new google.maps.StyledMapType(styles,
+      {name: "Styled Map"});
+    // create map and add controls
+
+    var mapOptions = {
+
+      center: new google.maps.LatLng(lat, lng),
+      zoom: defaultZoom,
+      mapTypeControlOptions: {
+        // mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+      }
+    };
+    var map = new google.maps.Map(document.getElementById('map'),mapOptions);
+
+    // comment for styled map *************************
+    // map.mapTypes.set('map_style', styledMap);
+    // map.setMapTypeId('map_style');
+    var markersArray = [];
+    var restaurants = [
+      <% @restaurants.each_with_index do |res,index|%>
+        ['<%= res.name %>', <%= res.lat %>, <%= res.lng %>, <%= index + 1%>, '<%= restaurant_info_path(res.slug) %>']<%= "," unless index >= @restaurants.to_a.count - 1 %>
+      <% end %>
+    ];
+
+    var bounds = new google.maps.LatLngBounds();
+    var has_markers = false;
+    setMarkers(map, restaurants);
+
+    if(lat != '' && lng != ''){
+      new_center = new google.maps.LatLng(lat, lng);
+      map.setCenter(new_center);
+    }
+    <% if(@restaurants.length > 0 && @drage != true) %>
+      setTimeout(function() {
+        map.fitBounds(bounds);
+      }, 1000);
+    <% end %>
+    // map.fitBounds(bounds);
+    // google.maps.event.addListener(map,'bounds_changed', function(e) {
+    $("#zl").val(map.getZoom());
+    $("#llat").val(map.getCenter().lat());
+    $("#llng").val(map.getCenter().lng());
+
+    // });
+    var keep_first_zoom_change = 1;
+    var delay_time = null;
+    $(document).ready(function(){
+      google.maps.event.addListener(map,'dragend', function(e) {
+        clearTimeout(delay_time);
+        delay_time = null;
+        delay_time = setTimeout(function() {
+          $("#ln1").val('');
+          $("#drage").val(true);
+          $("form#search_filter_form").submit();
+        }, 1000);
+
+      });
+      // google.maps.event.addListener(map,'zoom_changed', function(e) {
+      //   if(keep_first_zoom_change == 1)
+      //     keep_first_zoom_change = 0;
+      //   else{
+      //     clearTimeout(delay_time);
+      //     delay_time = null;
+      //     delay_time = setTimeout(function() {
+      //       $("form#search_filter_form").submit();
+      //     }, 1000);
+      //   }
+
+      // });
+    });
+
+
+    function setMarkers(map, locations) {
+      // Add markers to the map
+
+      // Marker sizes are expressed as a Size of X,Y
+      // where the origin of the image (0,0) is located
+      // in the top left of the image.
+
+      // Origins, anchor positions and coordinates of the marker
+      // increase in the X direction to the right and in
+      // the Y direction down.
+
+      for (var i = 0; i < locations.length; i++) {
+        var location = locations[i];
+        if(typeof(location[1]) != "undefined" && typeof(location[2]) != "undefined" ){
+          var myLatLng = new google.maps.LatLng(location[1], location[2]);
+          var image = new google.maps.MarkerImage('<%= asset_path "map_marker.png" %>',
+            // This marker is 20 pixels wide by 32 pixels tall.
+            new google.maps.Size(50, 50),
+            // The origin for this image is 0,0.
+            // new google.maps.Point(0, 41),
+            // The anchor for this image is the base of the flagpole at 0,32.
+            new google.maps.Point(0,0)
+          );
+
+          createMarker(myLatLng,image,location[0],location[3],location[4])
+        }
+
+      }
+    }
+    function createMarker(pos,image,title,zindex,weburl)
+    {
+      // var shadow = new google.maps.MarkerImage('<%= asset_path "shadow.png" %>',
+      //   // The shadow image is larger in the horizontal dimension
+      //   // while the position and offset are the same as for the main image.
+      //   new google.maps.Size(38, 50),
+      //   new google.maps.Point(0,0),
+      //   new google.maps.Point(0, 26));
+
+      marker = new google.maps.Marker({
+        position: pos,
+        map: map,
+        icon: image,
+        contentTitle: title,
+
+        // shadow: shadow
+  //      zIndex: zindex
+      });
+      bounds.extend(marker.getPosition());
+      google.maps.event.addListener(marker, 'click', function(e) {
+        e.preventDefault();
+        window.location.href = weburl;
+      });
+      markersArray.push(marker);
+      google.maps.event.addListener(marker, 'mouseover', function () {
+          var point = fromLatLngToPoint(this.getPosition(), map);
+          $('#marker-tooltip').html(this.contentTitle).css({
+              'left': point.x,
+              'bottom': $(".map-part").height() - point.y
+          }).show();
+      });
+
+      google.maps.event.addListener(marker, 'mouseout', function () {
+          $('#marker-tooltip').hide();
+      });
+    }
+
+    function clearOverlays() {
+      if (markersArray) {
+        for (i in markersArray) {
+          markersArray[i].setMap(null);
+        }
+      }
+    }
+    function fromLatLngToPoint(latLng, map) {
+      var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
+      var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
+      var scale = Math.pow(2, map.getZoom());
+      var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
+      return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
+    }
+
+  </script>
+</div>

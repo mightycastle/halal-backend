@@ -1,0 +1,2 @@
+$("#comments").html("<%= escape_javascript(render partial: 'comment', locals: {comments: @comments}) %>")
+$("#comment_content").val("")

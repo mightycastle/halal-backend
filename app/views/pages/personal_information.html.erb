@@ -1,0 +1,31 @@
+<div class="pnl_img_top">
+    <%= random_image_other_page %>
+</div>
+<div class="auto_height info">
+  <div class="row">
+    <div class="page col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+      <ul class="nav nav-tabs mar-20">
+        <li class="active"><a href="#content_1" data-toggle="tab"><%= t('my-info') %></a></li>
+        <li ><a href="#content_2" data-toggle="tab"><%= t('my_favourite') %></a></li>
+        <li><a href="#content_5" data-toggle="tab"><%= t('my_review') %></a></li>
+        
+      </ul>
+      <div  class="tab-content profile-page">
+        <div id="content_1" class="row content tab-pane active">
+          <%= render partial: "personal_info", locals: {user: @user} %>
+        </div>
+        <div id="content_2" class="row content tab-pane favorite_tab">
+          <%= render partial: "my_favorite" %>
+        </div>
+        <div id="content_5" class="row content tab-pane all_my_reviews">
+          <%= render partial: "my_review" %>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

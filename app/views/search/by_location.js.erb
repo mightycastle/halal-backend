@@ -1,0 +1,62 @@
+$("#result_table").removeClass("cover_loading")
+show_less_filter();
+// $("html, body").animate({ scrollTop: 0 }, 200);
+
+
+$(".modal").modal('hide');
+$("div.loading").addClass('hide');
+<% if @restaurants.length == 0 && @location_name.present? && @filter_ids.blank? %>
+  $("div#result_table").html("<%= escape_javascript(render 'no_result') %>")
+<% else %>
+  $("div#result_table").html("<%= escape_javascript(render 'result') %>")
+<% end %>
+clearOverlays();
+
+// if($("#result_table .item-result").size() > 0)
+//   $("html, body").animate({ scrollTop: $("#result_table").offset().top }, 200);
+// else
+//   $("html, body").animate({ scrollTop: 0 }, 200);
+
+
+$("div.numof").removeClass("hide");
+$('.searching-img').addClass('hide');
+restaurants = [
+  <% @restaurants.each_with_index do |res,index|%>
+    ['<%= res.name %>', <%= res.lat %>, <%= res.lng %>, <%= index + 1%>, '<%= restaurant_info_path(res.slug) %>']<%= "," unless index >= @restaurants.to_a.count - 1 %>
+  <% end %>
+];
+bounds = new google.maps.LatLngBounds();
+setMarkers(map, restaurants);
+$('#search_text_change').val('false'); 
+
+var new_center = '';
+<%= "new_center = new google.maps.LatLng(#{params[:llat]}, #{params[:llng]});" if  params[:llat].present? && params[:llng].present? && @drage != true %>
+
+<% if(@restaurants.length > 0 && @drage != true) %>
+  map.fitBounds(bounds);
+<% end %>
+
+if(new_center){
+  map.setCenter(new_center);
+}
+// google.maps.event.addListener(map,'bounds_changed', function() {
+$("#zl").val(map.getZoom());
+$("#llat").val(map.getCenter().lat());
+$("#llng").val(map.getCenter().lng());
+// }); 
+var arr = $('.content_filter.cuisine').children('label'); 
+
+for (var i = 0; i < 4; i++) {
+  if ($('#'+arr[i].id).find('input').is(':checked') == false)
+  {
+    for (var j = i+1; j < arr.length; j++) {
+      if ($('#'+arr[j].id).find('input').is(':checked') == true)
+      {
+        $('#'+arr[j].id).removeClass('hide');
+        $('.content_filter.cuisine').prepend($('#'+arr[j].id));
+        if ($('.content_filter.cuisine label:not(.hide)').length > 4)
+          $('#'+arr[i].id).addClass('hide');
+      }
+    };
+  }
+};

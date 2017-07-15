@@ -1,0 +1,21 @@
+<% 
+  current_page = ''
+  if params[:controller] ==  'reviews' && params[:action] == 'index'
+    current_page = 'reviews_index'
+  elsif params[:controller] ==  'reviews' && params[:action] == 'admin_review_replies'
+    current_page = 'admin_review_replies_index'
+  end
+%>
+
+<ul class="nav nav-tabs" id="myTab">
+  <li class="<%= (current_page == 'reviews_index') ? 'active' : '' %>">
+    <a href="<%= (current_page == 'reviews_index') ? '#reviews_index' : admin_reviews_path %>">
+      <%= t'layout.review' %>
+    </a>
+  </li>
+  <li class="<%= (current_page == 'admin_review_replies_index') ? 'active' : '' %>">
+    <a href="<%= (current_page == 'admin_review_replies_index') ? '#admin_review_replies_index' : reply_admin_review_path %>">
+      <%= t'layout.review_reply' %>
+    </a>
+  </li>
+</ul>

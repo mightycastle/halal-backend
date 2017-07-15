@@ -1,0 +1,57 @@
+<div class="login-page">
+  <div class="container ">
+    <div class="row">
+      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+        <h3 class='title-page title-login-page'><%= t('layout.login')%></h3>
+        <p class="title-text-sub open-sans"><%= t('layout_login.title_text_sub') %></p>
+      </div>
+    </div>
+    
+      
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+      <div class='row'>
+        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
+          <%= link_to  user_omniauth_authorize_path(:facebook), :class => 'btn btn-login-fb'  do%>
+            <i class="fa fa-angle-right fa-lg arrow-left"></i>
+            <%= t('layout_login.login_fb') %>
+          <% end %>
+          <div class="form-group">
+            <label class="title-text">Email</label>
+            <%= f.email_field :email, :class => 'form-control' %>
+          </div>
+          <div class="form-group">
+            <label class="title-text">Password</label>
+            <%= f.password_field :password, :class => 'form-control' %>
+          </div>
+          <div class="form-group mg-bt-10">
+    
+            <button name="button" type="submit" class="default-btn btn-halagems login-btn">
+              <!-- <i class="fa fa-angle-right fa-lg arrow-left" ></i> -->
+              <%= t('layout.login') %></button>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+          <div class="form-group">
+            <% if devise_mapping.rememberable? -%>
+              <% if devise_mapping.recoverable? && controller_name != 'passwords' %>
+                <div class="forgot-password">
+                  <%= link_to t('layout_login.forgot_password'), new_password_path(resource_name),class: 'title-text-sub' %>
+                </div>
+                
+              <% end %>
+              <% if devise_mapping.registerable? && controller_name != 'registrations' %>
+                <div class="create_account">
+                  <%= link_to t('layout_login.creat_account'), new_registration_path(resource_name), class: 'title-text-sub' %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      
+    </div>
+  </div>
+</div>
+

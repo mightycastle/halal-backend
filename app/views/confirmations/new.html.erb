@@ -1,0 +1,24 @@
+<div class="pnl_img_top">
+    <%= random_image_other_page %>
+</div>
+<div class="auto_height login">
+    <%= back_to_search %>
+    <div class="login_pnl">
+        <h3>Oh dear. Looks like the confirmation link has expired</h3>
+        <% if !resource.errors.blank? %>
+          <ul>
+            <% resource.errors.full_messages.each do |msg| %>
+              <li style="color:red">Please type your email address in below and we'll send you another one in a jiffy!</li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }, :validate =>true) do |f| %>
+        <table width="100%">
+          <tr><td colspan="2"><%= f.email_field :email, placeholder: "Email" %></td></tr>
+        <tr valign="top">
+          <td><%= f.submit "Resend" %></td>
+        </tr>
+        </table>
+        <% end %>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<h1 class="title"><%=t 'user.management' %></h1>
+
+<%= search_form_for @search do |f| %>
+  <div class="well">
+    <%= f.condition_fields do |c| %>
+      <%= render "condition_fields", f: c %>
+    <% end %>
+    <div class="actions">
+      <%= link_to_add_fields " Add Conditions", f, :condition %>
+      <%= f.submit "Search", :class => "btn btn-success icon-search" %>
+    </div>
+  </div>
+<% end %>
+
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>Avatar</th>
+      <th><%= sort_link @search, :username, "Username" %></th>
+      <th><%= sort_link @search, :email, "Email" %></th>
+      <th><%= sort_link @search, :address, "Address" %></th>
+      <th>Phone</th>
+      <th><%= sort_link @search, :status, "Status" %></th>
+      <th><%= sort_link @search, :gem_hunter, "Gem Hunter" %></th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% count = 0 %>
+    <% @users.each_with_index do |user,index| %>
+      <% if user.id != current_user.id %>
+        <tr>
+          <td><%= image_tag(backend_avatar_url(user)) %></td>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>
+          <td><%= user.address %></td>
+          <td><%= user.phone %></td>
+          <td id="user_status_<%= user.id%>">
+            <%= user_status user.status %>
+          </td>
+          <td id="user_change_gem_hunter_<%= user.id%>">
+            <%= toggle_gem_hunter_button user.gem_hunter, user.id %>
+          </td>           
+          <td id="user_change_status_<%= user.id%>">
+            <%= disable_user_button user %>
+          </td>
+        </tr>
+        <% count += 1 %>
+      <% end %>
+    <% end %>
+   </tbody>
+</table>
+<%= paginate @users, :theme => "twitter-bootstrap-3"%>
+
+
+

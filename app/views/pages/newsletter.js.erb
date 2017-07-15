@@ -1,0 +1,9 @@
+  <% if @success == true %>
+    $("#popup_message_newsletter").html("<%= escape_javascript @notice.html_safe %>");
+  <% else %>
+    $("#popup_message_newsletter").html("<div class='message_common alert-info-custom'></div>");
+    // $("#popup_message_newsletter .message_common").append("<button class='close' data-dismiss='alert'>×</button><div style='text-align:center'></div>");
+    $("#popup_message_newsletter .message_common div").append("<div><%= @notice %></div>"); 
+  <% end %>
+  
+  $('.form_submit_footer').find('input.input-email-footer').html('');

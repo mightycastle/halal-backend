@@ -1,0 +1,3 @@
+html = '<span class="label label-danger"> <%= t("reject") %></span>'
+$("#status_label_<%= @rest_temp_id %>").html(html)
+$("#status_label_<%= @rest_temp_id %>").parents('tr').addClass('disable_tr')

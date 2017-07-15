@@ -1,0 +1,42 @@
+p#notice = notice
+
+p
+  strong User:
+  = @subscription.user_id
+p
+  strong Ip address:
+  = @subscription.ip_address
+p
+  strong First name:
+  = @subscription.first_name
+p
+  strong Last name:
+  = @subscription.last_name
+p
+  strong Card type:
+  = @subscription.card_type
+p
+  strong Card expires on:
+  = @subscription.card_expires_on
+p
+  strong Action:
+  = @subscription.action
+p
+  strong Amount:
+  = @subscription.amount
+p
+  strong Success:
+  = @subscription.success
+p
+  strong Authorization:
+  = @subscription.authorization
+p
+  strong Message:
+  = @subscription.message
+p
+  strong Params:
+  = @subscription.params
+
+= link_to 'Edit', edit_subscription_path(@subscription)
+'|
+= link_to 'Back', subscriptions_path

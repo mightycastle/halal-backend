@@ -1,0 +1,9 @@
+$('#share_restaurant_via_email').modal('hide');
+
+html = ' <button class="close" data-dismiss="alert" ,"aria-hidden"="true">×</button> <div class="message_common alert-success"><%= t("restaurant.share_via_email")%></div> '
+$('#popup_message').html(html)
+
+setInterval(function(){
+  $('#popup_message').html('');
+  
+},5000);

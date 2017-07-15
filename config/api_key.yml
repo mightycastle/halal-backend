@@ -1,0 +1,22 @@
+development:
+  api_key_android: "87cf1d955a2a69af96a38a5318b855ecf720e998"
+  api_key_ios: "87cf1d955a2a69af96a38a5318b855ecf720e999"
+  api_secret: "61NTKGtztNGlgHTPQntLC6D9KMSJSPchOX6T3OLZdZsldycqiSxMQRMaFEPs\nNw4peJsF/9GU/l9IxsM8yRTHiQ=="
+
+
+test:
+  api_key_android: "6hte8caedc14092514be62c47e8b655dd3f8cpue"
+  api_key_ios: "9e7e8caca714092514be62c47e8b655dd3f815c7"
+  api_secret: "shYJsifYCP4Z6zN0bh1gM0dO0Cd53wSnU3OonypafUKn/Qid6ZsaAUaAq3+g\nAcmzZEeQGB4ohmMKldzkAmrT6A=="
+
+
+staging:
+  api_key_android: "b32611fecfc83fdf10400f7bcb8cf17a49fcba27"
+  api_key_ios: "b32611fecfc83fdf10400f7bcb8cf17a49fcba28"
+  api_secret: "YXJIkw1UW0XoAxn49cKpLzID71VjqY471KZq1H6X9czIM/WH/5bbm2/xowH3\n4Z1dew3RnY2/fs4vIgP4UZ0fuA=="
+
+
+production:
+  api_key_android: "b32611fecfc83fdf10400f7bcb8cf17a49fcba27"
+  api_key_ios: "b32611fecfc83fdf10400f7bcb8cf17a49fcba28"
+  api_secret: "YXJIkw1UW0XoAxn49cKpLzID71VjqY471KZq1H6X9czIM/WH/5bbm2/xowH3\n4Z1dew3RnY2/fs4vIgP4UZ0fuA=="

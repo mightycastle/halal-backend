@@ -1,0 +1,16 @@
+
+  <div class="field input-append">
+    <% if is_new %>
+      <% text = {:selected => 'cont'} %>
+      <% attribute = {:selected => 'name'}%>
+    <% end %>
+    <%= f.attribute_fields do |a| %>
+      <%= a.attribute_select({associations: [:user] } ||{}, class: 'input-medium padding-r-10 select-condition form-control pull-left input-medium mg-r-10') %>
+    <% end %>
+    <%= f.predicate_select(text || {}, class: 'input-medium padding-r-10 select-condition form-control pull-left input-medium mg-r-10' ) %>
+    <%= f.value_fields do |v| %>
+      <%= v.text_field :value, class: 'input-medium inline-bl form-control pull-left' %>
+    <% end %>
+    <%= link_to "", '#', class: "btn btn-danger fa fa-times remove_fields" %>
+  </div> 
+

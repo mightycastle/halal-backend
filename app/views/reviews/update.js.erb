@@ -1,0 +1,4 @@
+var id = <%= @review.id %>;
+$("#review_content_show_" + id).removeClass("hide");
+$("#form_review_" + id).addClass("hide");
+$("#review_content_show_<%= @review.id%>").html("<%= @review.content%>")

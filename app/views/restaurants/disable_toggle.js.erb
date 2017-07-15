@@ -1,0 +1,5 @@
+$("#btn_disable_<%= @restaurant.id %>").removeClass("<%= btn_disabled !@restaurant.disabled %>")
+$("#btn_disable_<%= @restaurant.id %>").addClass("<%= btn_disabled @restaurant.disabled %>")
+$("#btn_disable_<%= @restaurant.id %>").text(" <%= title_disable_text @restaurant.disabled %>")
+$("#status_label_<%= @restaurant.id %>").html("<%= escape_javascript(text_disabled @restaurant.disabled) %>")
+  

@@ -1,0 +1,101 @@
+
+<%= form_tag(((current_user)? create_review_restaurant_path(@restaurant): new_user_session_path),{method: ((current_user)? "post" : "get"), :multipart => true, :id => 'new_review_restaurant'}) do %>
+
+  <div class="row add_new_review">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <p class='title-page title-review'><%= t('layout.add_reviews')%></p>
+    </div>
+    <% if current_user.nil? %>
+      <p class='re-login-message'><%= t('layout.login_message') %></p>
+    <% end %>
+  </div>
+
+  <div class='form-review'>
+    
+    <div class="add-rating-review">
+      <div class="row">
+        <div class="col-md-12 col-lg-4">
+          <h4>1. Click or tap the stars below</h4>
+          <div class="rating-label">Service</div>
+          <div class="mar-b-16">
+            <% (1..5).each do |i| %>
+              <li class="fa fa-star-o star-review-format big" style ="list-style-type:none;" id="service_<%= i %>"
+                  data-stars="<%= i %>" 
+                  onclick="chage_rating('service', '<%= i %>');return false;"
+                  last="service_false"
+                  num="<%= i %>"
+                  type="service"
+                  onmouseover="choose_over_stars('<%= i %>','service')"
+                  onmouseout="choose_out_stars('<%= i %>','service')"></li>
+            <% end %>
+          </div>
+          <%= hidden_field_tag 'review[service]', 0 %>
+        
+        
+          <div class="rating-label">Quality</div>
+          <div class="mar-b-16">
+            <% (1..5).each do |i| %>
+              <li class="fa fa-star-o big" style ="list-style-type:none;" id="quality_<%= i %>"
+                            data-stars="<%= i %>" 
+                            onclick="chage_rating('quality', '<%= i %>');return false;"
+                            last="quality_false"
+                            num="<%= i %>"
+                            type="quality"
+                            onmouseover="choose_over_stars('<%= i %>','quality')"
+                            onmouseout="choose_out_stars('<%= i %>','quality')"></li>
+            <% end %>
+          </div>
+          <%= hidden_field_tag 'review[quality]', 0 %>
+        
+        
+          <div class="rating-label">Value</div>
+          <div class="mar-b-16">
+            <% (1..5).each do |i| %>
+              <li class="fa fa-star-o star-review-format big" style ="list-style-type:none;" id="value_<%= i %>"
+                            data-stars="<%= i %>" 
+                            onclick="chage_rating('value', '<%= i %>');return false;"
+                            last="value_false"
+                            num="<%= i %>"
+                            type="value"
+                            onmouseover="choose_over_stars('<%= i %>','value')"
+                            onmouseout="choose_out_stars('<%= i %>','value')"></li>
+            <% end %>
+          </div>
+          <%= hidden_field_tag 'review[value]', 0 %>
+          <%= hidden_field_tag "restaurant_id",@restaurant.id %>
+
+          <div class="row validate-message-row hide">
+                  <label for="review_rating" generated="true" class="error " ><i  class='fa fa-exclamation custom-icon-invalid'></i> <%= t('review.validate_star') %></label>
+                </div>
+
+          <h4>2. When did you visit the restaurant?</h4>
+          <div id="select_date_month">
+            <%= select_month(Time.now ,{:name=>"visited_date"},  {:class => "selectpicker",:style=>"width:120px;"}) %>
+            <%= select_year(Time.now, {:name=>"visited_date"}, {:class => "selectpicker", :style=>"width:120px;"}) %>
+          </div>
+
+
+        </div>
+        <div class="col-md-12 col-lg-8">
+          <h4>3. Type in your review then press submit.</h4>
+          <div class="row">           
+            <div class="review_box col-md-12 col-lg-6 col-xs-12">
+              <%= text_area_tag 'review[content]',nil, :style=> 'resize: none;', :class=>"form-control" , rows: 10, cols: 75, maxlength: 5000, onkeyup: "countChar(this)" %>
+              <span class="content_character_count">0/5000</span>
+
+
+              
+            </div>
+            <div class="col-md-12 col-lg-6 block-bottom-add-review">
+              <label for="review_content" generated="true" class="error"></label>
+              <h5 class="note_text"><%= t('review.review_using_username') %></h5>
+              <h5 class="note_text"><%= t('review.sub_title_share') %></h5>
+              <button name="button" type="submit" class="btn submit_new_review default-btn">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<% end %>

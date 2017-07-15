@@ -1,0 +1,10 @@
+
+
+$('.two-review-default').remove()
+$("#all_reply_reviews").append("<%= escape_javascript render partial: 'user_restaurants/all_reply_reviews', locals: {reviews: @reviews} %>");
+$('.btn-more-reviews').attr('href', "<%= show_reviews_path(:page_num=>(@page_num.to_i + 1),:restaurant_id =>@restaurant.id, :type => 'show', sort_by: @sort_by) %>");
+<% if @total_page <= @page_num %>
+	$('.btn-more-reviews').hide();
+<% else %>
+  $('.btn-more-reviews').show();
+<% end %>

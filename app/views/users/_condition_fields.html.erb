@@ -1,0 +1,12 @@
+
+  <div class="field input-append">
+    <%= f.attribute_fields do |a| %>
+      <%= a.attribute_select({:selected => 'name'} ||{}, class: 'input-medium padding-r-10 select-condition form-control pull-left mg-r-10') %>
+    <% end %>
+    <%= f.predicate_select( {}, class: 'input-medium padding-r-10 select-condition form-control pull-left mg-r-10') %>
+    <%= f.value_fields do |v| %>
+      <%= v.text_field :value, class: 'input-medium inline-bl form-control form-control pull-left' %>
+    <% end %>
+    <%= link_to "", '#', class: "btn btn-danger fa fa-times remove_fields" %>
+  </div>
+

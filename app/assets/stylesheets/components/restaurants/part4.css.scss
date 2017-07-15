@@ -1,0 +1,131 @@
+/*---------------*/
+
+.part4{
+  // height: 700px;
+  padding-bottom: 20px;
+  .default-btn{
+    margin-top: 20px;
+  }
+  .note_text{
+    margin-bottom: 5px;
+  }
+  .title-page{
+    font-size: 30px;
+  }
+  h4{
+    font-size: 14px;
+  }
+  .big{
+    margin-right: 8px;
+    &:last-child{
+      margin-right: 0;
+    }
+  }
+  padding-top: 20px;
+  .rating-label{
+    font-style: italic;
+    font-family: 'open-sans';
+    color: #D2C5AF;
+    font-size: 22px;
+    line-height: 28px;
+    width: 90px;
+    text-transform: lowercase;
+  }
+  .add_new_review{
+    .title-review{
+      color: #97A4A5;
+      text-transform: lowercase;
+    }
+    .re-login-message{
+      margin-left: 15px;
+      margin-top: -10px;
+      margin-bottom: 6px;
+    }
+  }
+
+  .review_area{
+    position: relative;
+    height: 22px; line-height: 24px; 
+  }
+  .review_box{
+    textarea{
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      width: 450px;
+      max-width: 100%;
+      height: 208px;
+    }
+  }
+  #select_date_month{
+    .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
+      width: 100px;
+    }
+    .filter-option{
+      left:8px;
+      right: 16px;
+    }
+    .btn-group.bootstrap-select{
+              vertical-align: top; margin-top: 0;  width: 110px; border: none; 
+              margin-right: 8px;
+              &:last-child{
+                margin-right: 0;
+              }              
+              .dropdown-toggle.selectpicker{ 
+                border: none; 
+                height: 40px; 
+                line-height: 40px; 
+                padding: 0; 
+                border-radius: 0;
+                background: #fff;
+                border-radius: 5px;
+                -moz-border-radius: 5px;
+                -webkit-border-radius: 5px;
+                box-shadow: 0 0 2px 0 #fff;
+                -moz-box-shadow: 0 0 2px 0 #fff;
+                -webkit-box-shadow: 0 0 2px 0 #fff;
+                .caret{
+                  background: image-url("caret_down.png") no-repeat scroll center center transparent;
+                  // border-top: 9px solid #000;
+                  // border-left: 8px solid transparent;
+                  // border-right: 8px solid transparent;
+                  // border-bottom: 0;
+                  width: 20px;
+                  height: 40px;
+                  position: absolute;
+                  top: 50%;
+                  margin-top: -20px;
+                  right: 2px;
+                }
+              }
+          }
+  }
+}
+.add_review_new_restaurant,.add-rating-review{
+    text-align: left;
+    width: 100%;
+    font-weight: normal;
+    .rate-row{ 
+      line-height: 24px; 
+      padding: 15px 0px; 
+      margin: 0px;
+    }
+}
+.content_character_count{
+  float: left;
+}
+@media (min-width: 1200px){
+  .block-bottom-add-review{
+    padding-top:73px;
+  }
+  .content_character_count{
+    float: right;
+  }
+}
+
+
+@media (max-width:400px){
+  .part4 .rating-label{
+    float: none;
+  }
+}

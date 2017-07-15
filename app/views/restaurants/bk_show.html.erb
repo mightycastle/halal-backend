@@ -1,0 +1,135 @@
+
+<div id="restaurant_social" class="pull-right" >
+                  <% if @restaurant.facebook_link && !@restaurant.facebook_link.strip().empty? %>
+                    <a href="<%= format_hyperlink(@restaurant.facebook_link) %>" target="_blank" style="margin: 0 10px;"><%= image_tag("icon_facebook_red.png") %></a>
+                  <% end %>
+                  <% if @restaurant.twitter_link && !@restaurant.twitter_link.strip().empty? %>
+                    <a href="<%= format_hyperlink(@restaurant.twitter_link) %> " target="_blank" style="margin: 0 10px;"><%= image_tag("icon_twitter_red.png") %></a>
+                  <% end %>
+                  <% if @restaurant.pinterest_link && !@restaurant.pinterest_link.strip().empty? %>
+                  <a href="<%= format_hyperlink(@restaurant.pinterest_link) %>" target="_blank" style="margin: 0 10px;"><%= image_tag("icon_pinterest_red.png") %></a>
+                  <% end %>
+                  <% if @restaurant.instagram_link && !@restaurant.instagram_link.strip().empty? %>
+                  <a href="<%= format_hyperlink(@restaurant.instagram_link) %>" target="_blank" style="margin: 0 10px;"><%= image_tag("icon_instagram_red.png") %></a>
+                  <% end %>
+                  <% if (@restaurant.email && !@restaurant.email.strip().empty?)   %>
+                    <% if current_user %>
+                      <a data-toggle="modal" data-target="#send_email_to_owner" style="cursor: pointer; margin: 0 10px;" ><%= image_tag("icon_email_red.png") %></a>
+                     <% else %>
+                      <a href='/users/sign_in' style="cursor: pointer; margin: 0 10px;" ><%= image_tag("icon_email_red.png") %></a>
+                     <% end %>
+                  <% end %>
+                </div>
+
+                  
+
+
+
+
+<div class="report col-xs-4 col-sm-2 col-md-2 col-lg-2 pull-left">
+<% if current_user %>
+  <button class="btn btn-link" data-toggle="modal" data-target="#report_modal" id="report">
+    <%= t("layout.report") %>
+  </button>
+<% else %>
+  <%= link_to t("layout.report"), new_user_session_path, class: 'btn btn-link' %>
+<% end %>
+<%= render "modals/report_restaurant" %>
+
+
+
+
+
+<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+  <div class="pull-right map_view">
+    <button name="button" type="button" class="default-btn btn-viewmap" data-toggle="modal" data-target="#show_map"><i class="fa fa-map-marker fa-lg"></i> <span>View on map</span></button>      
+      
+  </div>
+</div>
+<%= render 'map_restaurant' %>
+
+
+<%= render "modals/download_menu_restaurant" %>
+
+<% if @restaurant.get_price_restaurant %>
+          <p><%= t 'restaurant.average_cost' %> <%= @restaurant.get_price_restaurant %></p>
+        <% end %>
+
+
+
+
+  <div class="row infor_reviews_average">
+      
+      <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 col-1'>
+        <span class='display-inline padding-r-10'>Average of all reviews</span>
+        <div class='stars_color display-inline large'>
+          <%= render :partial => "rating", :locals => {:rate_count => @restaurant.rating_avg, :is_rating => true} %>
+        </div>
+      </div>
+
+      <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 col-2'>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <span class="rating_label display-inline padding-r-10 min-width-70">Service</span>
+          
+            <div class='stars_color display-inline'><%= render :partial => "rating", :locals => {:rate_count => @restaurant.service_avg, :is_rating => false} %></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <span class="rating_label display-inline padding-r-10 min-width-70">Quality</span>
+        
+            <div class='stars_color display-inline'><%= render :partial => "rating", :locals => {:rate_count => @restaurant.quality_avg, :is_rating => false} %></div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <span class="rating_label display-inline padding-r-10 min-width-70">Value</span>
+      
+            <div class='stars_color display-inline'><%= render :partial => "rating", :locals => {:rate_count => @restaurant.value_avg, :is_rating => false} %></div>
+
+          </div>
+        </div>
+        
+      </div>
+      <div class="row col-lg-12 pad-right-0 border-bt">
+      </div>
+    </div>        
+    <%if @reviews_count > 2 %>
+      <%= link_to(show_reviews_path(:page_num=>(@page_num.nil? ? 1 : (@page_num.to_i + 1)), :restaurant_id =>@restaurant.id, :sort_by => params[:sort_by]), :id=>'read_more_reviews_btn',:class => 'default-btn btn-more-reviews') do %>
+        <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i> -->
+        <%= t('restaurant.read_more_reviews') %>
+    <% end %>
+  <% end %> 
+
+
+
+
+
+
+
+
+
+
+  <%if @reviews_count > 2 %>
+    <%= link_to(show_reviews_path(:page_num=>(@page_num.nil? ? 1 : (@page_num.to_i + 1)), :restaurant_id =>@restaurant.id, :sort_by => params[:sort_by]), :id=>'read_more_reviews_btn',:class => 'default-btn btn-more-reviews') do %>
+      <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i> -->
+      <%= t('restaurant.read_more_reviews') %>
+  <% end %>
+<% end %>   
+
+
+
+<% if review.reply_content != nil && review.approve_reply == true && current_user %>
+        <div class="manager_reponded">
+          <div id="icon_reply"><%= image_tag('icon_manager_responded.png')%></div>
+          <div><h4><%= t('manager_responded')%></h4></div>
+          <div class="text_content"><%= review.reply_content %></div>
+          <div class="reviewed_time">Visited <%= review.time_replied%></div>
+        </div>
+      <% end%>
+
+
+
+      

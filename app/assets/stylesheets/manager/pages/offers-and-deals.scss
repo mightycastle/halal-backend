@@ -1,0 +1,53 @@
+#offers-and-deals-wrapper {
+  position: relative;
+
+  form {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  table {
+    width: 100%;
+
+    .default-btn {
+      padding: 0px 25px;
+      width: 95%;
+      text-align: center;
+    }
+  }
+}
+
+.offer-time-select {
+  .btn-group {
+    float: left;
+    width: 40% !important;
+
+    button {
+      background: #fff;
+    }
+  }
+
+  p {
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 15px;
+  }
+}
+
+.disabled-panel {
+  display: none;
+  visibility: hidden;
+}
+
+.offer-panel {
+}
+.offer-panel label {
+  display: block;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.preview-image {
+  max-width: 300px;
+}

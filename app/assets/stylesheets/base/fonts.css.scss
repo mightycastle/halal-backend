@@ -1,0 +1,109 @@
+
+@font-face {
+  font-family: "Fedra San Pro";
+  src: asset-url('fonts/Fedra-Sans-Pro-Medium.ttf',font);
+  font-weight: normal;
+  font-style: normal;
+  
+}
+
+/* BEGIN Light */
+@font-face {
+  font-family: 'Open Sans Light';  
+  src: asset-url('fonts/OpenSans-Light.ttf',font) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/* END Light */
+
+/* BEGIN Regular */
+@font-face {
+  font-family: 'Open Sans';
+  src: asset-url('fonts/Regular/OpenSans-Regular.eot',font);
+  src: asset-url('fonts/Regular/OpenSans-Regular.eot?#iefix',font) format('embedded-opentype'),
+       asset-url('fonts/Regular/OpenSans-Regular.woff',font) format('woff'),
+       asset-url('fonts/Regular/OpenSans-Regular.ttf',font) format('truetype'),
+       asset-url('fonts/Regular/OpenSans-Regular.svg#OpenSansRegular',font) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* END Regular */
+
+/*START Bold*/
+@font-face {
+  font-family: 'Open Sans';
+  src: asset-url('fonts/Bold/OpenSans-Bold.eot', font);
+  src: asset-url('fonts/Bold/OpenSans-Bold.eot?#iefix', font) format('embedded-opentype'),
+       asset-url('fonts/Bold/OpenSans-Bold.woff', font) format('woff'),
+       asset-url('fonts/Bold/OpenSans-Bold.ttf',font) format('truetype'),
+       asset-url('fonts/Bold/OpenSans-Bold.svg#OpenSansBold', font) format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* END Bold */
+
+/*STSRT Semibold*/
+@font-face {
+  font-family: 'Open Sans';
+  src: asset-url('fonts/Semibold/OpenSans-Semibold.eot',font);
+  src: asset-url('fonts/Semibold/OpenSans-Semibold.eot?#iefix',font) format('embedded-opentype'),
+       asset-url('fonts/Semibold/OpenSans-Semibold.woff',font) format('woff'),
+       asset-url('fonts/Semibold/OpenSans-Semibold.ttf',font) format('truetype'),
+       asset-url('fonts/Semibold/OpenSans-Semibold.svg#OpenSansSemibold',font) format('svg');
+  font-weight: 600;
+  font-style: normal;
+}
+/* END Semibold */
+
+
+/* Phase 3 */
+
+@font-face {
+  font-family: Interstate_Regular;
+  src: asset-url('fonts/Interstate-Regular.ttf',font);
+}
+@font-face {
+  font-family: PlayfairDisplay_Bold;
+  src: asset-url('fonts/PlayfairDisplay-Bold.ttf',font);
+}
+@font-face {
+  font-family: OpenSans_Semibold;
+  src: asset-url('fonts/OpenSans-Semibold.ttf',font);
+}
+@font-face {
+  font-family: OpenSans_Regular;
+  src: asset-url('fonts/OpenSans-Regular.ttf',font);
+}
+
+@font-face {
+  font-family: OpenSans_Bold;
+  src: asset-url('fonts/OpenSans-Bold.ttf',font);
+}
+@font-face {
+  font-family: OldStandard_Italic;
+  src: asset-url('fonts/OldStandard-Italic.ttf',font);
+}
+
+/* BEGIN Oswald ------------------------------------------------ */
+/*START Regular*/
+@font-face {
+  font-family: Oswald;
+  src: asset-url('fonts/Regular/Oswald-Regular.ttf',font) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/* END Regular */
+
+/*START Bold*/
+@font-face {
+  font-family: OswaldBold;
+  src: asset-url('fonts/Bold/Oswald-Bold.ttf',font) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* END Bold */
+/* END Oswald =========================================================== */
+
+/* End phase 3 */

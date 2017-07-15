@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= t('title_page') %></title>
+  <%= stylesheet_link_tag    "admin", :media => "all" %>
+  <%= javascript_include_tag "admin" %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag %>
+  <script type="text/javascript">
+    /* <![CDATA[ */
+    $(function() {
+      var input = document.createElement("input");
+      if(('placeholder' in input)==false) {
+        $('[placeholder]').focus(function() {
+          var i = $(this);
+          if(i.val() == i.attr('placeholder')) {
+            i.val('').removeClass('placeholder');
+            if(i.hasClass('password')) {
+                    i.removeClass('password');
+                    this.type='password';
+            }
+          }
+        }).blur(function() {
+          var i = $(this);
+          if(i.val() == '' || i.val() == i.attr('placeholder')) {
+            if(this.type=='password') {
+                    i.addClass('password');
+                    this.type='text';
+            }
+            i.addClass('placeholder').val(i.attr('placeholder'));
+          }
+          }).blur().parents('form').submit(function() {
+            $(this).find('[placeholder]').each(function() {
+                    var i = $(this);
+                    if(i.val() == i.attr('placeholder'))
+                            i.val('');
+            })
+          });
+        }
+    });
+    /* ]]> */
+  </script>
+</head>
+<body>
+  <div class="admin-page-content">
+    <div class="nav_top">
+      <div class="custom-container container">
+          <%= link_to(image_tag("logo.png", class: "logo"), root_path) %>
+          <!-- <%= image_tag "inspiring_your_muslim_lifestyle.png", class: "slogan"%> -->
+      </div>
+    </div>
+    <div class="navbar navbar-default navbar-fixed-top " role="navigation">
+        <div class="navbar-inner">
+          <div class="container custom-container">
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="<%= (params[:controller]=='restaurants' || (params[:controller] == 'photo' && params[:action] == change_photo_request) || (params[:controller] == 'restaurant_waiting_approves' && params[:action] == 'index')) ? "active" : "" %>"><%= link_to t("restaurant.management"), admin_restaurants_path %></li>
+                <li class="<%= (params[:controller]=='reviews' && params[:action] == 'index') || (params[:controller]=='reviews' && params[:action] == 'admin_review_replies') ? "active" : "" %>"><%= link_to t("admin.review_management"), admin_reviews_path %></li>
+                <li class="<%= (params[:controller]=='users') ? "active" : "" %>"><%= link_to t("layout.user"), admin_users_path %></li>
+                <li class="<%= (params[:controller]=='filters') ? "active" : "" %>"><%= link_to t("layout.filter"), admin_filters_path %></li>
+                <li class="<%= (params[:controller]=='admin_photos') ? "active" : "" %>"><%= link_to t("layout.admin_photos"), admin_upload_photos_path %></li>
+                <li class="<%= (params[:controller]=='basics_pages') ? "active" : "" %>"><%= link_to t("layout.basic_page"), admin_basics_pages_path %></li>
+                <li class="<%= (params[:controller]=='offers') ? "active" : "" %>"><%= link_to t("layout.offers"), admin_offers_path %></li>
+                <li class="<%= (params[:controller]=='subscriptions') ? "active" : "" %>"><%= link_to t("layout.subscriptions"), admin_subscriptions_path %></li>
+              </ul>
+              <ul class="nav pull-right">
+                <li>
+                  <div class="social">
+                    <%= link_to(image_tag("facebook.png"),"http://www.facebook.com/halalgems") %>
+                    <%= link_to(image_tag("twitter.png"),"http://www.twitter.com/halalgems") %>
+                    <%= link_to(image_tag("pinterest.png"),"http://www.pinterest.com/halalgems") %>
+                    <%= link_to(image_tag("youtube.png"),"http://www.youtube.com/halalgems") %>
+                    <%= link_to(image_tag("mailchimp.png"),"http://mailchimp.com/") %>
+                  </div>
+                </li>
+                <!--<li class="divider-vertical"></li>-->
+                <li class="dropdown">
+                  <%#= image_tag(backend_avatar_url(current_user))%>
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#"><%= (current_user.username.blank?)?(current_user.email):(current_user.username) %><b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#"><%= link_to "My Account",personal_information_path %></a></li>
+                    <li><a href="#"><%= link_to "Change password", change_password_user_registration_path %></a></li>
+                    <li class="divider"></li>
+                    <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!-- /.nav-collapse -->
+          </div>
+        </div><!-- /navbar-inner -->
+    </div>
+    <div class="custom-container container admin-table-data">
+        <% if flash[:error].present? %>
+          <div class="alert alert-error" style="border: solid 1px red; box-shadow: none; color: red; text-align: center;">
+            <%= flash[:error].to_s %>
+          </div>
+        <% end %>
+        <%= yield %>
+    </div>
+  </div>
+</body>
+</html>

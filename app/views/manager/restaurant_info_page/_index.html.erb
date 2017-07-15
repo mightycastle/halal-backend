@@ -1,0 +1,49 @@
+<div class="manager-container">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>RESTAURANT INFO</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-7 restaurant-info">
+      <%= render "info", restaurant: current_restaurant %>
+    </div>
+
+    <div class="col-md-5 restaurant-info">
+
+      <div id="upload_pictures">
+        <h3 class="tittle title-page">Upload pictures</h3>
+        <h5>Show off your restaurant and your food</h5>
+
+        <div id="processing_upload">
+          <%= render :partial => "upload_photos" %>
+        </div>
+      </div>
+
+      <div id="add_menus">
+        <h3 class="tittle title-page">Add menus</h3>
+        <h5>Show users what your menu has to offer.</h5>
+
+        <div id="adding_menus">
+          <%= render :partial => "upload_menus" %>
+        </div>
+      </div>
+
+      <div class="edit-profile">
+        <h3 class="tittle title-page">Your Profile</h3>
+        <h5>Edit the information of your restaurant.</h5>
+
+        <!--<%
+        x = 2
+        #edit_user_restaurant_path
+        %>-->
+        <%= link_to manager_restaurant_info_edit_path(current_restaurant_id), :class => 'default-btn btn-details btn-edit-profile' do %>
+          <span>Edit your profile</span>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

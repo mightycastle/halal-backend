@@ -1,0 +1,44 @@
+<h2>Upload Menu</h2>
+
+<div class="row" id='add_menus'>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+    <%= form_for(@menu, multipart: true, remote: true, class: "form-inline") do |f| %>
+      <%= f.text_field :name, placeholder: "Name", :name => "menus[name]" , class: 'form-control' %>
+      <label class=' hide menu-name-error'> <%= t('menu.please_set_menu_name') %> </label>
+      <%= f.hidden_field :restaurant_id, :name => "menus[restaurant_id]" %>
+      
+      <div class="clearfix"></div>
+      
+      <%= f.label :menu, "Choose menu", class: "btn btn-default mg-bt-10 border-radius-5 form-control label_for_chosen_menu" %>
+      <%= f.file_field :menu, :multiple => true , :name => "menus[menu]", class: 'form-control', accept: "application/pdf,image/*"%>
+      <label class=' hide menu-file-error'> <%= t('menu.please_set_menu_file') %> </label>
+  <div class="clearfix"></div>
+      <%= f.submit 'Submit', disable_with: "Submitting...", class: 'btn btn-success',  id: 'submit_menu'  %>
+    <% end %>
+
+    <%= form_tag(menu_path(1), method: 'PUT', remote: true, class: "form-inline hide", id: 'edit-menu') do |f| %>
+      <%= text_field_tag 'menu[name]', '',placeholder: "Name",:name => "menus[name]"  %>
+      <%= hidden_field_tag 'menu[restaurant_id]', @menu.restaurant_id ,:name => "menus[restaurant_id]"%>
+      <%= submit_tag 'Update', disable_with: "Submitting...", class: 'btn' %>
+      <%= link_to 'Cancel', '#', class: 'btn', id: 'edit-menu-cancel'%>
+    <% end %>
+  </div>
+</div>
+
+<table id="menus-table" class="table table-condensed table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th class='menu-action'>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @restaurant.menus.each do |m| %>
+        <%= menu_row m %>
+      <% end %>
+    </tbody>
+</table>
+
+
+

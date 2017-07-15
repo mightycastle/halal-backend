@@ -1,0 +1,83 @@
+.reviews{
+  *{
+    font-family: serif;
+  }
+  .content{
+    font-family: 'Open Sans';
+    font-size: 15px;  
+  }
+  .time{
+    margin-top: 10px;
+    font-family: 'Open Sans';
+  }
+  .profile{
+    text-decoration: underline;
+    font-style: italic;
+    font-size: 16px;
+  }
+  .wrap-img{
+    display: inline-block;
+    float: left;
+    margin: 0 18px 18px 0;    
+    text-align: center;
+    img{
+      max-width: 100%;
+      max-height: 100%;
+      line-height: 60px;
+    }
+  }
+  h4{
+    font-weight: bold;
+    display: block;
+    font-style: italic;    
+    color: #97A4A5;
+    margin: 0 0 10px 0;
+    text-transform: capitalize;
+  }    
+  .stars_color{
+    clear: both;
+    margin: 0 0 10px 0;
+    b{
+      font-weight: normal;
+      display: inline-block;
+      width: 75px;
+      font-style: italic;
+      color: #D2C5AF;
+      font-size: 18px;
+    }
+    &>span{
+      margin-right: 3px;
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+  }
+  .gem-hunter{
+    h4{
+      font-style: normal;
+      text-transform: uppercase;
+      margin: 0px;
+    }
+  }
+  .normal-review{   
+    .manager_reponded{ margin-bottom: 0;
+      .text_content{ margin-bottom: 0; font-style: italic;}
+    }
+    border-bottom:0px; 
+    &> div{
+      border-bottom: 1px dotted #fff;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+@media (min-width: 767px){
+  .reviews{
+    .normal-review{
+
+      &> div{
+       padding: 0 20px 10px 0;      
+      }
+    }
+  }
+}

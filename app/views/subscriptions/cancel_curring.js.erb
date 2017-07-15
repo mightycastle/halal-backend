@@ -1,0 +1,6 @@
+
+if(<%= @response.success? %>){
+  console.log($('#recurring_action_<%= @subscription.id %>'));
+  $('#recurring_action_<%= @subscription.id %>').find('.paypal_action').html('<%= link_to_action_purchase(@subscription).html_safe %>');
+
+}

@@ -1,0 +1,324 @@
+
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("#read_more_reviews_btn").click(function(){
+    $("this").hide();
+  });
+
+  $('a.tweet').click(function(e){
+    e.preventDefault();
+    var loc = $(this).attr('href');
+    var title  = escape($(this).attr('title'));
+    window.open('http://twitter.com/share?url=' + loc + '&text=' + title + '&', 'twitterwindow', 'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+$(window).width()/2 +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+  });
+});
+
+</script>
+
+<div class="part1 restaurant-photos">
+  <div class="container ">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="row tn3-slide-part">
+        	<%= render "slideshow"%>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
+        <div class="row infor1">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
+            <h3><%= @restaurant.name%></h3>
+            <h5><%= @restaurant.suggester_name%></h4>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row">
+              <div class="col-xs-8 col-sm-8 col-md-8">
+                <div id="restaurant_social" class="pull-right" >
+                  <a href="http://<%= @restaurant.facebook_link%>" target="_blank"><%= image_tag("icon_facebook_red.png") %></a>
+                  <a href="http://<%= @restaurant.twitter_link%>" target="_blank"><%= image_tag("icon_twitter_red.png") %></a>
+                  <a href="http://<%= @restaurant.pinterest_link%>" target="_blank" ><%= image_tag("icon_pinterest_red.png") %></a>
+                  <a data-toggle="modal" data-target="#send_email_to_owner" style="cursor: pointer;" ><%= image_tag("icon_email_red.png") %></a>
+                </div>
+              </div>
+              <div class="col-xs-4 col-sm-4 col-md-4">
+                <div id="final_number" class="rating-number">
+                  <p class="p1">Rated</p>
+                  <p class="p2"><%= @restaurant.rating_avg.to_i%></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal fade" id="send_email_to_owner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <% if current_user %>
+                <form accept-charset="UTF-8" action="/users/send_email_restaurant_owner" class="form_share_restaurant_email" id="form_send_email_to_restaurant_owner" method="post" data-remote='true' novalidate="novalidate"  >
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title" id="myModalLabel" style="text-align: center;"><%= t('restaurant.model_header_send_to')%></h3>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <input type='hidden' name='user[restaurant_email]' value='<%= @restaurant.email %>'>
+                      <textarea class="form-control" name='user[message]' rows="5" placeholder="Enter your messages to our restaurant" style="resize: none;"></textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="default-btn btn-details">Send</button>
+                  </div>
+                </form>
+              <% else %>
+
+                <p>You need sign in to send email.</p>
+              <% end %>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div class="infor2">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><hr></div>
+          </div>
+          <div class="row">
+            <div id="l1"class="col-xs-9 col-sm-9 col-md-9 col-lg-9"><%= @restaurant.address %></div>
+            <div it="report" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ">
+              <span class="pull-right"><a href="">Report</a></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div id="l2">Telephone</div>
+              <div><%= @restaurant.phone %></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div id="l3"><a href="<%= @restaurant.website%>"><%= @restaurant.website%></a></div>
+            </div>
+          </div>
+
+          <div class="row">
+            
+            <div id="social-space" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tool">
+              <label class='title-share color-blue-title'>Share</label>
+              <!-- AddThis Button BEGIN -->
+              <div class="addthis_toolbox addthis_default_style addthis_32x32_style" >
+              <a class="addthis_button_twitter social twitter"><%= image_tag "icon_twitter_blue.png"%></a>
+              <a class="addthis_button_facebook social facebook"><%= image_tag "icon_facebook_blue.png"%></a>
+         
+              <a class="addthis_button_email social email"><%= image_tag "icon_email_blue.png"%></a>
+              </div>
+              <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4ebb71dd7f06215d"></script>
+              <!-- AddThis Button END -->
+
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="share_by_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form accept-charset="UTF-8" action="/users/share_restaurant_email" class="form_share_restaurant_email" id="form_share_restaurant_email" method="post" data-remote='true' novalidate="novalidate"  >
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h3 class="modal-title" id="myModalLabel" style="text-align: center;"><%= t('restaurant.modal_header_share')%></h3>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <input type="email" class="form-control" name='user[friend_email]' id="friend_email" placeholder="Enter your friend email address">
+                  </div> 
+                  <div class="form-group">
+                    <input type='hidden' name='user[restaurant_link]' value="<%= restaurant_info_url(@restaurant.id) %>" />
+                    <textarea class="form-control" rows="5" name='user[message]' placeholder="Send your messages to your friend" style="resize: none;"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="default-btn btn-details" > Send</button>
+                </div>
+              </form>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div class="row infor3 view_on_map">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="text-offer"><%= image_tag("restaurant_detail/offer_icon.png")%>&nbsp<%= @restaurant.special_deal %>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="pull-right">
+              <button name="button" type="button" class="btn btn-viewmap" data-toggle="modal" data-target="#show_map"><i class="fa fa-map-marker fa-lg"></i> View on map</button>      
+                
+            </div>
+          </div>
+          <%= render 'map_restaurant' %>
+        </div>
+
+        <div class="infor4">
+          <div class="row ">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
+              <div class="label_stars">Service</div>
+              <div class="stars_color">             
+              <%= render :partial=>"rating", :locals =>{:rate_count=>@restaurant.service_avg, :is_rating =>false} %></div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+              <div class="label_stars">Quality</div>
+              <div class= "stars_color"><%= render :partial=>"rating", :locals =>{:rate_count=>@restaurant.quality_avg, :is_rating =>false} %></div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+              <div class="label_stars">Value</div>
+              <div class="stars_color"><%= render :partial=>"rating", :locals =>{:rate_count=>@restaurant.value_avg, :is_rating =>false} %></div>
+            </div>             
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="part2">
+  <div class="container">
+    <div class="hala_status">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div><%= t('layout.hala_status')%></div></div>
+      </div>
+      <div class="row">
+        <div class ="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+          <div class="list_status">
+            <% if @restaurant.is_staff_confirmation? %>
+              <div class="line_status"><%= image_tag("icon_staff.png", alt: "Staff Confirmation")%>   Staff Confirmation</div>
+            <%end%>
+
+            <% if @restaurant.is_sign_in_windown? %>
+              <div class="line_status"><%= image_tag("icon_sign_in.png", alt: "Sign In Window")%>   Sign in window</div>
+            <%end%>
+
+            <% if @restaurant.is_certificate_available? %>
+              <div class="line_status"><%= image_tag("icon_certificate.png", alt: "Certificate Available")%>   Certificate available</div>
+            <% end%>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+            <% if @restaurant.halal_status %>
+              <div class="status_text"><%= @restaurant.halal_status %></div>
+              <h4><%= @restaurant.name %></h4>
+            <%else %>
+              <div class="status_text"><%= t('restaurant.no_halal_status')%></div>
+            <%end%>
+        </div>
+      </div>
+    </div>
+
+    <div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><hr></div></div>
+
+    <div class="highlights">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><p><%= t('layout.features')%></p></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="open_hours">
+            <div class="line_open_hours">
+              <b>Open hours - </b> Weekdays / <span><b>Wekeends</b></span>
+            </div>
+          </div>     
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+          <%= @restaurant.is_shisha? ? image_tag("btn_shisha_yes.png", alt:"Shisha") : image_tag("btn_shisha_no.png", alt:"Shisha") %>
+        </div>
+
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+        	<%= @restaurant.is_deliver? ?  image_tag("btn_delivery_yes.png", alt:"Deliery") :  image_tag("btn_delivery_no.png", alt:"Deliery") %>
+        </div>
+
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+          <%= @restaurant.is_wifi? ? image_tag("btn_wifi_yes.png", alt:"Wifi") : image_tag("btn_wifi_no.png", alt:"Wifi")%>
+        </div>
+
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+          <%= @restaurant.is_wheel_chair_access? ? image_tag("btn_accessible_yes.png", alt:"Accessible") : image_tag("btn_accessible_no.png", alt:"Accessible") %>
+        </div>
+
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+          <%= @restaurant.is_organic? ? image_tag("btn_organic_yes.png", alt:"Organic") : image_tag("btn_organic_no.png", alt:"Organic")%>
+        	
+        </div>
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+          <%= alcohol_filter(@restaurant) %>
+        </div>      
+      </div>      
+    </div>
+  </div>
+</div>
+
+
+<div class="part3">
+  <div class="container">
+    <div class="row infor_reviews ">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><p class='title-review'><%= t('layout.review')%></p></div>
+    </div>
+    
+    <div id="more_reviews" class='row'><%= render partial: "latest_two_review", :locals=>{:reviews =>@reviews }%></div>
+
+    <%if @reviews_count > 2 %>
+      <%= link_to(show_reviews_path(:page_num=>(@page_num.nil? ? 1 : (@page_num.to_i + 1)), :restaurant_id =>@restaurant.id, :sort_by => params[:sort_by]), :target => '_blank', :id=>'read_more_reviews_btn',:class => 'btn-more-reviews defauktbtn') do %>
+        <i class="fa fa-angle-right fa-lg arrow-left"></i>Read more review
+    <% end %>
+  <% end %>   
+  </div>
+</div>
+
+<div class="part4">
+  <%= render "add_review_restaurant"%>
+</div>
+
+
+
+
+<!--  initialize the TN3 when the DOM is ready -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		//Thumbnailer.config.shaderOpacity = 1;
+		var tn1 = $('.mygallery').tn3({
+      autoplay: true,
+      skinDir:"assets/skins",
+      // imageClick:"fullscreen",
+      image:{
+        maxZoom:1.5,
+        crop:true,
+        // clickEvent:"dblclick",
+        transitions:[{
+          type:"blinds"
+        },{
+          type:"grid"
+        },{
+          type:"grid",
+          duration:460,
+          easing:"easeInQuad",
+          gridX:1,
+          gridY:8,
+          // flat, diagonal, circle, random
+          sort:"random",
+          sortReverse:false,
+          diagonalStart:"bl",
+          // fade, scale
+          method:"fade",
+          partDuration:360,
+          partEasing:"easeOutSine",
+          partDirection:"circle"
+          }]
+      }
+		});
+	});
+</script>
+

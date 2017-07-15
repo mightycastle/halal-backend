@@ -1,0 +1,23 @@
+$("#status_review_<%=@review.id%>").html("<%= escape_javascript render partial: '/reviews/review_approve_reply', locals: {review: @review}%>");
+$("#status_label_<%=@review.id%>").html("<%= escape_javascript render partial: '/reviews/status_label', locals: {status: @review.approve_reply}%>");
+
+
+$('.submit_reply_content').click(function(e){
+  e.preventDefault();
+  var id = $(this).attr('id');
+  $('#form_reply_content_'+id+' form').submit();
+});
+$('.cancel_reply_content').click(function(e){
+  e.preventDefault();
+  var id = $(this).attr('id');
+  $('#form_reply_content_'+id).addClass('hide');
+  $('#review_reply_content_show_'+id).removeClass('hide');
+  $('#'+id+'.edit_review_reply_content').removeAttr("disabled");
+});
+$('.edit_review_reply_content').click(function(e){
+  e.preventDefault();
+  var id = $(this).attr('id');
+  $('#form_reply_content_'+id).removeClass('hide');
+  $('#review_reply_content_show_'+id).addClass('hide');
+  $(this).attr('disabled','disabled');
+});

@@ -1,0 +1,23 @@
+<h1>Listing filter_types</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @filter_types.each do |filter_type| %>
+  <tr>
+    <td><%= filter_type.name %></td>
+    <td><%= link_to 'Show', filter_type %></td>
+    <td><%= link_to 'Edit', edit_filter_type_path(filter_type) %></td>
+    <td><%= link_to 'Destroy', filter_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Filter type', new_filter_type_path %>

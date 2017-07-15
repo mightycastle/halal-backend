@@ -1,0 +1,106 @@
+
+<%
+
+elements_at_a_time = 14
+
+%>
+
+<h3>Latest ratings</h3>
+
+<table class="latest-ratings latest-ratings-thead">
+  <thead>
+    <th class="fade-in-th" style="display: none;">Date</th>
+    <th class="fade-in-th" style="display: none;">Service</th>
+    <th class="fade-in-th" style="display: none;">Quality</th>
+    <th class="fade-in-th" style="display: none;">Value</th>
+    <th>S</th>
+    <th>Q</th>
+    <th>V</th>
+    <th class="fade-in-th" style="display: none;">Reviews</th>
+  </thead>
+</table>
+
+<div class="latest-ratings-container">
+  <table class="latest-ratings latest-ratings-tbody">
+    <tbody id="review-tbody"></tbody>
+  </table>
+</div>
+
+<div style="padding-top: 5px; width: 100%; text-align: center;">
+  <a class="show-more-button" onclick="add_reviews(<%= elements_at_a_time %>);">Show more</a>
+</div>
+
+<script text="text/javascript">
+reviews = <%= get_current_restaurant_reviews.to_json(only: [:id, :created_at, :service, :quality, :value, :content]).html_safe %>
+
+var refresh_latest_reviews_headers = function() {
+  for (var i = 1; i <= 7; i++) {
+    var width = $(".latest-ratings").find("td:nth-child(" + i + ")" ).width();
+    $(".latest-ratings").find("th:nth-child(" + i + ")").width(width);
+  }
+}
+
+var add_reviews = function(amount) {
+  var elem = $("#review-tbody");
+  var start_index = review_count;
+
+  for (var i = start_index; i < Math.min(reviews.length - 1, start_index + 20); i++) {
+    var r = reviews[i];
+
+    var date = new Date(r.created_at);
+    date = date.toISOString().substring(0, 10).replace("-", "/") + " - " + date.toISOString().substring(11, 16);
+
+    var row = $("<tr></tr>");
+    elem.append(row);
+
+    var add_stars = function(stars) {
+      td_elem = $("<td></td>");
+
+      for (var i = 0; i < stars; i++) {
+        td_elem.append('<%= image_tag "manager/halalgems_icon_small_hover.png", class: "latest_review_star"%>')
+      }
+
+      for (var i = 0; i < 5 - stars; i++) {
+        td_elem.append('<%= image_tag "manager/halalgems_icon_small.png", class: "latest_review_star" %>')
+      }
+
+      return td_elem;
+    }
+
+    row.append($("<td></td>").append(date));
+
+    row.append(add_stars(r.service));
+    row.append(add_stars(r.quality));
+    row.append(add_stars(r.value));
+
+    /* Integer versions of ratings */
+    row.append($("<td></td>").append(r.service));
+    row.append($("<td></td>").append(r.quality));
+    row.append($("<td></td>").append(r.value));
+
+    if (!!r.content) {
+      row.append($("<td><a href='<%= manager_reviews_path(current_restaurant_id)%>/" + r.id + "' class='see-review-link'>See review</a></td>"))
+    }
+  }
+
+  review_count += amount;
+  refresh_latest_reviews_headers();
+}
+
+var review_count = 0;
+add_reviews(<%= elements_at_a_time %>);
+review_count = 20;
+
+$(window).load(function() {
+  refresh_latest_reviews_headers();
+  $(".fade-in-th").fadeIn(function() {
+    $(".fade-in-th").css("display", "");
+  });
+});
+
+/* Fix so that thead aligns with tbody */
+$(window).bind('resize', function(){
+  refresh_latest_reviews_headers();
+});
+
+</script>

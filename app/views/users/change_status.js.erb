@@ -1,0 +1,2 @@
+$("#user_status_<%= @user.id%>").html("<%= escape_javascript user_status(@user.status) %>")
+$("#user_change_status_<%= @user.id%>").html("<%= escape_javascript disable_user_button(@user) %>")

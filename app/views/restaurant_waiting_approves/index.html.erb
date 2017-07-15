@@ -1,0 +1,65 @@
+<%= render "shared/restaurant_manage_tabs" %>
+
+<div class="row">
+  <div class="col-lg-12">
+    <h3 id="restaurant_waiting_approves_index" class="title"><%= t'restaurant.management' %></h3>
+    
+  </div>
+</div>
+
+<%= search_form_for @search, :url => admin_restaurant_waiting_approves_path do |f| %>
+    <div class="well">
+      <%= f.condition_fields do |c| %>
+          <%= render "condition_fields", f: c, is_new: false %>
+      <% end %>
+      <div class="actions">
+        <%= link_to_add_fields " Add Conditions", f, :condition %>
+        <%= f.submit "Search", :class => "btn btn-success icon-search" %>
+      </div>
+    </div>
+<% end %>
+
+<table class="table table-condensed table-striped">
+  <thead>
+  <tr>
+    <th width="100px"><%= sort_link @search, :name, "Name" %></th>
+
+    <th width="150px"><%= sort_link @search, :address, "Address" %></th>
+    <th><%= sort_link @search, :phone, "Phone" %></th>
+    <th><%= sort_link @search, :email, "Email" %></th>
+    <th><%= sort_link @search, :user_username, "Owner" %></th>
+    <th width="300px"><%= sort_link @search, :description, "Description" %></th>
+    <th><%= sort_link @search, :disabled, "Status" %></th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @restaurants.each_with_index do |restaurant, index| %>
+      <tr>
+       
+        <td><%= link_to restaurant.name, edit_restaurant_path(restaurant.slug) %></td>
+
+        <td><%= restaurant.address %></td>
+        <td><%= restaurant.phone %></td>
+        <td><%= restaurant.email %></td>
+        <td><%= restaurant.user.username if restaurant.user %></td>
+        <td><%= restaurant.description %></td>
+        <td id="status_label_<%= restaurant.id %>"><%= t('restaurant.waiting_approve') %></td>
+        <td width="150px">
+          <div class="btn-group btn-group-xs">
+            <%= link_to approve_change_restaurant_path(restaurant.slug), :remote => true, :method => 'post', class: 'btn btn-success fa fa-check-circle' do %>
+              <%= content_tag :span, " #{t('approve')}", class: 'open-san' %>
+            <% end %>
+            <%= link_to reject_change_restaurant_path(restaurant.slug), :remote => true,  :method => 'post', class: 'btn btn-danger fa fa-ban' do %>
+              <%= content_tag :span, " #{t('reject')}", class: 'open-san' %>
+            <% end %>
+          </div>
+        </td>
+
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<p>
+  <%= paginate @restaurants, :theme => "twitter-bootstrap-3"%>
+</p>

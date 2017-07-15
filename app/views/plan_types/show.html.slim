@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @plan_type.name
+p
+  strong Number of months:
+  = @plan_type.number_of_months
+
+= link_to 'Edit', edit_plan_type_path(@plan_type)
+'|
+= link_to 'Back', plan_types_path

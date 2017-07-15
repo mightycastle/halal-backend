@@ -1,0 +1,13 @@
+<%= form_for(@filter, validate: true, remote: true, html: {class: 'form-inline'}) do |f| %>
+    <%= f.collection_select :filter_type_id, FilterType.where("id != 3"), 'id','name',{}, :class => 'filter-select-admin' %>
+    <%= f.text_field :name, class: 'form-control input-medium' %>
+    <%= f.submit 'Submit', class: 'default-btn', disable_with: 'Submitting...'%>
+<% end %>
+
+<%= form_tag(filter_path(1), method: 'PUT', remote: true, class: 'form-inline hide', id: 'edit_filter') do |f| %>
+    <%= select_tag 'filter[filter_type_id]', options_from_collection_for_select(FilterType.all, 'id','name'), class: 'filter-select-admin' %>
+    <%= text_field_tag 'filter[name]',class: 'form-control input-medium' %>
+    <%= hidden_field_tag 'filter_index' %>
+    <%= submit_tag 'Submit', class: 'btn btn-success', disable_with: 'Submitting...'%>
+    <%= link_to 'Cancel', '#', class: 'btn', id: 'edit-filter-cancel'%>
+<% end %>

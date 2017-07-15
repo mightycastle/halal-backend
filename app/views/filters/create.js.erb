@@ -1,0 +1,8 @@
+tr_list = $("#filters-table tbody").find('tr')
+tr_list.each(function( index ){
+  css_class = "marker m" + (index + 2);
+  $(this).find('.marker').removeClass().addClass(css_class);
+})
+$("#filters-table tbody").prepend("<%=escape_javascript filter_row(@filter,1)%>");
+$("#filter_name").val("");
+

@@ -1,0 +1,16 @@
+<%
+    label = "label-success"
+    status = "Active"
+  if filter.status == false
+    label = "label-important"
+    status = "Disable"
+  end
+%>
+<div id="status_review_<%= filter.id %>">
+  <span class="label <%=label%>"><%=status%></span>
+  <% if filter.status == true %>
+    <%=link_to "Disable", root_path ,method: "post", remote: true%>
+  <%elsif review.status == false%>
+    <%=link_to "Active",change_status_filter_path(filter.id,true),method: "post", remote: true%>
+  <% end %>
+</div>

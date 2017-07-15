@@ -1,0 +1,122 @@
+
+<%
+
+elements_at_a_time = 29
+
+%>
+
+<table class="review-list review-list-thead">
+  <thead>
+    <th class="fade-in-th" style="display: none;">Date</th>
+    <th class="fade-in-th" style="display: none;">Service</th>
+    <th class="fade-in-th" style="display: none;">Quality</th>
+    <th class="fade-in-th" style="display: none;">Value</th>
+    <th>S</th>
+    <th>Q</th>
+    <th>V</th>
+    <th class="fade-in-th" style="display: none;">Reviews</th>
+  </thead>
+</table>
+
+<div class="review-list-container">
+  <table class="review-list review-list-tbody">
+    <tbody id="review-tbody"></tbody>
+  </table>
+</div>
+
+<div style="padding-top: 5px; width: 100%; text-align: center;">
+  <a class="show-more-button" onclick="add_reviews(<%= elements_at_a_time %>);">Show more</a>
+</div>
+
+<script text="text/javascript">
+reviews = <%= get_current_restaurant_reviews.to_json(only: [:id, :created_at, :service, :quality, :value, :content, :owner_has_read]).html_safe %>
+
+var refresh_review_list_headers = function() {
+  for (var i = 1; i <= 7; i++) {
+    var width = $(".review-list").find("td:nth-child(" + i + ")" ).width();
+    $(".review-list").find("th:nth-child(" + i + ")").width(width);
+  }
+}
+
+var add_reviews = function(amount) {
+  var elem = $("#review-tbody");
+  var start_index = review_count;
+
+  for (var i = start_index; i < Math.min(reviews.length - 1, start_index + amount); i++) {
+    var r = reviews[i];
+
+    var date = new Date(r.created_at);
+    date = date.toISOString().substring(0, 10).replace("-", "/") + " - " + date.toISOString().substring(11, 16);
+
+    var row = $("<tr></tr>");
+    elem.append(row);
+
+    if (r.owner_has_read) {
+      row.addClass("owner-has-read");
+    }
+
+    row.attr("review_id", r.id);
+    row.attr("onclick", "select_review(" + r.id + "); get_review(" + r.id + ");");
+
+    var add_stars = function(stars) {
+      td_elem = $("<td></td>");
+
+      for (var i = 0; i < stars; i++) {
+        td_elem.append('<%= image_tag "manager/halalgems_icon_small_hover.png", class: "review-list-star"%>')
+      }
+
+      for (var i = 0; i < 5 - stars; i++) {
+        td_elem.append('<%= image_tag "manager/halalgems_icon_small.png", class: "review-list-star" %>')
+      }
+
+      return td_elem;
+    }
+
+    row.append($("<td></td>").append(date));
+
+    row.append(add_stars(r.service));
+    row.append(add_stars(r.quality));
+    row.append(add_stars(r.value));
+
+    /* Integer versions of ratings */
+    row.append($("<td></td>").append(r.service));
+    row.append($("<td></td>").append(r.quality));
+    row.append($("<td></td>").append(r.value));
+
+    if (!!r.content) {
+      row.append($("<td><a class='see-review-link'>See review</a></td>"))
+    } else {
+      row.append($("<td></td>"))
+    }
+  }
+
+  review_count += amount;
+  refresh_review_list_headers();
+}
+
+var select_review = function(rev_id) {
+  $("#review-tbody").children().each(function(i, row) {
+    if (row.getAttribute("review_id") == rev_id.toString()) {
+      row.classList.add("selected-review");
+    } else {
+      row.classList.remove("selected-review");
+    }
+  });
+}
+
+var review_count = 0;
+add_reviews(<%= elements_at_a_time %>);
+
+$(window).load(function() {
+  refresh_review_list_headers();
+  $(".fade-in-th").fadeIn(function() {
+    $(".fade-in-th").css("display", "");
+  });
+});
+
+/* Fix so that thead aligns with tbody */
+$(window).bind('resize', function(){
+  refresh_review_list_headers();
+});
+
+</script>

@@ -1,0 +1,502 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// the compiled file.
+//
+// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
+// GO AFTER THE REQUIRES BELOW.
+//
+//= require jquery-1.8.2
+//= require jquery_ujs
+//= require jquery.remotipart
+//= require jquery.ui.widget
+//= require jquery.iframe-transport
+//= require tmpl.min
+//= require bootstrap.min
+//= require bootstrap-timepicker
+//= require history
+//= require load-image.min
+//= require jquery.fileupload
+//= require jquery.fileupload-ui
+//= require rails.validations
+//= require rails.validations.simple_form
+//= require jquery.tn3lite.min
+//= require jquery.placeholder
+//= require jquery.validate
+//= require ckeditor/init
+//= require ckeditor/config
+//= require autocomplete-rails
+//= require_tree ./lib
+//= require users
+//= require search
+//= require menus
+
+
+
+
+
+
+var list_cuisine_ids = [];
+var current_host = "http://halalgems.com/restaurants";
+$(document).ready(function(){
+  // home_slider();
+  info_tab();
+  // read_more_review();
+  filter();
+  set_position_popup();
+  // check_filter();
+  // popup_filter();
+  // sidebar_scroll();
+  tongle_filter();
+  slider_price();
+  popup_message();
+  $('.dropdown-toggle').dropdown();
+  list_user_reviews_popover();
+  set_left_sidebar();
+  avatar();
+  placeholder();
+  contact_us();
+  editTextline();
+  btn_select_filter();
+  ajax_history_state();
+  $('.select_cuisine').selectpicker({
+    style: 'btn_select_cuisin',
+    size: 10
+  });
+  $('.sort_select').selectpicker({
+    style: 'btn_select_cuisin',
+    size: 10
+  });
+  limit_3_cuisine();
+  restaurant_open_time();
+  btn_select_cuisin();
+  $('.select-opentime').selectpicker();
+  $('.selectpicker').selectpicker();
+  $('#filter_cuisines').selectpicker();
+  $('#filter_time').selectpicker();
+  $('select[name=filter_wday]').selectpicker();
+  $('.filter-select-admin').selectpicker();
+  check_user_valid();
+  $('body').keypress(function(e) {
+    var code = e.keyCode || e.which;
+    if(code == 13)
+        return false;
+    });
+});
+
+function check_user_valid(){
+  $('#submit_restaurant').on( 'click',  function(e){
+    // 
+
+    user_id = $("#restaurant_user_id").val()
+    data = $('#restaurant_user_name').val();
+    if(user_id.length == 0){
+      $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: current_host + '/users/check_user',
+        data: { user_name: data},
+        success: function(data)
+        {
+          if(data[0]['flag'] ==  true){
+            $("#restaurant_user_id").val(data[0]['user'].id)
+            $('.label-validate-username').addClass('hide');
+            $('#submit_restaurant').parents('form').submit();
+          }else{
+            $("#restaurant_user_id").val('')
+            $('.label-validate-username').removeClass('hide');
+          }
+          
+        }
+      })   
+
+    }
+    else{ $('#submit_restaurant').parents('form').submit();}
+    e.preventDefault()
+  })
+}
+
+function restaurant_open_time(){
+  $('#btn-apply-to-all-evening').click(function(){
+    time_from = $('.select-opentime.from.evening option:selected').val();
+    time_to = $('.select-opentime.to.evening option:selected').val();
+    $('.select-opentime.from.evening').val(time_from);
+    $('.select-opentime.from.evening').selectpicker('refresh');
+    $('.select-opentime.to.evening').val(time_to);
+    $('.select-opentime.to.evening').selectpicker('refresh');
+  })
+  $('#btn-apply-to-all-daily').click(function(){
+    time_from = $('.select-opentime.from.daily option:selected').val();
+    time_to = $('.select-opentime.to.daily option:selected').val();
+    $('.select-opentime.from.daily').val(time_from);
+    $('.select-opentime.from.daily').selectpicker('refresh');
+    $('.select-opentime.to.daily').val(time_to);
+    $('.select-opentime.to.daily').selectpicker('refresh');
+  })
+  $('.time-closed').click(function(){
+    class_val = $(this).attr('data-value');
+    $(class_val).val('');
+    $(class_val).selectpicker('refresh');
+  })
+
+}
+function tongle_filter(){
+  $('.icon-top-tongle').click( function(){
+    parent_price = $(this).parents('#ft_6')
+    target = $(this).parents('.li-filter').children('.content_filter')
+    if($(this).hasClass('fa-angle-up')){
+      $(this).removeClass('fa-angle-up').addClass('fa-angle-down');
+      target.hide();
+      if(parent_price){
+        $('.qtip-custom-slider').hide();
+      }
+    }else{
+      $(this).removeClass('fa-angle-down').addClass('fa-angle-up');
+      target.show();
+      if(parent_price){
+        $('.qtip-custom-slider').show();
+      }
+    }
+
+  })
+}
+function btn_select_cuisin(){
+  $('.select_cuisine').on('change',function(){
+    $('form#search_home_cuisine').submit()
+    return false;
+  })
+}
+function btn_select_filter(){
+  $('#filter_select').on('change',function(){
+    $('form#filter_restaurant').submit()
+    return false;
+  })
+}
+function limit_3_cuisine(){
+  last_valid_selection = null;
+
+  $('#filter_cuisines').on('change', function(){
+    if($(this).val().length > 3){
+      last_valid_selection = $(this).val();
+      last_valid_selection = last_valid_selection.slice(0,3);
+      $(this).val(last_valid_selection);
+      $(this).selectpicker('refresh');
+    }else{
+      last_valid_selection = $(this).val();
+    }
+  })
+}
+function ajax_history_state(){
+  if (history && history.pushState) {
+    $(function() {
+      $("#search_form").submit(function() {
+        $("div.loading").removeClass('hide');
+        list_cuisine_ids = [];
+        $.get($("#search_form").attr("action"), $("#search_form").serialize(), null, "script");
+        history.replaceState(null, document.title, $("#search_form").attr("action") + "?" + $("#search_form").serialize());
+      });
+      $(window).bind("popstate", function() {
+        $.getScript(location.href);
+      });
+    });
+  }
+}
+function slider_price () {
+  $( "#slider-range-min" ).slider({
+    range: "min",
+    value: 10,
+    min: 10,
+    max: 41,
+    slide: function( event, ui ) {
+      $( "#amount" ).val( "£" + ui.value );
+      $('.qtip-content').text("£" + ui.value);
+      $(".ui-slider-handle").qtip('reposition');
+
+    },
+    stop: function( event, ui ) {
+      target = $(ui.handle).parents('#slider-range-min');
+      target_1 = target.siblings('label:first').find('input');
+      target_2 = target.siblings('label:nth-child(3)').find('input');
+      target_3 = target.siblings('label:last').find('input');
+
+      if(ui.value < 15){
+        if(!target_1.is(':checked')){
+          target_1.click();
+        }
+        target_1.prop('checked', true);
+        target_2.prop('checked', false);
+        target_3.prop('checked', false);
+
+      }else if(15 < ui.value && ui.value < 30 ){
+        if(!target_2.is(':checked')){
+          target_2.click();
+        }
+        target_1.prop('checked', false);
+        target_2.prop('checked', true);
+        target_3.prop('checked', false);
+
+      }else if(ui.value > 30){
+        if(!target_3.is(':checked')){
+          target_3.click();
+        }
+        target_1.prop('checked', false);
+        target_2.prop('checked', false);
+        target_3.prop('checked', true);
+      }
+    }
+  });
+  $(".ui-slider-handle").qtip({
+    content: {
+      text: '£ 10'
+    } ,
+    position: {my: 'bottom center', at: 'top center', type: 'static'},
+    style:{
+      classes: 'qtip qtip-default qtip-custom-slider',
+      width: 35
+    },
+    show: {
+      ready: true
+    },
+    hide: {
+      event: false
+    }
+  });
+  $( "#amount" ).val( "£" + $( "#slider-range-min" ).slider( "value" ) );
+}
+function contact_us(){
+  $(".contact_us").validate({
+    rules:{
+      name:{required: true},
+      email:{required: true, email: true},
+      message:{required: true},
+      captcha:{required: true}
+    },
+    messages:{
+      name: "Please enter your name",
+      email: {
+        required: "Please enter your email",
+        email: "Please enter a valid email"
+      },
+      message: "Please enter your message",
+      captcha: "Please type the letters you see"
+    }
+  });
+  $(".new_review").validate({
+    rules:{
+      'review[content]': {required: true, maxlength: 5000}
+    },
+    messages:{
+      'review[content]': {
+        required: "Please enter review content.",
+        maxlength: "is too long (maximum is 5000 characters)."
+      }
+    }
+  });
+  $(".new_user").validate({
+    rules:{
+      'user[email]': {required: true, email: true},
+      'user[password]': {required: true, minlength: 6}
+    },
+    messages:{
+      'user[email]': {
+        required: "Please enter your email.",
+        email: "Please enter a valid email."
+      },
+      'user[password]': {
+        required: "Please enter your password.",
+        minlength: "Password is too short (minimum is 6 characters) "
+      }
+    }
+  });
+}
+function isNumberKey(evt){
+  var charCode = (evt.which) ? evt.which : event.keyCode
+  if (charCode > 31 && (charCode < 48 || charCode > 57))
+    return false;
+  return true;
+}
+function home_slider(){
+  setInterval(function(){
+    var $current_image = $("#home_slider img.active"),
+      $v = 'slow',
+      $class = 'active',
+      $next_image = $current_image.next();
+    if($next_image.index() == -1){
+      $next_image = $("#home_slider img:first");
+    }
+    $next_image.fadeIn($v, function(){
+      $current_image.fadeOut($v, function(){
+        $(this).removeClass($class);
+      });
+      $(this).addClass($class);
+    });
+  },5000);
+}
+function placeholder(){
+  $('input[placeholder],textarea[placeholder]').placeholder();
+}
+function set_left_sidebar(){
+  if($(".search_result .left")){
+    $(".search_result .left").css('min-height',$(".search_result #search_bar").outerHeight());
+  }
+}
+function avatar(){
+  $("#choose_file_button").click(function(){
+    $("#upload_file_input").click();
+  });
+  $("#upload_file_input").change(function(){
+    $("#new_file_name").addClass('label label-success');
+    $("#new_file_name").html($(this).val());
+  });
+}
+function list_user_reviews_popover(){
+  $(".lur_restaurant_info").popover({
+    trigger:'hover'
+  });
+}
+function info_tab(){
+  $("#info_container_tab a").click(function(){
+    tab_click = $(this).attr('id');
+    tab_active = $("#info_container_tab a.active").attr('id');
+    if(tab_click == tab_active){
+      return false;
+    }
+    $("#info_container_tab a.active").removeClass('active');
+    $("#info_container_tab a#"+tab_click).addClass('active');
+    $("#info_container_content div.active").removeClass('active');
+    $("#info_container_content div#content_"+tab_click).addClass('active');
+    if(tab_click == 3){
+      google.maps.event.trigger(map, 'resize');
+      map.setCenter(centrePoint);
+    }
+  });
+}
+function read_more_review(){
+  $("#read_more_review").click(function(){
+    tab_click = $(this).attr('tab');
+    $("#info_container_tab a.active").removeClass(function(){
+      $("#info_container_tab a#"+tab_click).addClass('active');
+    });
+    $("#info_container_content div.active").removeClass('active');
+    $("#info_container_content div#content_"+tab_click).addClass('active');
+    return false;
+  });
+}
+function filter(){
+  // $("#search_filter label").click(function(){
+  //   id = $(this).attr('id');
+  //   content_style = $("#search_filter #"+id+"_content").css('display');
+  //   if(content_style == 'block'){
+  //     $(this).removeClass('expanse');
+  //     $(this).addClass('collapse');
+  //     $("#search_filter #"+id+"_content").hide();
+  //   }else{
+  //     $(this).removeClass('collapse');
+  //     $(this).addClass('expanse');
+  //     $("#search_filter #"+id+"_content").show();
+
+  //   }
+  // });
+}
+function set_position_popup(){
+  $popup_pnl = $(".popup .pnl");
+  $window = $(window);
+  var pnl_height = $popup_pnl.outerHeight();
+  var pnl_width = $popup_pnl.outerWidth();
+  var win_height = $window.outerHeight();
+  var win_width = $window.outerWidth();
+  var top = ((win_height - pnl_height)/2)-200;
+  var left = ((win_width - pnl_width)/2)-100;
+  $popup_pnl.css({"top":top,"left":left});
+}
+
+
+function sidebar_scroll(){
+  var $window = $(window),
+    $search_bar = $("#search_bar"),
+    $leftside = $(".left"),
+    $rightside = $(".right"),
+    $nav_top = $('.nav_top'),
+    $pnl_img_top = $('.pnl_img_top'),
+    $nav_bottom = $(".nav_bottom"),
+    rest_height = $window.height() - $("#search_bar").height();
+  $window.scroll(function(){
+    if($search_bar.outerHeight() >= $rightside.outerHeight()){
+      return;
+    }
+    if($window.scrollTop() > ($nav_top.outerHeight() + $pnl_img_top.outerHeight())){
+      $search_bar.addClass('search_bar_fixed');
+      if(($window.scrollTop() + $search_bar.height()) > ($(document).height() - $nav_bottom.outerHeight())) {
+        $search_bar.css({
+          'bottom':0,
+          'top':'auto',
+          'position':'absolute'
+        })
+      }else{
+        $search_bar.css({
+          'bottom':'',
+          'top':0,
+          'position':''
+        })
+      }
+    }else{
+      $search_bar.removeClass('search_bar_fixed');
+    }
+  })
+}
+function popup_message(){
+  if($("#popup_message").html() != ""){
+    setTimeout(function(){
+      $("#popup_message").html('');
+
+    },10000);
+  }
+}
+
+
+
+function selectFirstResult() {
+  var firstResult = $(".pac-container .pac-item:first").text();
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({"address":firstResult}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      var place = results[0];
+      $("#lt").val(place.types);
+      $("#llat").val(place.geometry.location.lat());
+      $("#llng").val(place.geometry.location.lng());
+      $("input#ln").val(firstResult);
+    }
+  });
+}
+
+
+function editTextline () {
+  $('.btn-submit-update-text').live('click', function (e) {
+    target = $(this).parents('.popover');
+    id = target.siblings('.btn-edit-textline').attr('data-id');
+    data_type = target.siblings('.btn-edit-textline').attr('data-photo-type');
+    type = data_type == 'Home Page'? 1 : 0
+    $.ajax({
+      type: 'PUT',
+      url: current_host + '/admin/photos/' + id + '/update_text_photo/' + type ,
+      data: target.find('form').serialize(),
+      success: function(data)
+      {
+        target.find('form')[0].reset();
+        $('.btn-edit-textline').removeClass('opacity-disable');
+        target.siblings('.btn-edit-textline').click();
+        td_textline = target.parents('.action-table').siblings('.text-line')
+        td_textline.find('.text_title').html(data.text_title)
+        td_textline.find('.text_content').html(data.text_content)
+        td_textline.find('.text_hyperlink').html(data.text_hyperlink)
+
+      }
+    })
+    return false;
+    e.preventDefault();
+  })
+}

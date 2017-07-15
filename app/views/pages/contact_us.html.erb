@@ -1,0 +1,39 @@
+
+<div class="pnl_img_top">
+    <%= random_image_other_page %>
+</div>
+<div class="auto_height basic-page">
+  <div class="page">
+    <i class="back_button"></i>
+    <%= back_to_search %>
+    <h1 class="title-page pad-l-20"><%=t("layout.contact_us")%></h1>
+    <div class="page_content">
+      <!-- <div class="talk_to_us"></div> -->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr valign="top">
+          <td class='contact-left'>
+            <%= form_tag '/send_contact_message',:class=>'contact_us' do%>
+              <h4 class="title">Send us a message</h4>
+              <p><%= text_field_tag "name",params[:name],:placeholder=>"Name", class: 'form-control' %></p>
+              <p><%= text_field_tag "email",params[:email],:placeholder=>"Email", class: 'form-control'  %></p>
+              <p><%= text_area_tag "message",params[:message],:placeholder=>"Your message", class: 'form-control' %></p>
+              <br/>
+              <div id="refresh_captcha" title="Click here to get new image."><%= link_to(image_tag("refresh_captcha.gif"),refresh_captcha_path, :remote=>true)%></div>
+              <%= render "simple_captcha"%>
+              <!-- <p><%#= submit_tag "Submit", class: 'default-btn' %></p> -->
+              <button  id='submit_restaurant' class="default-btn btn-submit" type="submit">
+                <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i>  -->
+                <%= t('layout.submit') %>
+              </button>
+            <% end %>
+          </td class='contact-right'>
+          <td>
+            <div class="contact_info">
+              <%= render partial: "page_content", locals: {page:@page}%>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

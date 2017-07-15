@@ -1,0 +1,9 @@
+<%= form_for :text_photo do |f| %>
+  <%= t('layout.title') %>: <%= f.text_field :text_title , :class => 'form-control' %><br />
+  <%= t('layout.content') %> : <%= text_area :text_photo, :text_content,class: 'form-control', :style => 'height: 100px;' %><br />
+  <%= t('layout.hyperlink') %>: <%= f.text_field :text_hyperlink , :class => 'form-control' %>
+  <div class="footer-popover">
+    <button type="submit" class="btn-default btn btn-submit-update-text"><%= t('layout.submit') %></button>
+    <button  class="btn btn-default btn-cancel-popover"><%= t('layout.cancel') %></button>
+  </div>
+<% end %>

@@ -1,0 +1,84 @@
+.image-cover-page
+  width: 100%
+
+.arrow_box
+  position: relative
+  background: #ffffff
+
+.arrow_box.top:after, .arrow_box.top:before
+  bottom: 100%
+  border: solid transparent
+  content: " "
+  height: 0
+  width: 0
+  position: absolute
+  pointer-events: none
+
+.arrow_box.top:after
+  border-color: rgba(255, 255, 255, 0)
+  border-bottom-color: #ffffff
+  border-width: 6px
+  left: 15px
+  margin-left: -6px
+
+.arrow_box.top:before
+  border-color: rgba(204, 204, 204, 0)
+  border-bottom-color: #cccccc
+  border-width: 7px
+  left: 15px
+  margin-left: -7px
+
+.arrow_box.bottom-center:after, .arrow_box.bottom-center:before
+  left: 50%
+  border: solid transparent
+  content: " "
+  height: 0
+  width: 0
+  position: absolute
+  pointer-events: none
+  margin-left: -10px
+
+.arrow_box.bottom-center:after
+  border-color: rgba(136, 183, 213, 0)
+  border-top-color: #ffffff
+  border-width: 10px
+ 
+
+
+.arrow_box.bottom-center:before
+  border-color: rgba(204, 204, 204, 0)
+  border-top-color: rgba(0, 0, 0, 0.3)
+  border-width: 10px
+  top: 100%
+
+
+
+.arrow_box.ab-left:after, .arrow_box.ab-left:before
+  right: 100%
+  border: solid transparent
+  content: " "
+  height: 0
+  width: 0
+  position: absolute
+  pointer-events: none
+
+.arrow_box.ab-left:after
+  border-color: rgba(136, 183, 213, 0)
+  border-right-color: #ffffff
+  border-width: 6px
+  top: 30%
+  margin-top: -6px
+
+.arrow_box.ab-left:before
+  border-color: rgba(204, 204, 204, 0)
+  border-right-color: #cccccc
+  border-width: 7px
+  top: 30%
+  margin-top: -7px
+
+.arrow_box.ab-left.right-95:before
+  right: 95%
+.arrow_box.ab-left.right-95:after
+  right: 95%
+  bottom: 0
+

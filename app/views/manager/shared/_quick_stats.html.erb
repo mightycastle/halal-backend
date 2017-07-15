@@ -1,0 +1,76 @@
+<h3>Quick Stats</h3>
+
+<%
+
+  ratings_and_reviews_count = current_restaurant.reviews.count
+
+  if ratings_and_reviews_count > 5
+    avg_quality = current_restaurant.quality_avg
+    avg_value = current_restaurant.value_avg
+    avg_service = current_restaurant.service_avg
+  else
+    avg_quality = avg_value = avg_service = "not enough ratings"
+  end
+
+  today = Time.now.to_date
+  reviews_today = Review.all_reviews.where(:restaurant_id => current_restaurant_id, :created_at => today.beginning_of_day..today.end_of_day)
+  ratings_today = Review.all_ratings.where(:restaurant_id => current_restaurant_id, :created_at => today.beginning_of_day..today.end_of_day)
+  checkins_today = current_restaurant.checkins.where(:created_at => today.beginning_of_day..today.end_of_day)
+
+  ratings_today_count = ratings_today.length
+  reviews_today_count = reviews_today.length
+  checkins_today_count = checkins_today.count
+
+  satisfied_count = reviews_today.satisfied_ratings.count + ratings_today.satisfied_ratings.count
+  unsatisfied_count = ratings_today_count + reviews_today_count - satisfied_count
+
+  unread_reviews_count = current_restaurant.reviews.where(owner_has_read: false).count
+
+%>
+
+<table>
+  <tr>
+    <td>Average quality score:</td>
+    <td><b><%= avg_quality %></b></td>
+  <tr/>
+
+  <tr>
+    <td>Average value score:</td>
+    <td><b><%= avg_value %></b></td>
+  <tr/>
+
+  <tr>
+    <td>Average service score:</td>
+    <td><b><%= avg_service %></b></td>
+  </tr>
+
+  <tr>
+    <td>Ratings today:</td>
+    <td><b><%= ratings_today_count + reviews_today_count %></b></td>
+  </tr>
+
+  <tr>
+    <td>Reviews today:</td>
+    <td><b><%= reviews_today_count %></b></td>
+  </tr>
+
+  <tr>
+    <td>Unread reviews:</td>
+    <td><b><%= unread_reviews_count %></b></td>
+  </tr>
+
+  <tr>
+    <td>Satisfied customers today:</td>
+    <td><b><%= satisfied_count %></b></td>
+  </tr>
+
+  <tr>
+    <td>Unsatisfied customers today:</td>
+    <td><b><%= unsatisfied_count %></b></td>
+  </tr>
+
+  <tr>
+    <td>Customers checked in today:</td>
+    <td><b><%= checkins_today_count %></b></td>
+  </tr>
+</table>

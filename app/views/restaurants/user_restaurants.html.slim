@@ -1,0 +1,171 @@
+
+.owner-page
+  .welcome-owner
+    h2
+      | Welcome, 
+      = @restaurant.user.full_name if @restaurant.user
+    .row-fluid
+      .col-xs-12.col-sm-6.col-md-8.col-lg-8
+        h4
+          = t('restaurant.restaurant_manager_title', rest_name: @restaurant.name)
+
+
+      .col-xs-12.col-sm-6.col-md-4.col-lg-4
+        .pull-right.btn-group
+          button.default-btn.btn-details.dropdown-toggle.manage-btn data-toggle="dropdown"
+            / i.fa.fa-angle-right.fa-lg.arrow-left
+            | Manage another restaurant
+          ul.dropdown-menu.restaurant-list-dropdown role="menu"
+            - if current_user.restaurants.length > 0
+              - current_user.restaurants.each do |rest|
+                li
+                  = link_to rest.name, restaurant_info_path(rest.slug)
+                
+        .clearfix
+
+
+  .edit-details
+    .row
+      .col-xs-12.col-sm-6.col-md-6.col-lg-6
+          h3.tittle.title-page Reviews
+          - if @gem_hunter.blank? && @reviews.first.blank?
+            p= I18n.t("restaurant.no_review")
+          - else
+            = render :partial=> "user_restaurants/reply_reviews" , :locals=>{:reviews =>[@gem_hunter]}
+            = render :partial=> "user_restaurants/reply_reviews" , :locals=>{:reviews =>@reviews}
+
+          - if @gem_hunter.present? || (@reviews.present? && @reviews.size > 0)
+            = link_to(show_reviews_path(:page_num=>(@page_num.nil? ? 1 : (@page_num.to_i + 1)), :restaurant_id =>@restaurant.id, :sort_by => params[:sort_by] ), :id=>'read_more_reviews_btn', :class => 'default-btn btn-more-reviews') do
+                / i.fa.fa-angle-right.fa-lg.arrow-left
+                | Read more reviews
+      .col-xs-12.col-sm-6.col-md-6.col-lg-6
+        .post-offer
+          .row
+            .col-xs-9.col-sm-9.col-md-9.col-lg-9
+              h3.tittle.title-page Post an offer
+            .col-xs-3.col-sm-3.col-md-3.col-lg-3
+              .offer.pull-right
+                = link_to offer_restaurant_path do
+                  = image_tag("restaurant_detail/offer_icon.png")
+          ul.offer-descriptions
+            li.offer-dest 
+              i.fa.fa-circle
+              | Regular offer to attract dinners at quiet times
+            li.offer-dest 
+              i.fa.fa-circle
+              | One off offer
+          = link_to offer_restaurant_path do
+            button.default-btn
+              / i.fa.fa-angle-right.fa-lg.arrow-left
+              | Post an offer
+                  
+
+          #offer_post
+            = form_for Offer.new, url: create_offer_restaurant_path(@restaurant), :html => {:class =>"form-inline" } do |f|
+              = f.text_field :offer_content, placeholder: "Enter offer content", class: "form-control"
+              = f.submit 'Submit', class: 'default-btn btn-details'
+
+
+        #upload_pictures
+          h3.tittle.title-page   Upload pictures
+          h5 Show off your restaurant and your food.
+          
+
+          #processing_upload
+            = render :partial => "user_restaurants/upload_photos"
+            
+        #add_menus
+          h3.tittle.title-page Add menus
+          h5 Show users what your menu has to offer.
+          
+          #adding_menus
+            = render :partial=> "user_restaurants/upload_menus"
+
+        #add_social
+          h3.tittle.title-page Connect
+          h5 Add your social media pages such as Twitter, Facebook and Pinterest pages
+
+          button#btn_add_social_links.default-btn.btn-details 
+            / i.fa.fa-angle-right.fa-lg.arrow-left
+            | Connect
+
+
+          #form_add_social_links
+            = form_for @restaurant, url: update_social_link_restaurant_path(@restaurant) ,html:{:id => 'add_social_form', :remote => true} do |f|
+              label for="facebook" Facebook:
+              = f.text_field :facebook_link, class: "form-control" , placeholder: 'www.facebook.com/'
+              label for="twitter" Twitter:
+              = f.text_field :twitter_link, class: "form-control" , placeholder: 'www.twitter.com/'
+              label for="pinterest" Pinterest:
+              = f.text_field :pinterest_link, class: "form-control", placeholder: 'www.pinterest.com/'
+              label for="instagram" Instagram:
+              = f.text_field :instagram_link, class: "form-control", placeholder: 'www.instagram.com/'
+              button.default-btn.btn-details.btn-submit-social type="submit"
+                / i.fa.fa-angle-right.fa-lg.arrow-left
+                | Save
+
+        .edit-profile
+          h3.tittle.title-page Your Profile
+
+          = link_to  edit_user_restaurant_path, :class=> 'default-btn btn-details btn-edit-profile' do
+            / i.fa.fa-angle-right.fa-lg.arrow-left
+            | Edit your profile
+
+
+javascript:
+  $(document).ready(function() {
+    $('#form_add_social_links').hide();
+
+    $('#btn_add_social_links').click(function(){
+      var flag = "#{current_user.is_profession_user_avail? }";
+      if (flag == 'false'){
+        window.location.href="#{become_a_member_path}"
+      }else{
+        $('#btn_add_social_links').hide()
+        $('#form_add_social_links').show();
+      }
+    });
+    $('#btn_edit_social_links').click(function(){
+      var flag = "#{current_user.is_profession_user_avail? }";
+      if (flag == 'false'){
+        window.location.href="#{become_a_member_path}"
+      }else{
+        $('#form_add_social_links').show();
+        $('#show_social_media').hide();
+      }
+    });
+
+    $('#btn-upload-new-pics').click(function(){
+      var flag = "#{current_user.is_profession_user_avail? }";
+      if (flag == 'false'){
+        window.location.href="#{become_a_member_path}"
+      }else{
+        $('#btn-upload-new-pics').hide()
+        $('#processing_upload').show()
+      }
+    });
+
+    $('#btn_add_menu').click(function(){
+      var flag = "#{current_user.is_profession_user_avail? }";
+      if (flag == 'false'){
+        window.location.href="#{become_a_member_path}"
+      }else{
+        $('#btn_add_menu').hide()
+        $('#adding_menus').show()
+      }
+    });
+
+    $('.post-offer a').click(function(e){
+      e.preventDefault();
+      var flag = "#{current_user.is_profession_user_avail? }";
+      if (flag == 'false'){
+        window.location.href="#{become_a_member_path}"
+      }else{
+        window.location.href="#{offer_restaurant_path}"
+      }
+    });
+
+
+  })
+
+

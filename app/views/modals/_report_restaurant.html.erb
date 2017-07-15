@@ -1,0 +1,61 @@
+<!-- Modal -->
+<%= form_tag report_restaurant_path, remote: true, :class=>'advertise_your_restaurant text-left' do%>
+  <div class="modal fade" id="report_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p for="" class="title-page">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <%= t("layout.this_restaurant") -%>
+          </p>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 col-lg-12 flash_caution">
+            </div>
+              
+            <div class="col-md-12 col-lg-12 col-xs-12">
+              <label class='report-item'>
+                <%= check_box_tag "is_closed" %>
+                <span>Is closed</span>
+              </label>
+            </div>
+
+            <div class="col-md-12 col-lg-12 col-xs-12">
+              <label class='report-item'>
+                <%= check_box_tag "has_incorrect_information" %>
+                <span>Has incorrect information</span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-md-12 col-lg-12 mg-t-20">
+              <%= text_field_tag "more_details", nil, {placeholder: "Please provide details so we can check this out", class: "form-control"} %>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+          <!-- <%= submit_tag "Search", class: "search default-btn"%> -->
+          <button name="button"  class="btn-submit  default-btn search pull-left">
+            <%= hidden_field_tag "restaurant_id", @restaurant.id  %>
+            <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i>  -->
+            <%= t('layout.submit') %>
+          </button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+<% end %>
+
+
+<script>
+  $('#report_modal').on('hidden.bs.modal', function (e) {
+    $("#report_modal #is_closed").attr('checked', false);
+    $("#report_modal #has_incorrect_information").attr('checked', false);
+    $("#report_modal #more_details").val('');
+    $("#report_modal .flash_caution").html('');
+  });
+</script>

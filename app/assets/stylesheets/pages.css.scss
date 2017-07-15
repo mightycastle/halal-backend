@@ -1,0 +1,212 @@
+// Place all the styles related to the Pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.star1{
+ background-image: src("rating/filled_star.png");
+}
+
+.ratingStar:before {
+    font-size: 0pt;
+    width: 13px;
+    height: 12px;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+    display: block;
+    content: "\f005";
+    font-family: FontAwesome;
+}
+
+.filledRatingStar {
+    background: image-url("/assets/rating/filled_star.png") repeat-x top;
+}
+.ratings_stars{ display: inline-block; padding: 0 5px;
+	
+}
+
+
+.rate_widget {
+    border:     1px solid #CCC;
+    overflow:   visible;
+    padding:    10px;
+    position:   relative;
+    width:      180px;
+    height:     32px;
+}
+.ratings_stars:before {
+    color: red;
+    content: "\f006";
+    font-family: FontAwesome;
+    font-size: 20px;
+    float:      left;
+    height:     20px;
+    width:      20px;
+    line-height: 25px;
+}
+.rating_bars {
+    background: url('/assets/rating/empty_bar.png') no-repeat;
+    float:      left;
+    height:     41px;
+    padding:    2px;
+    width:      32px;
+}
+.ratings_vote {
+    background: url('/assets/rating/filled_star.png') no-repeat;
+}
+
+.ratings_over:before {
+    content: "\f005";
+    font-family: FontAwesome;
+}
+.rating_bars_over {
+    background: url('/assets/rating/filled_bar.png') no-repeat;
+}
+
+.rating_star_filled{
+  background: url('/assets/rating/filled_bar.png') no-repeat;
+}
+.rating_star_empty{
+  background: url('/assets/rating/empty_bar.png') no-repeat;
+}
+
+.info .review .rating_voting{
+    width: 250px;
+    float: left;
+    height: 120px;
+}
+
+.info .paginate{
+
+    width: 1002px;
+}
+
+
+/*             styles for the star rater                */	
+	.star-rating{
+		list-style:none;
+		margin: 0px;
+		padding:0px;
+		width: 125px;
+		height: 25px;
+		position: relative;
+		overflow:hidden;
+		background: url('/assets/rating/filled_bar.png') top left repeat-x;		
+	}
+	.star-rating li{
+		padding:0px;
+		margin:0px;
+		width:25px;
+		height:25px;
+		/*\*/
+		float: left;
+		/* */
+	}
+	.star-rating li a{
+		display:block;
+		width:25px;
+		height: 25px;
+		line-height:25px;		
+		text-decoration: none;
+		text-indent: -9000px;
+		z-index: 20;
+		position: absolute;
+		padding: 0px;
+		overflow:hidden;
+	}
+	.star-rating li a:hover{
+		background: url('/assets/rating/filled_bar.png') left bottom;
+		z-index: 2;
+		left: 0px;
+		border:none;
+	}
+	.star-rating a.one-star{
+		left: 0px;
+	}
+	.star-rating a.one-star:hover{
+		width:25px;
+	}
+	.star-rating a.two-stars{
+		left:25px;
+	}
+	.star-rating a.two-stars:hover{
+		width: 50px;
+	}
+	.star-rating a.three-stars{
+		left: 50px;
+	}
+	.star-rating a.three-stars:hover{
+		width: 75px;
+	}
+	.star-rating a.four-stars{
+		left: 75px;
+	}	
+	.star-rating a.four-stars:hover{
+		width: 100px;
+	}
+	.star-rating a.five-stars{
+		left: 100px;
+	}
+	.star-rating a.five-stars:hover{
+		width: 125px;
+	}
+	.star-rating li.current-rating{
+		background: url('/assets/rating/filled_bar.png') left center;
+		position: absolute;
+		height: 25px;
+		display: block;
+		text-indent: -9000px;
+		z-index: 1;
+	}
+	
+	/* remove halo effect in firefox   */
+	a:active{
+		outline: none;
+	}		
+
+.special_deal_star {
+  position: absolute;
+  top: -23px;
+  left: -22px;
+}
+.search_special_deal {
+  position: absolute;
+  top: 0px;
+  left: 150px;
+}
+
+div#result_table tr td {
+  position: relative;
+}
+
+.my_reviews{
+  margin-bottom: 30px;
+  .content_review_bounder{
+  width: 315px;
+  }
+}
+.my_purchases{
+  padding: 60px 20px 50px;
+  color: #000;
+  .title-page{
+  	color: #fff;
+  }
+  table{
+    background: #fff;
+
+    tbody{
+      td{
+        a{
+          color: #000;
+          text-decoration: underline;
+          &:hover{
+            text-decoration: none;
+          }
+        }
+        a.btn-color-white{
+          color: #000; text-decoration: none; padding: 2px 5px;
+          &:hover{ color: #fff;}
+        }
+      }
+    }
+  }
+}

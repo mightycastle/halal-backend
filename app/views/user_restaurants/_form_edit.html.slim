@@ -1,0 +1,229 @@
+
+= form_for(@restaurant, wrapper: 'restaurant', url: restaurant_managerment_restaurants_path, :multipart => true, :validate => true) do |f|
+  .edit_profile
+    #your_profile1
+      input type='hidden' name='id' value= @restaurant.id
+      .row
+        .col-lg-6.col-xs-12.col-sm-6.col-md-6
+          .cover
+            = image_tag(cover_thumb_url(@restaurant), :class => 'restaurant-image-cover') 
+      .row
+        .col-lg-6.col-xs-12.col-sm-6.col-md-6
+          label.label-text for="edit_restaurant_name"
+            = t('suggestion.restaurant_name')
+          span.text-error *
+          = f.text_field :name, class: "form-control", required: true
+      .row
+        .col-lg-6.col-xs-12.col-sm-6.col-md-6
+          label.label-text for="edit_page_owner"
+            = t('page_owner')
+          = f.text_field :user_name, class: "form-control", disabled: true
+
+      .row
+        .col-lg-6.col-xs-12.col-sm-6.col-md-6
+          label.label-text for="edit_full_name"
+            = t('full_name')
+          = f.text_field :suggester_name, class: "form-control"
+
+      .row
+        .col-lg-6.col-xs-12.col-sm-6.col-md-6
+          label.label-text for="edit_address"
+            = t('suggestion.restaurant_address')
+          span.text-error *
+          = f.text_field :address, class: "form-control", id: 'restaurant_address', required: true
+          label.label-text for="edit_address"
+            = t('suggestion.short_address')
+          = f.text_field :short_address, class: "form-control"
+          = f.hidden_field :lat
+          = f.hidden_field :lng
+          = f.hidden_field :district
+          = f.hidden_field :city
+          = f.hidden_field :country
+          = f.hidden_field :postcode
+      .row
+        .col-lg-6.col-xs-12.col-sm-6.col-md-6
+          label.label-text for="edit_phone"
+            = t('suggestion.suggester_phone')
+          = f.text_field :phone, class: "form-control"
+
+      .row
+        .col-lg-6.col-xs-12.col-sm-6.col-md-6
+          label.label-text for="edit_website"
+            = t('suggestion.suggester_website')
+          = f.text_field :website, class: "form-control"
+
+      #hala_status
+        h4 = t('layout.hala_status')
+        .row
+          .col-lg-6.col-xs-12.col-sm-6.col-md-6
+            - @filter_status.each do |f_s|
+              = restaurant_filter_checkbox f_s, @filter_ids
+        label.label-text
+          = t('layout.hala_status_comment')
+        .row
+          .col-lg-6.col-xs-12.col-sm-6.col-md-6
+            = f.text_area :halal_status, class: "form-control", :rows => "7"
+
+
+      h4
+        = t('cuisine')
+      .row.mg-t-15
+        .col-lg-6.col-xs-12.col-sm-6.col-md-6
+          #select_cuisines
+            = select_tag "restaurant[filter_ids][]", options_from_collection_for_select(@filter_cuisines, "id", "name", @filter_cuisine_id) , :prompt => t('choose_options'),multiple: true, :id => 'filter_cuisines'
+
+
+
+      #acohol_allowance
+        h4
+          = t('alcohol')
+        .row
+          .col-lg-6.col-xs-12.col-sm-6.col-md-6
+            - @filter_alcohol.each do |f_a|
+              = restaurant_filter_radio_button(f_a, @filter_ids,'restaurant[filter_id_alcohol]')
+      #prices
+        h4
+          = t('price')
+        span.small-text-sub = t('price_sub')
+        .row
+          .col-lg-6.col-xs-12.col-sm-6.col-md-6
+            - @filter_prices.each do |f_i| 
+              = restaurant_filter_radio_button(f_i, @filter_ids,'restaurant[filter_id_price]')
+       
+      #facilities
+        h4
+          = t('features')
+        .row
+          .col-lg-6.col-xs-12.col-sm-6.col-md-6
+            - @filter_features.each do |f_i|
+              = restaurant_filter_checkbox f_i, @filter_ids
+
+        #opening_times
+          h4
+            = t('opening_times')
+      #time_box
+        .row
+
+          .col-lg-6.col-xs-12.col-sm-6.col-md-6.padding-r-35
+            .col-md-12.col-xs-12.col-sm-12.pad-right-0
+              .daily.text-time.inline-bl
+                span
+                  =t('day_time')
+              button#btn-apply-to-all-daily.btn.btn-link.btn-apply-all.color-blue-title type='button'
+                = t('layout.apply_to_all')
+
+
+            table#opening_hours.table-open-time border="0" style="margin-left: 15px; margin-right: 15px;"
+
+              = f.simple_fields_for :schedules, wrapper: "none" do |p|
+                - if p.object.schedule_type.blank? || p.object.schedule_type == 'daily'
+                  tr
+                    td width="40px"
+                      = Schedule::DAY_SHEET["#{p.object.day_of_week}"]
+                    td class='select'
+                      = p.input :day_of_week, as: 'hidden'
+                      = p.input :time_open, collection: Schedule::TIME_SHEET.invert, input_html: {class: "select-opentime from daily #{p.object.day_of_week}", title: t('title_time')}
+                      = p.input :schedule_type,  as: 'hidden', input_html: { value: 'daily' }
+                    td width="30px" align="center"
+                      |to
+                    td class='select'
+                      = p.input :time_closed, collection: Schedule::TIME_SHEET.invert, input_html: {class: "select-opentime to daily #{p.object.day_of_week}", title: t('title_time')}
+                    td width="60px" align="center"
+                      button.btn.btn-link.time-closed.color-blue-title type='button' data-value=".select-opentime.daily.<%= p.object.day_of_week %>"
+                        = t('layout.closed')
+          
+          .col-lg-6.col-xs-12.col-sm-6.col-md-6.padding-r-35
+            .col-md-12.col-xs-12.col-sm-12.pad-right-0
+              .evening.text-time.inline-bl
+                span
+                  =t('evening')
+              button#btn-apply-to-all-evening.btn.btn-link.btn-apply-all.color-blue-title type='button'
+                = t('layout.apply_to_all')
+            table#opening_hours.table-open-time border="0" style="margin-left: 15px;"
+              = f.simple_fields_for :schedules, wrapper: "none" do |p|
+                - if p.object.schedule_type.blank? || p.object.schedule_type == 'evening'
+                  tr
+                    td width="40px"
+                      = Schedule::DAY_SHEET["#{p.object.day_of_week}"]
+                    td class='select'
+                      = p.input :day_of_week, as: 'hidden'
+                      = p.input :time_open, collection: Schedule::TIME_SHEET_EVENING.invert, input_html: {class: "select-opentime from evening #{p.object.day_of_week}", title: t('title_time')}
+                      = p.input :schedule_type,  as: 'hidden', input_html: { value: 'evening' }
+
+                    td width="30px" align="center"
+                      |to
+                    td class='select'
+                      = p.input :time_closed, collection: Schedule::TIME_SHEET_EVENING.invert, input_html: {class: "select-opentime to evening #{p.object.day_of_week}", title: t('title_time')}
+                    td width="60px" align="center"
+                      button.btn.btn-link.time-closed.color-blue-title type='button' data-value=".select-opentime.evening.#{p.object.day_of_week}"
+                        = t('layout.closed')
+                    
+      .button-submit
+        button.default-btn type=""
+          / i.fa.fa-angle-right.fa-lg.arrow-left
+          = t('save')
+
+        h5.color-666
+          = t('suggestion.change_other_details')
+
+          = link_to t('contact_us'), contact_us_path(), :class => 'contact_us'
+
+
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDviEQ_rkCCFJzwyrbtFREw39Cwu-oAIcg&sensor=true&libraries=places" type="text/javascript"></script>
+javascript:
+  
+  $(document).ready(function(){
+    if($('.select-opentime.from.daily').val().length == 0){
+      $('.select-opentime.from.daily').val('1200');
+      $('.select-opentime.from.daily').selectpicker('refresh');
+      $('.select-opentime.to.daily').val('2300');
+      $('.select-opentime.to.daily').selectpicker('refresh');
+    }
+  })
+  // Address Autocomplete
+  var input = document.getElementById('restaurant_address');
+  var autocomplete = new google.maps.places.Autocomplete(input);
+
+
+
+  // Autocomplete Listener
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    var place = autocomplete.getPlace();
+
+    document.getElementById("restaurant_lat").value = place.geometry.location.lat();
+    document.getElementById("restaurant_lng").value = place.geometry.location.lng();
+
+
+
+    var address = '';
+    if (place.address_components) {
+      address = [(place.address_components[0] &&
+                  place.address_components[0].short_name || ''),
+                 (place.address_components[1] &&
+                  place.address_components[1].short_name || ''),
+                 (place.address_components[2] &&
+                  place.address_components[2].short_name || '')
+                ].join(' ');
+    }
+
+
+
+    // Autofill the fields in the form. TODO: improve parsing of the returned JSON data.
+    var address = place.address_components;
+    var zipcode = address[address.length - 1].long_name;
+    var country = address[address.length - 2].long_name;
+    var city = address[address.length - 3].long_name;
+    var sublocality = address[address.length - 4].long_name;
+    var streetname = address[0].long_name;
+
+    var location_name = place.name;
+    var formatted_address = place.formatted_address;
+    var formatted_phone_number = place.formatted_phone_number;
+
+    document.getElementById("restaurant_postcode").value = zipcode;
+    document.getElementById("restaurant_city").value = city;
+    document.getElementById("restaurant_country").value = country;
+    document.getElementById("restaurant_district").value = sublocality;
+    document.getElementById("restaurant_address").value = formatted_address;
+
+  });

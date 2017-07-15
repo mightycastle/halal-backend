@@ -1,0 +1,21 @@
+<% if @review %>
+  <% if @review.is_featured? %>
+    $('.btn-set-featured-<%= @review.id %>').removeClass('btn-info');
+    $('.btn-set-featured-<%= @review.id %>').addClass('btn-warning');
+    $('.btn-set-featured-<%= @review.id %>').attr('href', "<%= set_featured_review_path(@review.id,"0")%>").text(' Featured')
+  <% else %>
+    $('.btn-set-featured-<%= @review.id %>').removeClass('btn-warning');
+    $('.btn-set-featured-<%= @review.id %>').addClass('btn-info');
+    $('.btn-set-featured-<%= @review.id %>').attr('href', "<%= set_featured_review_path(@review.id,"1") %>").text(' Set featured')
+  <% end %>
+  $(".btn-set-featured-<%= @review.id %>").popover('destroy')
+<% else %>
+  $(".btn-set-featured-<%= @review_id %>").popover({
+    placement : 'auto',
+    html: 'true', 
+    trigger: 'click',
+    container: 'body',
+    content : '<div id="popOverBox"><%= t "review.warning_message_feature" %></div>'
+    }).popover('toggle');
+
+<% end %>

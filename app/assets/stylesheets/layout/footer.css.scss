@@ -1,0 +1,88 @@
+#footer{
+  .halalgem-logo{
+    margin: 10px 0px 30px 0px;
+  }
+
+  background-color: #37383a;
+  padding-top: 30px;
+  padding-bottom: 100px;
+  color: #f2f2f2;
+  float: left;
+  .col-block{
+    margin-bottom: 15px;
+    font-family: OpenSans_Regular;
+    &:last-child{
+      > p{
+        font-family: OldStandard_Italic;
+        font-size: 24px;
+        margin: 10px 0px;
+        &:first-child{
+          margin-top: 0px;
+        }
+      }
+      .btn-newsletter{
+        font-family: OldStandard_Italic;
+      }
+    }
+  }
+  .footer-nav-left{
+    > li{
+      margin-bottom: 10px;
+      > a{
+        color: #f2f2f2;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+    }
+  }
+  .footer-nav-right{
+    > li{
+      margin-bottom: 10px;
+      > a{
+        color: #f2f2f2;
+        text-transform: uppercase;
+      }
+    }
+  }
+  .btn-newsletter{
+    background-color: #000;
+    color: #fff;
+  }
+  .social-icons{
+    > li{
+      > a{
+        color: #a4b1b1;
+        &:hover{
+          color: #fff;
+        }
+      }
+    }
+  }
+  // .input-email-footer{ width: 95%; display: inline-block; border-radius: 0; border: none; padding-right: 82px; vertical-align: top;
+  //               box-shadow: inset 4px 4px 10px -3px #888;
+  //           -moz-box-shadow: inset 4px 4px 10px -3px #888;
+  //           -webkit-box-shadow: inset 4px 4px 10px -3px #888;
+  // }
+  // .title-footer{ font-size: 20px;  text-transform: uppercase; font-size: 16px; line-height: 30px; }
+  // .first_col{ padding-left: 0;}
+  // .option{ line-height: 30px;
+  //   b{ font-weight: normal;}
+  // }
+  // .copy-right{ padding: 10px 0; font-size: 13px;
+  //   b{ font-weight: normal;}
+  // }
+  // .submit-footer{ margin-left: -80px; margin-top: 0px; vertical-align: top; margin-bottom: 0; height: 34px;}
+  // .form_submit_footer{ padding-top: 5px;}
+  // .text-footer{ color: #fff; text-decoration: none ; font-size: 16px;
+  //   &:hover{
+  //     color: fff;
+  //   }
+  // }
+  // #popup_message_newsletter{
+  //   margin-right: 9px; margin-top: 5px;
+  //   .message_common{
+  //     padding: 3px 5px;
+  //   }
+  // }
+
+}

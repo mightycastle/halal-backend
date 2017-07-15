@@ -1,0 +1,108 @@
+<dl class="restaurant-info-box">
+  <dt>Restaurant name:</dt>
+  <dd><%= formatInfo restaurant.name %></dd>
+
+  <dt>Page owner:</dt>
+  <dd><%= formatInfo (restaurant.user.username + " (#{restaurant.user.email})") %></dd>
+
+  <dt>Full name:</dt>
+  <%
+    name = ""
+
+    if restaurant.user.first_name
+      name = restaurant.user.first_name
+    end
+    if restaurant.user.middle_name
+      name += " #{restaurant.user.middle_name}"
+    end
+    if restaurant.user.last_name
+      name += " #{restaurant.user.last_name}"
+    end
+
+    if name.strip == ""
+      name = nil
+    end
+  %>
+
+  <dd><%= formatInfo name %></dd>
+
+  <dt>Address:</dt>
+  <dd><%= formatInfo restaurant.address %></dd>
+
+  <dt>Short address:</dt>
+  <dd><%= formatInfo restaurant.short_address %></dd>
+
+  <dt>Phone:</dt>
+  <dd><%= formatInfo restaurant.phone %></dd>
+
+  <dt>Website:</dt>
+  <dd><%= formatInfo restaurant.website %></dd>
+
+  <dt>Email:</dt>
+  <dd><%= formatInfo restaurant.email %></dd>
+
+  <dt>Facebook-page link:</dt>
+  <dd><%= formatInfo restaurant.facebook_link %></dd>
+
+  <dt>Twitter link:</dt>
+  <dd><%= formatInfo restaurant.twitter_link %></dd>
+
+  <dt>Price:</dt>
+  <dd><%= formatInfo restaurant.get_price_restaurant %></dd>
+
+  <dt>Halal Status:</dt>
+  <dd>
+    <div class="list_status">
+      <% if restaurant.is_staff_confirmation? %>
+        <img src="<%= image_path('restaurant_detail/staff_comfirmation_icon.png')%>" alt="Staff Confirmation" class="jtooltip" title="Staff Confirmation" />
+      <%end%>
+
+      <% if restaurant.is_sign_in_windown? %>
+        <img src="<%= image_path('restaurant_detail/sign_in_window_icon.png')%>" alt="Sign In Window" class="jtooltip" title="Sign In Window" />
+      <%end%>
+
+      <% if restaurant.is_certificate_available? %>
+        <img src="<%= image_path('restaurant_detail/certificate_icon.png')%>" alt="Certificate available" class="jtooltip" title="Certificate available" />
+      <% end%>
+    </div>
+  </dd>
+
+  <dt>Features:</dt>
+  <dd>
+    <%= restaurant.is_shisha? ? image_tag("restaurant_detail/shisha.png", alt:"Shisha", class:"jtooltip", title:"Shisha" ) : '' %>
+    <%= restaurant.is_deliver? ?  image_tag("restaurant_detail/delivery.png", alt:"Deliery", class:"jtooltip", title:"Deliery") :  '' %>
+    <%= restaurant.is_wifi? ? image_tag("restaurant_detail/wifi_icon.png", alt:"Wifi", class:"jtooltip", title:"Wifi" ) : '' %>
+    <%= restaurant.is_wheel_chair_access? ? image_tag("restaurant_detail/wheelchair_accessiable_icon.png", alt:"Accessible", class:"jtooltip", title:"Accessible") : '' %>
+    <%= restaurant.is_organic? ? image_tag("restaurant_detail/organic_icon.png", alt:"Organic", class:"jtooltip", title:"Organic") : '' %>
+  </dd>
+
+  <dt>Alchohol:</dt>
+  <dd>
+    <%= alcohol_filter(restaurant) %>
+  </dd>
+
+  <dt>Halal Status comment:</dt>
+  <%
+    halal_status = nil
+    if restaurant.halal_status != "" and restaurant.halal_status != nil
+      halal_status = "\"#{restaurant.halal_status}\""
+    end
+  %>
+  <dd>
+    <% if halal_status %>
+      <i><%= formatInfo halal_status %></i>
+    <% else %>
+      <%= formatInfo halal_status %>
+    <% end %>
+  </dd>
+
+  <dt>Cuisine:</dt>
+  <dd><%= formatInfo restaurant.cuisine.join(", ") %></dd>
+
+  <dt>Opening hours:</dt>
+  <dd>
+    <% if restaurant.schedules && restaurant.schedules.is_set_daily.count > 0 %>
+      <%= restaurant.opening_time_daily.html_safe %>
+    <% end %>
+  </dd>
+</dl>

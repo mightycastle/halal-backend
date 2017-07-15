@@ -1,0 +1,14 @@
+$('#form_add_social_links').hide();
+<% if @restaurant.have_social_link? %>
+  $('#btn_add_social_links').hide();
+  $('#show_social_media').show();
+<% else %>
+  $('#btn_add_social_links').show();
+  $('#show_social_media').hide();
+<% end %>
+
+$('.facebook_link').html('<%= @restaurant.facebook_link %>').attr('href','http://<%= @restaurant.facebook_link %>');
+
+$('.twitter_link').html('<%= @restaurant.twitter_link %>').attr('href','http://<%= @restaurant.twitter_link %>');
+
+$('.pinterest_link').html('<%= @restaurant.pinterest_link %>').attr('href','http://<%= @restaurant.pinterest_link %>');

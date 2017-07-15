@@ -1,0 +1,33 @@
+<div class="btn-group btn-group-xs">
+<!-- <%= link_to "", "#", class: 'btn btn-default icon-edit edit_review_content', id: review.id%> -->
+<% if review.status == nil %>
+  <%=link_to (content_tag :span, " Approve", class: 'open-san'), change_status_review_path(review.id,"1"), method: "post", class: 'btn btn-success fa fa-check-circle ', remote: true, title: 'Approve'%>
+  <%=link_to (content_tag :span, " Reject", class: 'open-san'), change_status_review_path(review.id,"0"), method: "post", class: 'btn btn-danger fa fa-ban ', remote: true, title: 'Reject'%>
+<%elsif review.status == true %>
+  <%=link_to (content_tag :span, " Approve", class: 'open-san'), change_status_review_path(review.id,"1"), method: "post", class: 'btn btn-success fa fa-check-circle disable_btn', remote: true, title: 'Approve'%>
+  <%=link_to (content_tag :span, " Reject", class: 'open-san'), change_status_review_path(review.id,"0"), method: "post", class: 'btn btn-danger fa fa-ban ', remote: true, title: 'Reject'%>
+<%elsif review.status == false %>
+  <%=link_to (content_tag :span, " Approve", class: 'open-san'), change_status_review_path(review.id,"1"), method: "post", class: 'btn btn-success fa fa-check-circle ', remote: true, title: 'Approve'%>
+    <%=link_to (content_tag :span, " Reject", class: 'open-san'), change_status_review_path(review.id,"0"), method: "post", class: 'btn btn-danger fa fa-ban disable_btn', remote: true, title: 'Reject'%>
+<% end %>
+
+</div>
+
+<% if review.status == true && review.restaurant.disabled == false %>
+  <div class="btn-group btn-group-xs pad-top-5">
+    <% if review.is_featured? %>
+      <%= link_to (content_tag :span, " Featured", class: 'open-san'), set_featured_review_path(review.id,"0"), method: "post", class: "btn btn-mini  btn-default btn-warning fa fa-star btn-set-featured-#{review.id}", remote: true %>
+      
+    <% else %>
+      <%= link_to (content_tag :span, " Set featured", class: 'open-san'), set_featured_review_path(review.id,"1"), method: "post", class: "btn btn-mini  btn-info fa fa-star btn-set-featured-#{review.id} btn-feature", remote: true %>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="btn-group btn-group-xs mg-t-5 ">
+  <%= link_to (content_tag :span, " Edit", class: 'open-san'), "#", class: 'btn btn-default fa fa-edit edit_review_content', id: review.id %>
+</div>
+
+<script type="text/javascript">
+  // $(".btn-set-featured-<%= review.id %>").popover()
+</script>

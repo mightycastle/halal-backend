@@ -1,0 +1,81 @@
+<h2 class="title"><%=t 'filter.management' %></h2>
+
+<div class="well">
+<div class="filter-form">
+  <%= render 'form'%>
+</div>
+<%= search_form_for @search do |f| %>
+    <%= f.condition_fields do |c| %>
+      <%= render "condition_fields", f: c %>
+    <% end %>
+    <div class="actions">
+      <%= link_to_add_fields " Add Conditions", f, :condition %>
+      <%= f.submit "Search", :class => "btn btn-success icon-search" %>
+    </div>
+<% end %>
+</div>
+
+<table id='filters-table' class="table table-condensed table-striped">
+  <thead>
+  <tr>
+    <th width="150px">Group</th>
+    <th><%= sort_link @search, :name, "Filter Name" %></th>
+    <th width="100px">Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @filters.each_with_index do |filter, index| %>
+    <tr id='filter-<%= filter.id %>'>
+      <td><%= filter.filter_type.name %></td>
+      <td>
+        
+        <div class="hide" id='form_name_<%= filter.id%>'>
+          <%= form_tag update_name_filter_path(filter), remote: true, method: :post do %>
+            <%= text_area_tag 'name', filter.name, :id => "name_#{filter.id}", :style => "width: 240px; height: 80px; float: left;", alt: filter.name %>
+            <div class="btn-group btn-group-xs" style="margin-left: 10px; float: left;">
+              <a href="#" class="btn btn-primary fa fa-check-circle submit_name" id="<%= filter.id%>"></a>
+              <a href="#" class="btn btn-danger fa fa-ban cancel_name" id="<%= filter.id%>"></a>
+            </div>
+          <% end %>
+        </div>
+        
+        <div id="filter_name_show_<%= filter.id %>">
+          <%= filter.name %>
+        </div>
+      </td>
+      <td>
+        <div class='btn-group btn-group-xs'>
+          <%= link_to (content_tag :span, ' Edit', class: 'open-san'), '#',:class => "btn btn-default fa fa-edit btn-edit-filter edit_filter_name", id: filter.id, title: 'Edit' %>
+          <%= link_to (content_tag :span, ' Delete', class: 'open-san'), "/admin/filters/#{filter.id}",:class => "btn btn-default fa fa-times-circle-o", id: filter.id, title: 'Delete', confirm: t('filter.delete_confirm') , :method => :delete %>
+        </div>
+      </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= paginate @filters, :theme => "twitter-bootstrap-3" %>
+<br />
+
+
+<script>
+  $('.submit_name').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    $('#form_name_'+id+' form').submit();
+  });
+  $('.cancel_name').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    $('#form_name_'+id).addClass('hide');
+    $('#form_name_'+id+' textarea').val($('#form_name_'+id+' textarea').attr('alt'));
+    $('#filter_name_show_'+id).removeClass('hide');
+    $('#'+id+'.edit_filter_name').removeAttr("disabled");
+  });
+  $('.edit_filter_name').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    $('#form_name_'+id).removeClass('hide');
+    $('#filter_name_show_'+id).addClass('hide');
+    $(this).attr('disabled','disabled');
+  });
+</script>

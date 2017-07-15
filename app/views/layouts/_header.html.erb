@@ -1,0 +1,80 @@
+<!-- <div class='red-header-top'></div> -->
+
+<nav class="navbar nav_top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#home-header-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to(image_tag("logo1.png", class: "logo"), 'http://www.halalgems.com', class: "navbar-brand navbar-logo") %>
+    </div>
+
+    <% if user_signed_in? %>
+      <%= render "layouts/user_pnl"%>
+    <% else %>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="home-header-navbar-collapse1">
+        <ul class="nav navbar-nav navbar-right guest">
+          <li class="dropdown">
+            <%= link_to( t('layout.register'), new_user_registration_path, {:class => 'pull-left'}) %>
+            <span class="divider pull-left">/</span>
+            <%= link_to( t('layout.login'), new_user_session_path, {:class => 'pull-left'}) %>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+      <div class="collapse navbar-collapse" id="home-header-navbar-collapse">
+        <ul class="nav navbar-nav visible-xs">
+          <li class="dropdown">
+            <%= link_to( t('layout.register'), new_user_registration_path) %>
+          </li>
+          <li class="dropdown">
+            <%= link_to( t('layout.login'), new_user_session_path) %>
+          </li>
+          <li class="<%= active_restaurants_pages? ? "active" : "" %>">
+            <%= link_to "Restaurants", root_path %>
+          </li>
+          <li>
+            <a href="http://halalgems.com/gem-hunter-profiles"> Gemhunters</a>
+          </li>
+          <li>
+            <a href="http://halalgems.com/halal-gems/news"> News</a>
+          </li>
+          <li>
+            <a href="http://halalgems.com/halal-gems/magazine"> Magazine</a>
+          </li>
+          <li>
+            <%= link_to "FAQ", faq_path %>
+          </li>
+          <li>
+            <%= link_to 'Contact Us', contact_us_path %>
+          </li>
+          <li>
+            <%= link_to "Search Restaurants", root_path %>
+          </li>
+          <li>
+            <%= link_to "Add Restaurants", new_restaurant_path %>
+          </li>
+          <li>
+            <%= link_to "Advertising", "#" %>
+          </li>
+          <li class="social-icons">
+            <%= link_to "http://www.instagram.com/halalgems", target: "_blank" do %>
+              <span class="fa fa-instagram fa-2x"></span>
+            <%- end %>
+            <%= link_to "https://twitter.com/halalgems", target: "_blank" do %>
+              <span class="fa fa-twitter fa-2x"></span>
+            <%- end %>
+            <%= link_to "https://www.facebook.com/halalgems", target: "_blank" do %>
+              <span class="fa fa-facebook-square fa-2x"></span>
+            <%- end %>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    <% end %>
+  </div><!-- /.container-fluid -->
+</nav>
+

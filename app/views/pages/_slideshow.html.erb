@@ -1,0 +1,16 @@
+<div id="content" class="">
+  <div class="mygallery" >
+    <div class="tn3 album" style="overflow:hidden !important;">
+     <div class="tn3 thumb"><%= image_tag(@restaurant.cover.image.url) if @restaurant.cover %></div>
+        <ol>
+        <% @restaurant.photos.each do |photo| %>
+          <li>
+            <a href="<%= photo.image.thumb("470x300#").url %>">
+            <%= image_tag(photo.image.thumb("160x80#").url, {:width=>"160", :height=>"80"}) %>
+            </a>
+          </li>
+        <% end %>
+        </ol>
+     </div>
+  </div>
+</div>

@@ -1,0 +1,189 @@
+<%= form_for AdminPhoto.new, :html => { :multipart => true, :id => "fileupload"  } do |f| %>
+  <div class='well'>
+    <div class="fileupload-buttonbar">
+      <div class="progressbar fileupload-progressbar nofade"><div style="width:0%;"></div></div>
+      <span class="btn fileinput-button">
+        <span><%= t('admin_photos.add_files') %>...</span>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.file_field :image, :multiple => true %>
+      </span>
+      <button type="submit" class="btn start"><%= t('admin_photos.start_upload') %></button>
+      <button type="reset" class="btn cancel"><%= t('admin_photos.cancel_upload') %></button>
+      <button type="button" class="btn delete"><%= t('admin_photos.delete_selected') %></button>
+    </div>
+  </div>
+  <div class='table-photo-data'>
+    <div>
+      <table class="table table-condensed zebra-striped photo-upload">
+        <tr>
+          <th>Photo</th>
+          <th>File Name</th>
+          <th>Size</th>
+          <th>Type</th>
+          <th>Modified Date</th>
+          <th>Text Line</th>
+          <th><div class="fileupload-buttonbar">Action &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" class="toggle"></div></th>
+        </tr>
+        <tbody class="files"></tbody>
+      </table>
+      <div id="loading"></div>
+    </div>
+  </div>
+<% end %>
+<script>
+  var fileUploadErrors = {
+    maxFileSize: 'File is too big',
+    minFileSize: 'File is too small',
+    acceptFileTypes: 'Filetype not allowed',
+    maxNumberOfFiles: 'Max number of files exceeded',
+    uploadedBytes: 'Uploaded bytes exceed file size',
+    emptyResult: 'Empty file upload result'
+  };
+</script>
+
+<!-- IMPORTANT fade class makes fileupload depend on css transition effect REMOVE or RENAME it -->
+<script id="template-upload" type="text/html">
+  {% for (var i=0, files=o.files, l=files.length, file=files[0]; i<l; file=files[++i]) { %}
+  <tr class="template-upload nofade">
+    <td class="preview"><span class="nofade"></span></td>
+    <td class="name">{%=file.name%}</td>
+    <td class="size">{%=o.formatFileSize(file.size)%}</td>
+    {% if (file.error) { %}
+    <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
+    {% } else if (o.files.valid && !i) { %}
+    <td class="progress"><div class="progressbar"><div style="width:0%;"></div></div></td>
+    <td class="start">{% if (!o.options.autoUpload) { %}<button class="btn primary"><%= t('admin_photos.template.start') %></button>{% } %}</td>
+    {% } else { %}
+    <td colspan="2"></td>
+    {% } %}
+    <td class="cancel">{% if (!i) { %}<button class="btn info"><%= t('admin_photos.template.cancel') %></button>{% } %}</td>
+  </tr>
+  {% } %}
+</script>
+
+<script id="template-download" type="text/html">
+  {% for (var i=0, files=o.files, l=files.length, file=files[0]; i<l; file=files[++i]) { %}
+  <tr class="template-download nofade" id="{%= file.id %}">
+    {% if (file.error) { %}
+    <td></td>
+    <td class="name">{%=file.name%}</td>
+    <td class="size">{%=o.formatFileSize(file.size)%}</td>
+    <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
+    {% } else { %}
+    <td class="preview">{% if (file.thumbnail_url) { %}
+      <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery"><img src="{%=file.thumbnail_url%}"></a>
+    {% } %}</td>
+    <td class="name">
+      <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
+    </td>
+    <td class="size">{%=o.formatFileSize(file.size)%}</td>
+    <td class="name"><span id="admin_photo_{%= file.id %}" class="label label-{%= file.img_type =='Home Page' ? 'success' : 'info' %}">{%= file.img_type %}</span></td>
+
+    <td class="name">{%= file.modified_date %}</td>
+    <td class='text-line'> 
+      <p class='text_title'>{%= file.text_title %}</p>
+      <p class='text_content' >{%= file.text_content %} </p>
+      <p> <span>link: </span>    <span class='text_hyperlink' >{%= file.text_hyperlink %} </span></p>
+    </td>
+    {% } %}
+    
+    <td class="delete action-table" style="width: 250px;">
+      <div class=' btn-group btn-group-xs mg-bt-10'>
+
+        <a class='btn btn-default fa fa-edit btn-edit-textline' data-toggle="popover" data-placement='left' title="" data-content='<%= render :partial => "form_edit_text_line" %>' data-id="{%= file.id %}" data-photo-type="{%= file.img_type %}" data-html='true' role="button" data-original-title="<%=t('text_line.title_edit') %>">
+          <%= content_tag :span, " #{t('edit')}", class: 'open-san' %>
+        </a>
+        <a class="btn btn-default fa fa-cogs" data-method="POST" data-remote="true" href="{%=file.change_image_type_url%}" title='Click here to change image type.'>
+          <%= content_tag :span, " #{t('admin_photo.template.change_type')}", class: 'open-san' %>
+        </a>
+      </div>
+      <div class="clearfix"></div>
+      <div class=' btn-group btn-group-xs '>
+        <button class="btn btn-danger fa fa-ban btn-delete-photo" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}" title="Click here to remove the image."><%= content_tag :span, " #{t('layout.delete')}", class: 'open-san' %></button>
+        <label class='btn btn-default'><input type="checkbox" name="delete" value="1" id="{%= file.id %}"></label>
+      </div>
+    </td>
+  </tr>
+  {% } %}
+</script>
+
+
+<!-- add include_tag js files to config.assets.precompile in ...environments/production.rb if you have it in vendor/ assets -->
+
+
+<script type="text/javascript" charset="utf-8">
+    $(function () {
+        // Initialize the jQuery File Upload widget:
+        $("#fileupload").fileupload();
+        // 
+        // Load existing files:
+        $.getJSON($('#fileupload').prop('action'), function (files) {
+          var fu = $('#fileupload').data('fileupload'), 
+            template;
+          fu._adjustMaxNumberOfFiles(-files.length);
+          template = fu._renderDownload(files)
+            .appendTo($('#fileupload .files'));
+          // Force reflow:
+          fu._reflow = fu._transition && template.length &&
+            template[0].offsetWidth;
+          template.addClass('in');
+          $('#loading').remove();
+          $('.btn-edit-textline').popover();
+          $('.btn-edit-textline').on('click', function (e) {
+              $('.btn-edit-textline').not(this).popover('hide');
+          });
+          $('.btn-edit-textline').on('shown.bs.popover', function () {
+            td = $(this).parents('.action-table').siblings('td.text-line')
+            text_title = td.find('.text_title').text()
+            text_content = td.find('.text_content').text()
+            text_hyperlink = td.find('.text_hyperlink').text()
+            popover = $(this).siblings('.popover')
+            popover.find('#text_photo_text_title').val(text_title)
+            popover.find('#text_photo_text_content').val(text_content)
+            popover.find('#text_photo_text_hyperlink').val(text_hyperlink)
+            $('.btn-edit-textline').addClass('opacity-disable');
+          })
+        });
+        var fu = $('#fileupload').data("fileupload");
+        var eventData = { fileupload: fu };
+        var clickEvent = 'click.' + fu.options.namespace;
+
+        $('#fileupload')
+            .off(clickEvent, '.delete button.btn-delete-photo')
+            .on(clickEvent, '.delete button.btn-delete-photo', eventData, function(e) {
+                var fileName = $(this).parent().siblings(".name").children().prop("title");
+                if (confirm("Are you sure you want to delete?")) {
+                    fu._deleteHandler.call($(this), e);
+                } else {
+                    return false;
+                }
+            });
+        $('button.btn-cancel-popover').live('click', function(e) {
+          $('.btn-edit-textline').removeClass('opacity-disable');
+          $(this).parents('.popover').siblings('.btn-edit-textline').click();
+          e.preventDefault();
+        });
+
+        fu.element.find('.fileupload-buttonbar .delete')
+            .off(clickEvent)
+            .on(clickEvent, eventData, function(e) {
+                var toDelete = $('#fileupload').find('.delete input:checked');
+
+                if (toDelete.size() > 0 && confirm("Are you sure you want to delete the selected files?")) {
+                    toDelete.each(function() {
+                        fu._deleteHandler.call($(this), e);
+                        id = $(this).attr("id");
+                        $.ajax({
+                          type: "DELETE",
+                          url: "/admin_photos/"+id,
+                          dataType: "text"
+                        });
+                    });
+                    $('input.toggle')
+                        .prop('checked', false);
+                } else {
+                    return false;
+                }
+            });
+    });
+</script>

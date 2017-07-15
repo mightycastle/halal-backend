@@ -1,0 +1,8 @@
+
+<% if @favourite_or_not %>
+  <% link = link_to image_tag('restaurant_detail/star_icon.png', class: 'image-favorite'), remove_favourite_restaurant_path(@restaurant),method: ((current_user)? "post" :""), remote:  ((current_user)? true : false) %>
+<% else %>
+  <% link = link_to image_tag('restaurant_detail/star_icon_empty.png', class: 'image-favorite'),((current_user)? add_favourite_restaurant_path(@restaurant.id) :new_user_session_path),method: ((current_user)? "post" :""), remote: ((current_user)? true : false) %>
+<% end %>
+
+$("#favourite_status_<%=@restaurant.id %>").html('<%= link.html_safe %>');

@@ -1,0 +1,28 @@
+<h2 class="title"><%=t 'basic_pages.title' %></h2>
+<%= render partial: "layouts/flash_messages", flash: flash %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 mg-bt-20">
+
+      <ul class="nav nav-tabs" id="myTab">
+        <% if !@pages.nil? %>
+          <% @pages.each do |page| %>
+            <li class="<%= (page.id == 1) ? 'active' : '' %>">
+              <%= link_to page.page_name, edit_basics_page_path(page) %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+
+    </div>
+
+    <div class="col-lg-12 mg-bt-40">
+      <%= simple_form_for @page do |p| %>
+        <%= p.label :page_name %>
+        <%= p.text_field :page_name, :disabled => true, class: "form-control mg-bt-10" %>
+        <%= p.input :page_content, :as => :ckeditor, :toolbar => 'Easy' %>
+        <%= p.submit "Submit",:class=>"btn btn-success btn-large mg-t-20 open-san" %>
+      <% end %>
+    </div>
+  </div>
+</div>

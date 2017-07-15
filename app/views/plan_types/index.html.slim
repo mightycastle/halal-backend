@@ -1,0 +1,21 @@
+h1 Listing plan_types
+
+table
+  tr
+    th Name
+    th Number of months
+    th
+    th
+    th
+
+  - @plan_types.each do |plan_type|
+    tr
+      td = plan_type.name
+      td = plan_type.number_of_months
+      td = link_to 'Show', plan_type
+      td = link_to 'Edit', edit_plan_type_path(plan_type)
+      td = link_to 'Destroy', plan_type, :confirm => 'Are you sure?', :method => :delete
+
+br
+
+= link_to 'New Plan type', new_plan_type_path

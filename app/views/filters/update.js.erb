@@ -1,0 +1,1 @@
+$("tr#filter-<%= params[:id]%>").replaceWith("<%=escape_javascript filter_row(@filter,params[:filter_index].to_i)%>");

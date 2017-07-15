@@ -1,0 +1,248 @@
+<%
+
+reviews = Review.all_reviews.where(:user_id => @reviewer.id)
+reviews_count = reviews.length
+reviews_at_res_count = reviews.where(:restaurant_id => current_restaurant_id).count
+
+ratings = Review.all_ratings.where(:user_id => @reviewer.id)
+ratings_count = ratings.length
+ratings_at_res_count = ratings.where(:restaurant_id => current_restaurant_id).count
+
+checkins_count = current_restaurant.checkins.where(restaurant_id: current_restaurant.id).count
+
+satisifed_count = @reviewer.reviews.where(satisfied: true).count
+satisifed_at_res_count = @reviewer.reviews.where(satisfied: true, restaurant_id: current_restaurant.id).count
+
+%>
+
+<div class="row" style="margin-bottom: 20px">
+  <div class="col-sm-12">
+    <div class="user-name-title"><%= @reviewer.username %></div>
+    <div style="display: inline-block; float: right; margin-top: 14px"><%= timestamp_to_string @review.created_at %></div>
+  </div>
+</div>
+
+<div id="are-you-sure-dialogue" class="modal-dialogue">
+    <div style="font-size: 20px">
+      <b>Are you sure you want to send a message to</b> <span style="font-family: OldStandard_Italic;"><%= @reviewer.username %></span> <b>?</b>
+    </div>
+    <div style="display: table; margin: auto; margin-top: 10px;">
+      <a onclick="overlay(); send_email_to_reviewer()">Yes</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a onclick="overlay();">No</a>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 10px;">
+  <div class="col-sm-4">
+    <div class="review-user-avatar" style="
+      <% if @reviewer.avatar %>
+        background: url(<%= @reviewer.avatar.url %>);
+      <% else %>
+        background: url(/assets/no_avatar_big_manager.png);
+      <% end %>
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;">
+    </div>
+  </div>
+
+  <div class="col-sm-8 user-information">
+    <span class="user-information-title">User information</span>
+
+    <ul>
+      <li><b>Ratings:</b> <%= ratings_count %>, <%= ratings_at_res_count %> for <%= current_restaurant.name %></li>
+      <li><b>Reviews:</b> <%= reviews_count %>, <%= reviews_at_res_count %> for <%= current_restaurant.name %></li>
+      <li><b>Checked in at <%= current_restaurant.name %>:</b> <%= pluralize(checkins_count, "time") %></li>
+      <li>
+        <b>Satisfied experiences:</b>
+        <%= satisifed_count %>,
+        <%= pluralize(satisifed_at_res_count, "of which is", "of which are") %> at <%= current_restaurant.name %>
+      </li>
+      <li>
+        <b>Unsatisfied experiences:</b> <%= (ratings_count + reviews_count) - satisifed_count %>,
+        <%= pluralize((ratings_at_res_count + reviews_at_res_count) - satisifed_at_res_count, "of which is", "of which at") %> at <%= current_restaurant.name %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<div class="row">
+  <div class="col-sm-4">
+    <div style="display: table; margin: 0 auto;">
+      <div class="review-rating-title">Service</div>
+      <div class="review-rating">
+        <% 1.upto(5).each do |n| %>
+          <% if n <= @review.service %>
+            <%= image_tag "manager/halalgems_icon_small_hover.png", class: "review-star"%>
+          <% else %>
+            <%= image_tag "manager/halalgems_icon_small.png", class: "review-star"%>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div style="display: table; margin: 0 auto;">
+      <div class="review-rating-title">Quality</div>
+      <div class="review-rating">
+        <% 1.upto(5).each do |n| %>
+          <% if n <= @review.quality %>
+            <%= image_tag "manager/halalgems_icon_small_hover.png", class: "review-star"%>
+          <% else %>
+            <%= image_tag "manager/halalgems_icon_small.png", class: "review-star"%>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div style="display: table; margin: 0 auto;">
+      <div class="review-rating-title">Value</div>
+      <div class="review-rating">
+        <% 1.upto(5).each do |n| %>
+          <% if n <= @review.value %>
+            <%= image_tag "manager/halalgems_icon_small_hover.png", class: "review-star"%>
+          <% else %>
+            <%= image_tag "manager/halalgems_icon_small.png", class: "review-star"%>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<br/>
+
+<div class="review-text-area">
+  <%= @review.content %>
+</div>
+<br />
+
+<% if !@review.is_rating? %>
+  <div class="row" id="reply_row" style="
+  <% if @review.reply_content == nil then %> display: none; <% end %>
+  margin-top: 10px;">
+    <div class="col-xs-12">
+      <div id="reply_area" style="padding-bottom: 0px; margin-bottom: 0px;">
+        <% if @review.reply_content != nil && @review.approve_reply == true %>
+          <div id="icon_reply">
+            <%= image_tag('icon_manager_responded.png') %>
+          </div>
+
+          <h4><%= t('layout.manager_responded') %></h4>
+          <div>
+            <%= @review.reply_content %>
+          </div>
+        <% elsif @review.reply_content != nil && !@review.is_approved_reply? && @review.is_show?(current_user) %>
+          <div id="icon_reply">
+            <%= image_tag('icon_manager_responded.png') %>
+          </div>
+
+          <h4><%= t('layout.manager_responded') %></h4>
+
+          <div>
+            <%= @review.reply_content %>
+          </div>
+
+          <p class="not-yet-approved-reply">"<%= t('review.not_yet_approved_reply') %>"</p>
+        <% end %>
+
+        <div class="reply-owner" id="reply_review_owner_<%= @review.id %>" style="border-bottom: none">
+          <% if @review.reply_content == nil && @review.restaurant.user_id == current_user.id %>
+            <% label = t('layout.type_reply_here') %>
+            <%= form_tag user_restaurants_reply_review_path, :remote => true, id: 'reply_owner_form' do |r| %>
+              <%= text_area_tag "reply_review[reply_content]" ,nil, :class=> "form-control", :size=> "80x5", onkeyup: "countChar(this)", :maxlength => "5000" %>
+              <span class="content_character_count pull-right">0/5000</span>
+              <p class="error-message" style="margin-bottom: 30px;">
+                <label class="error hide" for="review_reply_content" generated=true>Please fill your reply content.</label>
+              </p>
+              <%= hidden_field_tag "review_id", @review.id %>
+              <button id="btn-reply" class="default-btn btn-halagems login-btn mg-t-0" style="width: 100%;" type="submit">Reply to <%= @reviewer.username %></button>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <% if @review.reply_content == nil %>
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="default-btn btn-halagems login-btn mg-t-0" id="reply-button" style="width: 100%" onclick="toggle_reply();">Reply to review</button>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<!-- EMAIL
+<div class="row">
+  <div class="col-xs-12">
+
+    <textarea id="email-box" style="display:none" cols="80" row="5">
+    </textarea>
+    <button class="default-btn btn-halagems login-btn mg-t-0" id="send-message-button" style="width: 100%" onclick="toggle_send_message();">Send email</button>
+  </div>
+</div>
+-->
+
+<script type="text/javascript">
+
+$(function() {
+  $("#overlay").empty();
+  d = $("#are-you-sure-dialogue").detach();
+  $("#overlay").append(d);
+});
+
+var toggle_send_message = function() {
+  var message_box = $("#email-box");
+  var msg_button = $("#send-message-button");
+  var turn_on = message_box.css("display") == "none";
+
+  if (turn_on) {
+    message_box.css("display", "block");
+    msg_button.attr("onclick", "overlay();toggle_send_message();");
+    msg_button.text("Send email to <%= @reviewer.username %>");
+  } else {
+    message_box.css("display", "none");
+    msg_button.attr("href", "");
+    msg_button.attr("onclick", "toggle_send_message();");
+    msg_button.text("Send email");
+    email_text = message_box.text();
+    message_box.text("");
+  }
+}
+
+var send_email_to_reviewer = function() {
+  $.ajax({
+    type: "POST",
+    dataType: "JSON",
+    url: "<%= manager_send_email_path(current_restaurant_id, @review.id) %>",
+    data: { content: email_text },
+    success: function() {
+      alert("asda");
+    },
+  }).fail(function() {
+    alert( "fail");
+  });
+}
+
+var toggle_reply = function() {
+  var reply_row = $("#reply_row");
+  var reply_btn = $("#reply-button");
+  var turn_on = reply_row.css("display") == "none";
+
+  if (turn_on) {
+    reply_row.css("display", "");
+    reply_btn.css("display", "none")
+  }
+}
+
+</script>

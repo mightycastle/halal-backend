@@ -1,0 +1,103 @@
+<%= render "shared/review_manage_tabs" %>
+
+<h1 class="title"><%=t 'review.reply_management' %></h1>
+
+<%= search_form_for @search, url: '/admin/admin_review_replies' do |f| %>
+  <div class="well">
+    <%= f.condition_fields do |c| %>
+      <%= render "condition_fields", f: c %>
+    <% end %>
+    <div class="actions">
+      <%= link_to_add_fields " Add Conditions", f, :condition %>
+      <%= f.submit "Search", :class => "btn btn-success icon-search" %>
+    </div>
+  </div>
+<% end %>
+
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th><%= sort_link @search, :reply_time, "Reply Date" %></th>
+      <th><%= sort_link @search, :restaurant_name, "Restaurant" %></th>
+      <th><%= sort_link @search, :user_username, "User" %></th>
+      <th><%= sort_link @search, :content, "Content" %></th>
+      <th><%= t('admin.reply_content') %></th>
+      <th><%= sort_link @search, :approve_reply, "Status" %></th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reviews.each_with_index do |review,index| %>
+      <tr>
+        
+        <td><%= review.reply_time.strftime("%b-%d-%Y")%></td>
+        <td>
+          <%= link_to(image_tag(backend_thumb_url(review.restaurant)), restaurant_info_path(review.restaurant.slug),:title=>"Go to edit restaurant page.")%><br /><%= link_to(review.restaurant.name, restaurant_info_path(review.restaurant.slug)) if review.restaurant %><br />
+          <%= review.restaurant.address if review.restaurant %>
+        </td>
+        <td><%= (review.user.username  if review.user) || "No Name"%></td>
+        <td class='border-left-table'>
+          <div class="content_review_bounder" >
+
+            <div id='review_content_show_<%= review.id %>'>
+              <% if (review.content=="Thanks for helping fellow eaters make better choices about their meals. We're all grateful.") %>
+                <span style="color: red;">This user has not written a comment. They used the stars to say it all.</span>
+              <% else %>
+                <%= review.content %>
+              <% end %>
+            </div>
+          </div>
+        </td>
+        <td class='border-left-table' style="width: 200px;">
+
+          <div class="content_review_bounder" >
+
+            <div class="hide" id='form_reply_content_<%= review.id%>'>
+              <%= form_tag update_reply_content_review_path(review), remote: true, method: :post do %>
+                <%= text_area_tag 'reply_content', review.reply_content, :id => "reply_content_#{review.id}", :style => "width: 240px; height: 80px; float: left;", alt: review.reply_content %>
+                <div class="btn-group btn-group-xs" style="margin-left: 10px; float: left;">
+                  <a href="#" class="btn btn-primary fa fa-check-circle submit_reply_content" id="<%= review.id%>"></a>
+                  <a href="#" class="btn btn-danger fa fa-ban cancel_reply_content" id="<%= review.id%>"></a>
+                </div>
+              <% end %>
+            </div>
+            
+            <div id='review_reply_content_show_<%= review.id %>'>
+              <%= review.reply_content %>
+            </div>
+           </div>
+
+        </td>
+
+        <td id="status_label_<%= review.id%>"><%= render partial: "status_label", locals: {status: review.approve_reply} %></td>
+        <td width="150px" id="status_review_<%=review.id%>">
+          <%= render partial: "review_approve_reply", locals: {review: review} %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @reviews, :theme => "twitter-bootstrap-3"%>
+
+<script>
+  $('.submit_reply_content').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    $('#form_reply_content_'+id+' form').submit();
+  });
+  $('.cancel_reply_content').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    $('#form_reply_content_'+id).addClass('hide');
+    $('#form_reply_content_'+id+' textarea').val($('#form_reply_content_'+id+' textarea').attr('alt'));
+    $('#review_reply_content_show_'+id).removeClass('hide');
+    $('#'+id+'.edit_review_reply_content').removeAttr("disabled");
+  });
+  $('.edit_review_reply_content').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    $('#form_reply_content_'+id).removeClass('hide');
+    $('#review_reply_content_show_'+id).addClass('hide');
+    $(this).attr('disabled','disabled');
+  });
+</script>

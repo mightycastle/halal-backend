@@ -1,0 +1,130 @@
+<style>
+      .overview {
+				background: #FFEC9D;
+				padding: 10px;
+				width: 90%;
+				border: 1px solid #CCCCCC;
+			}
+			
+			.originalTextareaInfo {
+				font-size: 12px;
+				color: #000000;
+				font-family: Tahoma, sans-serif;
+				text-align: right
+			}
+			
+			.warningTextareaInfo {
+				font-size: 12px;
+				color: #FF0000;
+				font-family: Tahoma, sans-serif;
+				text-align: right
+			}
+</style>
+
+<div class="pnl_img_top">
+    <%= random_image_other_page %>
+</div>
+<div class="auto_height">
+  <div class="page">
+    <%= link_to "Back to Restaurant Information",restaurant_info_path(@restaurant.slug),:class=>'back_button' %>
+    <div class="write_a_review">
+      <h4>Write a review</h4>
+      <table width="100%">
+        <tr valign="top">
+          <td width="170px">
+            <div class="restaurant_thumb">
+              <%= image_tag (search_thumb_url @restaurant) %>
+            </div>
+          </td>
+          <td>
+            <%= @restaurant.name %><br/>
+            <% address = @restaurant.address.split(",") %>
+            <% address.each do |addr| %>
+              <%= addr if !addr.blank? %><br/>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+      <h 5>Rate this restaurant</h5>
+      <%= form_for(@review, :url=>create_review_restaurant_path) do |f| %>
+        <% form_id = "review_#{@restaurant_id}_rating" %>
+        <table width="100%">
+          <tr class="review_number" id="service">
+            <td width="66px">Service</td>
+            <td>
+              <% (1..5).each do |i| %>
+                <li class="ratings_stars service_choose" style ="list-style-type:none;" id="service_<%= i %>"
+                    data-stars="<%= i %>" data-form-id="<%= form_id %>"
+                    onclick="chage_rating('service', '<%= i %>');return false;"
+                    last="service_false"
+                    num="<%= i %>"
+                    type="service" 
+                    onmouseover="choose_over_stars('<%= i %>','service')"
+                    onmouseout="choose_out_stars('<%= i %>','service')"></li>
+              <% end %>
+            </td>
+            <td valign="center" align="right">
+              <%= image_tag("Click-to-rate.png",{:class=>"review_badge_active",:id=>"review_badge_service"}) %>
+            </td>
+          </tr>
+          <tr class="review_number" id="quality">
+            <td>Quality</td>
+            <td>
+              <% (1..5).each do |i| %>
+                <li class="ratings_stars" style ="list-style-type:none;" id="quality_<%= i %>"
+                    data-stars="<%= i %>" data-form-id="<%= form_id %>"
+                    onclick="chage_rating('quality', '<%= i %>');return false;"
+                    last="quality_false"
+                    num="<%= i %>"
+                    type="quality"
+                    onmouseover="choose_over_stars('<%= i %>','quality')"
+                    onmouseout="choose_out_stars('<%= i %>','quality')"></li>
+              <% end %>
+            </td>
+            <td valign="center" align="right">
+              <%= image_tag("Click-to-rate.png",{:class=>"review_badge",:id=>"review_badge_quality"}) %>
+            </td>
+          </tr>
+          <tr class="review_number" id="value">
+            <td>Value</td>
+            <td>
+              <% (1..5).each do |i| %>
+                <li class="ratings_stars" style ="list-style-type:none;" id="value_<%= i %>"
+                    data-stars="<%= i %>" data-form-id="<%= form_id %>"
+                    onclick="chage_rating('value', '<%= i %>');return false;"
+                    last="value_false"
+                    num="<%= i %>"
+                    type="value"
+                    onmouseover="choose_over_stars('<%= i %>','value')"
+                    onmouseout="choose_out_stars('<%= i %>','value')"></li>
+              <% end %>
+            </td>
+            <td valign="center" align="right">
+              <%= image_tag("Click-to-rate.png",{:class=>"review_badge",:id=>"review_badge_value"}) %>
+            </td>
+          </tr>
+        </table>
+        <%= f.hidden_field :service, {:value=>0} %>
+        <%= f.hidden_field :quality, {:value=>0} %>
+        <%= f.hidden_field :value, {:value=>0}  %>
+      <h5>Your overall rating of this restaurant</h5>
+      <div style="margin-left:70px;">
+        <% (1..5).each do |i| %>
+            <span class="fa-star-o" id="rating_overall_<%= i %>"></span>
+         <% end %><br/>
+      </div>
+        <%= f.hidden_field :user_id,{:value=>@user_id} %>
+        <%= f.hidden_field :restaurant_id,{:value=>@restaurant_id} %>
+        <div><b>When did you visit <%= @restaurant.name %>?</b></div>
+        <div class="styled-select">
+         <table><tr><td><%= select_month(Time.now,{:name=>"visited_date"}, {:style=>"width:120px;"} ) %></td><td >&nbsp;<%= select_year(Time.now, {:name=>"visited_date"}, {:style=>"width:120px;"}) %></td></tr></table>         
+        </div>
+        <div><b>Your review</b></div>
+        <%= f.text_area :content, {:rows=>5, :cols=>100, :placeholder=>"Thanks for helping fellow eaters make better choices about their meals. We're all grateful."} %>
+        Reviews will be posted using your username. No personal details will ever be shared.
+        <br/>
+        <%= f.submit "Submit"%>
+      <% end %>
+    </div>
+  </div>
+</div>

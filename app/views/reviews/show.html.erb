@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+<h3><%=@review.title%></h3>
+<h5><%=@review.user.email%></h5>
+<p><%=@review.content%></p>
+<p><b>Service: </b><%=@review.service%></p>
+<p><b>Quality: </b><%=@review.quality%></p>
+<p><b>Value: </b><%=@review.value%></p>
+<%
+  label = ""
+  status = "Draft"
+  if @review.status == true
+    label = "label-success"
+    status = "Approved"
+  elsif @review.status == false
+    label = "label-important"
+    status = "Rejected"
+  end
+%>
+<p><b>Status: </b><span class="label <%=label%>"><%=status%></span></p>
+<%= link_to 'Edit', edit_review_path(@review) %> |
+<%= link_to 'Back', reviews_path %>

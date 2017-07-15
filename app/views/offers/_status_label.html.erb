@@ -1,0 +1,5 @@
+<% if !approve && !reject %>
+  <span class="label <%= status_label_class nil%>"><%= t('review.new') %></span>
+<% else %>
+  <span class="label <%= status_label_class approve%>"><%= status_label approve %></span>
+<% end %>

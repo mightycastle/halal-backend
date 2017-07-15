@@ -1,0 +1,41 @@
+.login-page{
+  .message{
+    font-weight: normal;
+    color: #f11458;
+  }
+  background: image-url('bg_login.png') no-repeat; background-size: 100% 100%;
+  padding-top: 50px; padding-bottom: 50px;
+  .btn-login-fb{
+    background-color: #3b5998;
+    border-radius: 0;
+    color: #fff;
+    font-size: 14px;
+    // font-weight: 900;
+    text-transform: uppercase; margin-bottom: 10px;
+    font-family: Fedra San Pro;
+  }
+  .title-login-page{color: #005c9e; text-transform: uppercase; font-weight: bold; padding-top: 50px; font-size: 32px; }
+  .title-text-sub{ color: #005c9e; margin: 0; padding: 10px 0; font-size: 16px;}
+  .title-text{
+    color: #005c9e; font-size: 14px; font-weight: normal;
+    span{
+      color: #666;
+      font-size: 12px;
+    }
+  }
+  label.error{ font-weight: normal;}
+  .login-btn{ font-size: 14px; font-weight: 900; text-transform: uppercase; margin-bottom: 0; margin-top: 15px;}
+  .forgot-password, .create_account{ display: inline-block;
+    a{ 
+      text-decoration: underline;
+      color: #005c9e;
+      &:hover{
+        text-decoration: none;
+      }
+    }
+  }
+  .forgot-password{ padding-right: 50px;
+    
+  }
+}
+  

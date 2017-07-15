@@ -1,0 +1,8 @@
+.pnl_img_top
+  = random_image_other_page 
+.success-payment-page
+  .container.mg-top-10
+    | Your payment may have been declined!
+    br
+    - if @subscription
+      = @subscription.message

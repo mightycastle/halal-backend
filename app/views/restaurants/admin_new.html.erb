@@ -1,0 +1,26 @@
+
+<div class="edit-restaurant-admin">
+  <div class="">
+    <div class="page-header color-blue-title">
+      <h1>New Restaurant</h1>
+    </div>
+    <div class="page_content info">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Info</a></li>
+        <li class=""><a href="#tab2" data-toggle="tab">Menu</a></li>
+        <li class=""><a href="#tab3" data-toggle="tab">Photos</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active edit_profile" id="tab1">
+          <%= render 'admin_form' %>
+        </div>
+        <div class="tab-pane" id="tab2">
+          <%= render 'upload_menu' %>
+        </div>
+        <div class="tab-pane" id="tab3">
+          <%= render 'upload_photos' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

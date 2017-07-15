@@ -1,0 +1,10 @@
+.label-success, .label-warning, .label-danger, .label-info{
+  background: none;
+}
+
+input, select{
+  &.form-control{
+    color: #000;
+  }
+ 
+}

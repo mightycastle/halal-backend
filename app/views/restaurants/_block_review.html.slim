@@ -1,0 +1,35 @@
+div(class="#{gem_hunter == true ? 'gem-hunter' : ''}")
+  - if gem_hunter == true
+    .wrap-img= image_tag avatar_url review.user, "61x57#"
+  h4
+    - if gem_hunter == true
+      | GEMHUNTER
+      br/
+    = review.user ? review.user.full_name : "No Name"
+  - if gem_hunter == true
+    a.profile.default-link(style="color:#fff!important;") View profile
+  .stars_color
+    b Service
+    = render :partial=>"rating", :locals =>{:rate_count=>review.service, :is_rating =>false}
+  .stars_color
+    b Quality
+    = render :partial=>"rating", :locals =>{:rate_count=>review.quality, :is_rating =>false}
+  .stars_color
+    b Value
+    = render :partial=>"rating", :locals =>{:rate_count=>review.value, :is_rating =>false}
+  .content
+    = review.content
+    .time= review.month_ago
+
+- if review.reply_content != nil && review.approve_reply == true
+  blockquote.manager_reponded
+    #icon_reply 
+      = image_tag('icon_manager_responded.png')
+    span 
+      = t('layout.manager_responded')
+    .text_content 
+      = review.reply_content
+    replied_time
+      = t('layout.visited') 
+      =< review.time_replied
+    

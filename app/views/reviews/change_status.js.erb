@@ -1,0 +1,22 @@
+$("#status_review_<%=@review.id%>").html("<%= escape_javascript render partial: '/reviews/review_status', locals: {review: @review}%>");
+$("#status_label_<%=@review.id%>").html("<%= escape_javascript render partial: '/reviews/status_label', locals: {status: @review.status}%>");
+
+$('.submit_content').click(function(e){
+  e.preventDefault();
+  var id = $(this).attr('id');
+  $('#form_content_'+id+' form').submit();
+});
+$('.cancel_content').click(function(e){
+  e.preventDefault();
+  var id = $(this).attr('id');
+  $('#form_content_'+id).addClass('hide');
+  $('#review_content_show_'+id).removeClass('hide');
+  $('#'+id+'.edit_review_content').removeAttr("disabled");
+});
+$('.edit_review_content').click(function(e){
+  e.preventDefault();
+  var id = $(this).attr('id');
+  $('#form_content_'+id).removeClass('hide');
+  $('#review_content_show_'+id).addClass('hide');
+  $(this).attr('disabled','disabled');
+});

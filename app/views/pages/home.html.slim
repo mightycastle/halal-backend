@@ -1,0 +1,92 @@
+.top-search
+  .relative
+    = image_tag homepage_bg_photo, :width => "100%" , class: "random-background"
+    .hyperlinked_text
+      span.title_text_hypelink 
+        = link_to home_page_text[0], format_hyperlink(home_page_text[2]) if home_page_text
+      - if home_page_text[1].present?
+        span.content_text_hypelink 
+          | - 
+          = home_page_text[1]
+  / #carousel-example-generic.carousel.slide.nav_center data-ride="carousel"
+  /   - unless @admin_photos.blank?
+  /     ol.carousel-indicators
+  /       - @admin_photos.each_with_index do |img, index| 
+  /         li class="#{ "active" if index == 0 }" data-target="#carousel-example-generic" data-slide-to="#{index}" 
+  /     .carousel-inner
+  /       - @admin_photos.each_with_index do |img, index| 
+  /         .item class="#{ "active" if index == 0 }"
+  /           = image_tag img.image.thumb("1024x500#").url.to_s, :width => "100%"
+  /           div.hyperlinked_text
+  /             p.title_text_hypelink 
+  /               = link_to img.text_title, format_hyperlink(img.text_hyperlink) if img.text_title
+  /             p.content_text_hypelink 
+  /               = img.text_content
+  /     a.left.carousel-control href="#carousel-example-generic" data-slide="prev"
+  /       span.glyphicon.glyphicon-chevron-left
+
+  /     a.right.carousel-control href="#carousel-example-generic" data-slide="next"
+  /       span.glyphicon.glyphicon-chevron-right
+
+        
+  .search-part-home
+    .search_pnl
+      = form_tag({controller: "search", action: "by_location"}, id: 'search_home', method: "get", class: "transpent_pnl_form") do
+        h1
+          = t(:find_place)
+        .home_search
+          = text_field_tag :ln, "", :type => "search", placeholder: t(:search_placeholder), class: "home_search_input search_home", tabindex: "1"
+          javascript:
+            var input = document.getElementById('ln');
+            var options = {
+              //types: ['(regions)'],
+              //componentRestrictions: {country: 'uk'}
+            };
+            var autocomplete = new google.maps.places.Autocomplete(input, options);
+            google.maps.event.addListener(autocomplete, 'place_changed', function() {    
+              var place = autocomplete.getPlace();
+              $("#llat").val(place.geometry.location.lat());
+              $("#llng").val(place.geometry.location.lng());
+            });
+            
+          = hidden_field_tag "llat", params[:llat]
+          = hidden_field_tag "llng", params[:llng]
+          = hidden_field_tag "lt", params[:lt]
+          = hidden_field_tag "zl", params[:zl]
+          
+          = submit_tag "", class: "home_search_submit" , tabindex: "2"
+
+    .or
+    p.or-phone.visible-xs or
+    .search_pnl
+      = form_tag({controller: "search", action: "by_location"}, id: 'search_home_cuisine', method: "get", class: "transpent_pnl_form") do
+        h1
+          = t(:pick_cuisine)
+        .home_search
+          = select("filter_ids",nil, @cuisine.collect {|p| [ p.name, "#{p.id},#{p.filter_type_id}" ] }, { include_blank: false },class: 'select_cuisine')
+          = hidden_field_tag "llat", params[:llat]
+          = hidden_field_tag "llng", params[:llng]
+          = hidden_field_tag "lt", params[:lt]
+  
+  / div.hyperlinked_text
+  /   span.title_text_hypelink 
+  /     = link_to home_page_text[0], format_hyperlink(home_page_text[2]) if home_page_text
+  /   - if home_page_text[1].present?
+  /     span.content_text_hypelink 
+  /       | - 
+  /       = home_page_text[1]
+#feature_view
+  .title
+      h4 GemHunters
+      p= t(:featured_review)
+  .content-review
+    .row
+      - @fetured_review.each do |review|
+        = render "pages/gem_hunter_review", :review => review
+  
+  = link_to t("restaurant.read_more_reviews"), 'http://halalgems.com/gem-hunter-reviews', class: 'more default-link'    
+
+ 
+
+
+

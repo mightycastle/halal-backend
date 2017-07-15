@@ -1,0 +1,61 @@
+<% unless @restaurants.blank? %>
+  <% @restaurants.in_groups_of(2, false) do |restaurants| %>
+    <% for restaurant in restaurants %>
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 row_restaurants">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row_restaurant_image">
+              <div id="favourite_status_<%= restaurant.id %>">
+                <% if current_user && current_user.favourite_or_not?(restaurant.id) %>
+                  <%=link_to image_tag('star_icon.png', class: 'image-favorite'), remove_favourite_restaurant_path(restaurant.slug),method: "post", remote: true %>
+                <% else %>
+                  <%=link_to image_tag('star_icon_outline.png', class: 'image-favorite'),((current_user)? add_favourite_restaurant_path(restaurant.id) :new_user_session_path),method: ((current_user)? "post" :""), remote: ((current_user)? true : false) %>
+                <% end %>
+              </div>
+
+              <%= link_to(image_tag(search_thumb_url(restaurant) , class: 'image-cover'),restaurant_info_path(restaurant.slug)) %>
+            </div>
+            <div class="row_restaurant_info">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <h4><%= restaurant.name %></h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <b><%= restaurant.price_value %></b>
+                  <%= image_tag "icon_food.png" %>
+                  <b><%= restaurant.cuisine.join " " %></b>
+                  <br/>
+                  <%= render :partial=>"restaurants/rating", :locals =>{:rate_count=>restaurant.rating_avg.ceil, :is_rating =>true} %>
+                  <br/>
+                  <%= link_to t(:count_reviews, count: restaurant.reviews.count), restaurant_info_path(restaurant.slug), class: "button_reviews"%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h6><%= restaurant.address %></h6>
+            <div class="detail">
+              <%= restaurant.description %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="clearfix"></div>
+  <% end %>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <%= paginate @restaurants, :theme => "twitter-bootstrap-3", :params => {:tab_name=>"my_favorites"}, :remote=>true%>
+      </div>
+    </div>
+  </div>
+        
+<% else %>
+  <p>You haven't chosen any favourites yet. How about searching to find your favourite restaurant?</p>
+<% end %>
+

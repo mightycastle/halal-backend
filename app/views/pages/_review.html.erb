@@ -1,0 +1,57 @@
+
+<% reviews.each_with_index do |review, index| %>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 column_reviews">
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-10 col-lg-10">
+      <div class="row">
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+          <div id="avatar"><%= image_tag avatar_url review.user, "61x57#" %></div>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+          <h4><%= review.user ? review.user.full_name  : "No Name" %>
+          <%= render :partial => "rating", :locals => {:rate_count => @restaurant.rating_avg, :is_rating => true} %>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="reviewed_text">
+    <%= truncate(review.content, :length=>5000)%>
+  </div>
+
+  <div class="reviewed_time"><%= t('layout.visited')%>&nbsp<%= review.month_ago%></div>
+
+  <div class="rating_box">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <div class="label_stars">Service</div>
+        <div class="stars_color">             
+        <%= render :partial=>"rating", :locals =>{:rate_count=>review.service, :is_rating =>false} %></div>
+      </div>
+      <div id="border-quality" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <div class="label_stars">Quality</div>
+        <div class= "stars_color"><%= render :partial=>"rating", :locals =>{:rate_count=>review.quality, :is_rating =>false} %></div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <div class="label_stars">Value</div>
+        <div class="stars_color"><%= render :partial=>"rating", :locals =>{:rate_count=>review.value, :is_rating =>false} %></div>
+      </div>          
+    </div>
+  </div>
+  <hr></hr>
+
+  <% if review.reply_content != nil %>
+    <div class="manager_reponded">
+      <div id="icon_reply"><%= image_tag('icon_manager_responded.png')%></div>
+      <div><h4><%= t('manager_responded')%></h4></div>
+      <div class="text_content"><%= review.reply_content %></div>
+      <div class="replied_time"><%= t('layout.visited')%>&nbsp<%= review.time_replied%></div>
+    </div>
+  <% end%>
+</div>
+<% if index%2 ==1 %>
+  <div class="clearfix"></div>
+<%end%>
+<%end%>
+

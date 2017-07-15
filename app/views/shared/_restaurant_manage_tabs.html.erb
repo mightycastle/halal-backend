@@ -1,0 +1,35 @@
+<% 
+  current_page = ''
+  if params[:controller] ==  'restaurants' && params[:action] == 'index'
+    current_page = 'restaurants_index'
+  elsif params[:controller] ==  'collections' && params[:action] == 'index'
+    current_page = 'collections_index'
+  elsif params[:controller] ==  'restaurant_waiting_approves' && params[:action] == 'index'
+    current_page = 'restaurant_waiting_approves_index'
+  elsif params[:controller] ==  'restaurants' && params[:action] == 'change_photo_request'
+    current_page = 'restaurant_change_photo_request'
+  end
+%>
+
+<ul class="nav nav-tabs" id="myTab">
+  <li class="<%= (current_page == 'restaurants_index') ? 'active' : '' %>">
+    <a href="<%= (current_page == 'restaurants_index') ? '#restaurants_index' : restaurants_path %>">
+      <%= t'layout.restaurant' %>
+    </a>
+  </li>
+  <li class="<%= (current_page == 'collections_index') ? 'active' : '' %>">
+    <a href="<%= (current_page == 'collections_index') ? '#collections_index' : collections_path %>">
+      <%= t'collections.tab' %>
+    </a>
+  </li>
+  <li class="<%= (current_page == 'restaurant_waiting_approves_index') ? 'active' : '' %>">
+    <a href="<%= (current_page == 'restaurant_waiting_approves_index') ? '#restaurant_waiting_approves_index' : admin_restaurant_waiting_approves_path %>">
+      <%= t'restaurant.change_info_request' %>
+    </a>
+  </li>
+  <li class="<%= (current_page == 'restaurant_change_photo_request') ? 'active' : '' %>">
+    <a href="<%= (current_page == 'restaurant_change_photo_request') ? '#restaurant_change_photo_request' : change_photo_request_path %>">
+      <%= t'restaurant.change_photo_request' %>
+    </a>
+  </li>
+</ul>

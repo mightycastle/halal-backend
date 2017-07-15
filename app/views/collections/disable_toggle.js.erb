@@ -1,0 +1,5 @@
+$("#btn_disable_<%= @collection.id %>").removeClass("<%= btn_disabled !@collection.disabled %>")
+$("#btn_disable_<%= @collection.id %>").addClass("<%= btn_disabled @collection.disabled %>")
+$("#btn_disable_<%= @collection.id %>").text(" <%= title_disable_text @collection.disabled %>")
+$("#status_label_<%= @collection.id %>").html("<%= escape_javascript(text_disabled @collection.disabled) %>")
+  

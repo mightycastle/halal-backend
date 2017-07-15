@@ -1,0 +1,11 @@
+<% dark = false %>
+<% comments.each do |comment| %>
+  <div style="background-color: <%= (dark = !dark) ? '#DDD' : '#EEE' %>; display: inline-block; width: 100%">
+    <div style="float: left;">
+      <%= image_tag(backend_avatar_url(comment.user), :class => 'user_avatar') %><br/>
+      <b> <%= comment.user.username %></b>
+    </div>
+
+    <span style="float: left;"><%= comment.content %></span>
+  </div>
+<% end %>

@@ -1,0 +1,122 @@
+
+<ul class="filter short-filter">
+  <% alcohols = Filter.where("code='alcohol_not_allowed' OR code='alcohol_served' OR code='bring_your_own'").sort_index_order %>
+  <% delivery = Filter.find_by_code("delivery_available") %>
+  <% prices = Filter.where("code='price'").sort_index_order %>
+  <li class="li-filter selelct-option-filter">
+    <div class="inline-block hide-label">
+      <% alcohols.each do |c| %>
+        <%= left_filter_checkbox c, params[:filter_ids], false %>
+      <% end %>
+    </div>
+    <div class="inline-block hide-label mar-lr-20">
+      <%= left_filter_checkbox delivery, params[:filter_ids], false %>
+    </div>
+    <div class="inline-block mar-r-20">
+      <% prices.each do |c| %>
+        <%= left_filter_checkbox c, params[:filter_ids], false %>
+      <% end %>
+    </div>
+    <a id="more-filters" class="default-btn small" style="color:#fff!important;">More filters</a>
+  </li>
+</ul>
+
+
+<ul class="filter long-filter" id="search_filter">
+
+  <% arr_filter_type_hide = ["offer", "shisha", "facility", "organic", "open_hour"] %>
+  <% arr_filter_hide = ["shisha_not_allowed"] %>
+  <% FilterType.where("code NOT IN (?)", arr_filter_type_hide).all_order_by_index.each do |ft| %>
+    <li class="li-filter selelct-option-filter">
+      <p class=" <%= ft.code%> open-sans filter-option-title filter-title" id="ft_<%= ft.id %>">
+        <%= ft.name %>
+        <!-- <i class="pull-right fa fa-angle-up icon-top-tongle"></i> -->
+      </p>
+      <div class="content_filter <%= ft.code%>" id="ft_<%= ft.id %>_content" <%= 'style=display:block;' if collapse_css_class(ft.id) == 'expanse'%>>
+
+      <% ft.filters.sort_index_order_and_name.where("code NOT IN (?)", arr_filter_hide).each do |c| %>
+        
+        <%= left_filter_checkbox c, params[:filter_ids]%>
+      <% end %>
+      
+      <% if ft.code == 'open_hour' %>
+        <div class="input-append bootstrap-timepicker-component selelct-option-filter">
+           <%= select_tag :filter_wday, "
+           <option value=''>Day</option>
+            <option value='1'>Monday</option>
+            <option value='2'>Tuesday</option>
+            <option value='3'>Wednesday</option>
+            <option value='4'>Thursday</option>
+            <option value='5'>Friday</option>
+            <option value='6'>Saturday</option>
+            <option value='0'>Sunday</option>".html_safe , :class => "input-small", :id => 'rest_hour_filter' %>
+          <%= select_tag :filter_time, options_from_collection_for_select(Schedule::TIME_SHEET, :first , :last, ""), prompt: "Time", class: 'select-time-hour', :style => "width: 100px;", :id => 'filter_time' %> 
+      
+        </div> 
+      <% end %>
+
+      </div>
+     
+    </li>
+  <% end %>
+
+  <li class='action-filter'>
+    <input type="submit" class='default-btn small' style="color:#fff!important;" value="<%= t('layout.show_results') %>" />
+    <a id="less-filters" class="pull-right">
+      <i class="fa fa-angle-up"></i>
+    </a>
+  </li>
+
+</ul>
+
+
+
+<!-- <label style="padding: 10px 10px;">
+    <input id="rds" name="rds" style="margin: -3px 0 0 0;" type="checkbox" value="true"  />
+    <%#=t :redo_search_in_map %>
+  </label> -->
+
+  <!-- map autocomplet -->
+
+<script type="text/javascript">
+  // // Address Autocomplete
+  // var options = {
+  //   types: ['geocode']
+  // }
+  // var input = document.getElementById('ln');
+  // var options = {
+  //  types: ['(regions)'],
+  //  componentRestrictions: {country: 'uk'}
+  // };
+  // var autocomplete = new google.maps.places.Autocomplete(input, options);
+  
+  // // Autocomplete Listener
+  // google.maps.event.addListener(autocomplete, 'place_changed', function() {
+  //   var place = autocomplete.getPlace();
+    
+  //   $("#lt").val(place.types);
+  //   $("#llat").val(place.geometry.location.lat());
+  //   $("#llng").val(place.geometry.location.lng());
+  // });
+</script>
+
+<script>
+
+// arr = $('.content_filter.cuisine').children('label');
+
+// for (var i = 0; i < 4; i++) {
+//   if ($('#'+arr[i].id).find('input').is(':checked') == false)
+//   {
+//     for (var j = i+1; j < arr.length; j++) {
+//       if ($('#'+arr[j].id).find('input').is(':checked') == true)
+//       {
+//         $('#'+arr[j].id).removeClass('hide');
+//         $('.content_filter.cuisine').prepend($('#'+arr[j].id));
+//         if ($('.content_filter.cuisine label:not(.hide)').length > 4){
+//           $('#'+arr[i].id).addClass('hide');
+//         }
+//       }
+//     };
+//   }
+// };
+</script>

@@ -1,0 +1,45 @@
+.login-page
+  .container
+    = form_for(resource, :as => resource_name, :url => registration_path(resource_name) ,:autocomplete => "off") do |f|
+      .row.login-form
+        .col-xs-12.col-sm-6.col-sm-offset-3.col-lg-4.col-lg-offset-4.login-form
+          h1.title-login-page.title-page
+            = t('layout.sign_up')
+          p.title-text-sub.open-sans
+            = t('layout_sign_up.title_text_sub') 
+
+        
+          = f.label :username, :class => 'title-text'
+            | User name 
+            span 
+              | (This will be the name you use to post your reviews)
+        
+          .form-group
+            = f.text_field :username,  :class => 'form-control'
+
+          .form-group
+            = f.label :email, :class => 'title-text'
+            = f.email_field :email, :class => 'form-control' ,:autocomplete => "off"
+          .form-group
+            = f.label :password, :class => 'title-text'
+            = f.password_field :password , :class => 'form-control' ,:autocomplete => "off"
+
+          .form-group
+            => check_box_tag 'accept' ,true ,true, :id => 'confirm_signup_term' 
+            | Agree to our 
+            =<> link_to "terms and conditions.", terms_conditions_path, class: 'title-text-sub'
+          .form-group
+            button.default-btn.btn-halagems.login-btn#btn_sign_up.mg-t-0 name="button" type="submit" 
+              / i class="fa fa-angle-right fa-lg arrow-left" 
+              = t('layout.sign_up')
+          br.clearfix
+
+
+javascript:
+  $('#confirm_signup_term').on('click', function(){
+    if($(this).prop('checked')) {
+      document.getElementById("btn_sign_up").disabled = false;
+    } else {
+      document.getElementById("btn_sign_up").disabled = true; 
+    }
+  })

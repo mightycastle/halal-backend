@@ -1,0 +1,22 @@
+<div id="content" class="">
+  <div class="mygallery" >
+    <div class="tn3 album" style="overflow:hidden !important;">
+     <div class="tn3 thumb"><%= image_tag(get_image_cover_url(@restaurant.cover))%></div>
+        <ol>
+          <% if !@restaurant.photos.approved.blank? %>
+            <% @restaurant.photos.approved.each do |photo| %>
+              <li>
+                <a href="<%= photo.image.thumb("555x440#").url %>">
+                <%= image_tag(photo.image.thumb("150x150#").url) %>
+                </a>
+              </li>
+            <% end %>
+          <% else %>
+            <li>
+              <a href="<%= get_image_cover_url(@restaurant.cover) %>"><%= image_tag(get_image_cover_url(@restaurant.cover), {:width=>"150", :height=>"150"}) %></a>
+            </li>
+          <% end %>
+        </ol>
+     </div>
+  </div>
+</div>

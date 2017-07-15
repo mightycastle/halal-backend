@@ -1,0 +1,102 @@
+/*---------------*/
+.part3{ 
+  .color-blue-title{
+    color: #000;
+  }
+  .infor_reviews_average{
+    margin-bottom: 15px;
+    .col-1{
+      margin-bottom: 8px;
+    }
+    .col-2{
+      margin-bottom: 10px;
+      .rating_label{
+        margin-bottom: 8px;
+      }
+      .stars_color{
+        letter-spacing: 3px;
+        font-size: 16px;
+      }
+    }
+    .stars_color{ 
+      &.large{
+        font-size: 20px;
+        letter-spacing: 15px;
+      }
+    }
+  }
+  .infor_reviews{
+    .title-page{
+      text-transform: uppercase;  margin: 10px 0; 
+      font-style: normal;
+      text-align: center; font-weight: bold;
+    }
+    
+  }
+  #show_reviews{
+    /*// padding-top: 50px;*/
+  }
+  .infor_user{
+    height: 62px;S
+    #avatar{margin-right: 20px; padding-bottom: 5px;}
+    .number{margin-left: 280px;}
+  }
+  .border-bt { margin: 0px; border-bottom: #fff solid 2px; margin-bottom: 10px;}
+
+  .infor_reviews_average hr{
+    margin-top: 10px;
+  }
+  .t1{padding-top: 10px;}
+  .text_content{ margin-top: 10px; margin-bottom: 20px; clear: both; text-align: left;}
+  .reviewed_time{ font-size: 12px;  margin-top: 10px; margin-bottom: 5px; font-weight: bold;}
+  .rating_box{ margin-top: 20px; margin-bottom: 15px; position: relative; display: block; border-bottom: 1px solid #fff; padding-bottom: 15px;}
+  
+  .manager_reponded{ padding-bottom: 10px;
+    h4{margin-bottom: 0px; margin-top: 30px;}
+    #icon_reply{float: left; margin-right: 10px;}
+  }
+  .column_reviews{
+    .text_contentt{
+      word-break: break-word;
+    }
+  }
+  #more_reviews .normal-review{
+    margin-bottom: 20px;
+    &:nth-child(3n+1){
+      clear: left;
+    }
+  }
+}
+
+@media (max-width:767px){
+  .part3{
+    padding: 0 10px;    
+  }
+  #more_reviews .gem-hunter, #more_reviews .normal-review > div{
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+  #more_reviews .gem-hunter{
+    border-bottom: 1px dotted #fff;
+  }
+
+
+  #more_reviews .normal-review{
+    &:last-child{
+      &> div{
+        border-bottom:0;
+      }
+    }
+  }
+}
+
+@media (min-width:768px) and (max-width: 991px){
+  .part3 .reviews{
+    .stars_color{
+      b{
+        display: block;
+      }
+    }
+  }
+  
+}

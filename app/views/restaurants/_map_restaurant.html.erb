@@ -1,0 +1,129 @@
+
+<div class="modal fade" id="show_map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header container modal_container">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title color-blue-title" id="myModalLabel"><%= t('restaurant.map_title') %></h4>
+      </div>
+      <div class="modal-body">
+        <div class="container modal_container">
+          <div class="row">
+            <div class='map-view col-xs-12 col-sm-12 sol-md-6 col-lg-6'>
+              <div class="map">
+                <div class="mask"><%= render "restaurants/googlemap_show" %></div>
+              </div>
+              <div class="directions_form">
+                <%= hidden_field_tag "user_lat", params[:user_lat] %>
+                <%= hidden_field_tag "user_lng", params[:user_lng] %>
+                <div class="direct_input">
+
+                  <div class="input-group" style="margin: 10px 0 0 0;">
+                    <input type="text" id="user_location" class="address_input form-control" placeholder="Type in your location to get directions" required="true">
+                    <span class="input-group-btn">
+                      <button style="margin:0;" class="btn btn-default btn-halagems " type="submit" id="btn-get-direction"><i class="fa fa-search"></i></button>
+                    </span>
+                  </div>
+
+
+
+                  <!-- <input type="text" class='form-control address_input' id="user_location" placeholder="Type in your location to get directions" required="true"/>
+                  <button class='default-btn btn-halagems btn-get-direction' type="submit" id="btn-get-direction">
+                    <i class="fa fa-search"></i>
+                  </button> -->
+                </div>
+              </div>
+            </div>
+            <div class='direction_option col-xs-12 col-sm-12 sol-md-6 col-lg-6' >  
+              <div class="directions">
+                <div class="btn-group">
+                  <a href="#" class="btn travel_mode btn-default" value="driving"><%= image_tag "travel_mode_driving.png" %></a>
+                  <a href="#" class="btn travel_mode btn-default" value="transit"><%= image_tag "travel_mode_transit.png" %></a>
+                  <a href="#" class="btn travel_mode btn-default" value="walking"><%= image_tag "travel_mode_walking.png" %></a>
+                </div>
+                <div id="own_direction"><%= t('restaurant.direction') %>: <%= @restaurant.direction %></div>
+                <div id="direction_text"></div>
+              </div>
+              <div class="directions" url="#">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+    <script type="text/javascript">
+      // Address Autocomplete
+      var options = {
+        types: ['(regions)'],
+        componentRestrictions: {country: 'uk'}
+      }
+      var input = document.getElementById('user_location');
+      var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+      // Autocomplete Listener
+      google.maps.event.addListener(autocomplete, 'place_changed', function () {
+          var place = autocomplete.getPlace();
+
+//    $("#user_location").val(place.types);
+          $("#user_lat").val(place.geometry.location.lat());
+          $("#user_lng").val(place.geometry.location.lng());
+      });
+      var directionsDisplay;
+      var directionsService = new google.maps.DirectionsService();
+      directionsDisplay = new google.maps.DirectionsRenderer();
+      directionsDisplay.setMap(map);
+      directionsDisplay.setPanel(document.getElementById("direction_text"));
+
+      // When user click on get direction button_reviews
+      $("a.travel_mode").click(function (e) {
+          e.preventDefault();
+          mode = google.maps.TravelMode.DRIVING;
+          switch ($(this).attr('value')) {
+              case "transit":
+                  mode = google.maps.TravelMode.TRANSIT;
+                  break;
+              case "walking":
+                  mode = google.maps.TravelMode.WALKING;
+                  break;
+              case "bicycling":
+                  mode = google.maps.TravelMode.BICYCLING;
+                  break;
+              default:
+                  mode = google.maps.TravelMode.DRIVING;
+          }
+          calcRoute(mode);
+      });
+
+      $("#btn-get-direction").click(function () {
+          mode = google.maps.TravelMode.DRIVING;
+          calcRoute(mode);
+      });
+
+      function calcRoute(mode) {
+          var lat = <%= @restaurant.lat.present? ? @restaurant.lat : '10.79878' %>;
+          var lng = <%= @restaurant.lng.present? ? @restaurant.lng : '106.64892199999997' %>;
+
+          var start = new google.maps.LatLng($("#user_lat").val(), $("#user_lng").val());
+          var end = new google.maps.LatLng(lat , lng);
+
+
+          var request = {
+              origin: start,
+              destination: end,
+              travelMode: mode
+          };
+          directionsService.route(request, function (result, status) {
+              if (status == google.maps.DirectionsStatus.OK) {
+                  directionsDisplay.setDirections(result);
+              }
+          });
+      }
+      $(".modal").on("shown.bs.modal", function () {
+        google.maps.event.trigger(map, "resize");
+      });
+  </script>

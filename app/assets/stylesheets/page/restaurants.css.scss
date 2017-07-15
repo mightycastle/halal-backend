@@ -1,0 +1,920 @@
+// Place all the styles related to the Restaurants controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+/*-Add new restaurant---------------------------------------------------------------------------*/
+.edit-restaurant-admin{
+  .page-header{ margin-top: 70px;}
+}
+.image-preview{
+  .img-preview{
+    max-width: 120px; max-height: 120px;
+  }
+}
+
+.page_add_new_restaurant, .page_add_new_collection{
+  font-weight: normal;
+  label.error{
+    line-height: 22px; margin: 30px 0 0 0;
+    color: #f11458;
+    .custom-icon-invalid{
+      border: 3px solid #f11458;
+      width: 25px;
+      height: 25px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 21px;
+      border-radius: 33px;
+      font-weight: normal;
+    }
+  }
+  label{ font-weight: normal;}
+  .validate-message-row{ margin-left: 5px;
+    label.error{ margin: 10px 0;}
+  }   
+
+}
+.form-review{
+  .custom-icon-invalid {
+    border: 3px solid #f11458;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 21px;
+    border-radius: 33px;
+    font-weight: normal;
+  }
+}
+.add-rating-review{
+  
+  label[for="review_rating"]{ margin-left: 15px;}
+}
+
+.titles_page_add_restaurant{
+    text-align: left; 
+    font-weight: bold; 
+    font-size: 32px; 
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+.re-login-message{ margin-bottom: 30px; margin-top: -25px;}
+
+.form_infor_restaurant{
+    padding: 30px 20px 10px 20px;
+    margin-bottom: 20px;
+}
+
+.form_review_restaurant{
+    background: #000;
+    padding: 30px 20px 20px 20px;
+    #select_date_month{
+      .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
+        width: 150px;
+      }
+    }
+}
+.edit-details, .admin-edit-restaurant{
+  #add_menus .new_menu{
+    .label_for_chosen_menu{ position: absolute; width: auto;}
+  }
+} 
+
+
+.form_is_your_restaurant{
+    padding: 30px 20px;
+}
+
+.btn-submit {
+    letter-spacing: 0px;
+    text-decoration: none ! important;
+    text-shadow: none;
+    text-transform: uppercase;
+    text-align: center;   
+    width: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.arrow-left{
+    font-size: 25px;
+    margin-right: 3px;
+}    
+
+.custom_container {
+  padding-right: 30px;
+  padding-left: 30px;
+  margin: auto;
+
+}
+.custom-label{
+    font-weight: normal;
+    padding-bottom: 5px;
+}
+
+
+
+
+/*Star rating*/
+
+.rating-label{
+    text-align: left;
+    padding-left: 0px;
+    font-weight: normal;
+    font-size: 16px;
+    float: left;
+    padding-right: 5px;
+}
+
+/*-Edit restaurant details -----------------------------------------*/
+
+.restaurant-photos{
+	.tn3-slide-part{ 
+		.tn3-gallery{ 
+      border: none;
+			.tn3-image{ 
+				/*min-height: 310px;*/
+				width: 100%;
+        .tn3-image-in{
+          width: 100% ! important;
+          height: 100% ! important;
+          .tn3-full-image{
+            width: 100% ! important;
+            height: 100% ! important;
+            left: 0px ! important;
+            img{
+              width: 100% ! important;
+              height: 100% ! important;
+            }
+          }
+        }
+        .tn3-in-image{
+          width: 100% ! important;
+          left: 0px ! important;
+        }
+			 }
+		}
+		.tn3-thumbs{ 
+      width: 100%;
+      padding: 9px 20px 0px 20px;
+      border-top: none;
+      left: 0px;
+      height: 180px;
+      background-color: #58595b;
+      .tn3-thumb{ 
+        height: auto; 
+        border: none;
+        img{ width: 100%;}
+      }
+      .tn3-thumb-selected{
+        outline: 3px solid #d90018;
+        
+      }
+      
+    }
+
+	}
+  .mygallery{
+    .tn3-gallery{
+      .tn3-next-page{ height: 50px;}
+    }
+    .tn3-full-image{ top: 0 !important;}
+  }
+}
+
+
+
+
+
+
+
+.replied_time{ font-size: 12px; font-weight: bold; color: #fff; margin-top: 5px; }
+
+.rating-number{
+	clear: both;
+	font-size: 11px;font-weight: bold; 
+	text-transform: uppercase;
+	text-align: center;
+	background: image-url('label_rated.png') no-repeat;
+	width: 46px;height: 50px; text-align: center; line-height: 18px; color: #fff;
+	.p1{
+    margin: 0px;
+    padding-top: 6px;
+    width: 46px;
+    height: 22px;
+    font-size: 8px;
+  }
+	.p2{
+    margin: 0px;
+    padding: 0px;
+    width: 46px;
+    font-size: 15px;
+    line-height: 13px;
+  }
+	line-height: 18px;
+}
+
+/*.btn-more-reviews {
+	background-color: #d90018;
+	border:none;
+	border-radius: 0px 0px 0px 0px;
+	color: #ffffff;
+	letter-spacing: 0px;
+	// font-weight: bold;
+	text-decoration: none ! important;
+	text-shadow: none;
+	text-transform: uppercase;
+	text-align: center;   
+	width: auto;
+	margin-bottom: 20px;
+	// height: 40px;
+	// line-height: 30px;
+  &:hover{
+    color: #fff;
+  }
+}*/
+.arrow-left{
+    font-size: 25px;
+    margin-right: 3px;
+	}
+
+// .column_reviews{ vertical-align: top;}
+
+
+
+
+
+
+/*-------Edit Restaurant in detail ----------------------*/
+
+
+
+
+.owner-page{ padding: 0 20px;}
+.welcome-owner{ 
+  background:#37383a;
+  height: 90px;
+  padding-bottom: 20px;
+  margin: 0 -20px;
+  h2{ margin-top:0; padding-left: 20px;}
+}
+
+.name-users{ 
+  font-weight: bold;
+  display: table-cell;
+  height: 60px;
+  vertical-align: middle;
+}
+
+.border-left{border-right: #ecf6fa solid 1px}
+
+#reply_area{ font-size: 15px;
+  padding-bottom: 10px;
+  
+  margin-bottom: 20px;
+  label{color: #fff; margin-bottom: 10px;}
+  label.error{ margin-bottom: 0; margin-top: 5px; }
+  p.error-message{ margin-bottom: 0}
+  .form-control{resize: none; font-size: 14px; position: relative; width: 100%;}
+  .text_content{ margin-top: 10px; margin-bottom: 10px; clear: both; text-align: left; word-break: break-word; font-style: italic;}
+  .manager_reponded{ color: #fff; margin: 0; 
+    #icon_reply{float: left; margin-right: 10px;}
+    h4{margin-bottom: 0px; margin-top: 0px;}
+  }
+  .reply-owner{border-bottom: 1px dotted #fff; padding-bottom:20px;}
+}
+.manager_reponded{
+  .text_content{
+    word-break: break-word; padding-top: 5px;
+  }
+}
+#all_reply_reviews{
+  padding-top:20px;
+  display: table;
+  background-color: #58595B;
+  width: 100%;
+  .reviewed_text{
+    word-break: break-word; 
+    padding-top: 5px;
+    text-align: justify;
+  }
+  .column_reviews{ padding-bottom: 10px;}
+
+}
+#reply_area{
+  .reply-owner{
+    #btn-reply{ margin-bottom: 0; margin-top: 20px;}
+    label.error{color: #f11458;}
+  }
+  .not-yet-approved-reply{
+    background-color: #fff;
+    padding: 5px 0; color: #3A3535;
+    margin-top: 10px;
+  }
+}
+
+.review-comments{
+  margin-top: 20px; margin-bottom: 10px;
+  .review-content{ word-break: break-word; color: #fff;}
+  .time-visited {font-size: 12px ; margin: 10px 0 20px 0;font-weight: bold; color: #fff;}
+  hr{margin: 0px;  margin-top: 0px; margin-bottom: 0px; }
+  .label_stars{
+    margin-right: 8px;
+    float: left;
+    font-size: 13px;
+  }
+}
+@-moz-document url-prefix() {
+  .edit-details, .admin-edit-restaurant{
+
+    #add_menus input#menu_menu {
+      padding: 0 0 0 30px;
+    }
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) 
+{ 
+  .edit-details, .admin-edit-restaurant{
+
+    #add_menus input#menu_menu {
+      padding: 6px 0 0 15px; 
+    }
+  }
+  ::i-block-chrome, .edit-details, .admin-edit-restaurant{
+
+    #add_menus input#menu_menu {
+      padding: 0 0 0 20px;
+    }
+  }
+
+}
+
+.admin-edit-restaurant{
+  #add_menus{ margin-left: 10px;}
+}
+.edit-details, .admin-edit-restaurant{ 
+  padding-top: 30px; padding-bottom: 30px;  
+  h5{
+    line-height: 1.5;
+  }
+  .tittle {text-transform: uppercase; font-weight: bold; color: #fff;}
+
+  .post-offer{ background:#37383a;  margin-bottom: 10px; padding: 0px 20px 20px 20px; 
+    ul{
+      padding-left: 0px;
+      li {
+        list-style: none;
+        padding-bottom: 20px;
+        padding-left: 30px;
+      }
+    }
+    .fa-circle{
+      font-size: smaller;
+      margin-right: 18px;
+      margin-left: -28px;
+    }
+    .offer{vertical-align: bottom; padding-top: 15px; cursor: pointer;}
+  }
+
+  .edit-profile{background:#37383a; padding: 1px 20px 20px 20px;}
+
+  #offer_post{ display: none;
+    .form-control{width: 50%; margin-right: 5px;}
+  }
+  #add_menus{ margin-bottom: 40px; 
+    .form-control{
+      width: 70%;
+      margin-top: 10px; outline: none;}
+      #menu_menu{ padding-left: 20px;}
+
+     #submit_menu{margin-top: 10px;}
+     
+     .menu-name-error, .menu-file-error{ margin: 0; color: red;}
+  }
+  #adding_menus{ margin-top:  10px; margin-bottom: 10px;}
+
+  #add_social{ margin-bottom: 30px;
+    .form-control{
+      width: 70%;
+    }
+    .icon{color: #005c9e;  width: 25px;} 
+    label{color: #fff; padding-top: 15px;} 
+  }
+  #processing_upload{
+    margin-top: 10px; 
+  }
+  #upload_pictures{
+    margin-bottom: 10px;
+    .fileinput-button{
+      // color: #fff;
+      // &:hover{
+      //   background-image: -webkit-gradient(linear, left 0%, left 100%, from(#e0e0e0), to(#e0e0e0));
+      //   background-image: -webkit-linear-gradient(top, #e0e0e0 0%, #e0e0e0 100%);
+      //   background-image: -moz-linear-gradient(top, #e0e0e0 0%, #e0e0e0 100%);
+      //   background-image: linear-gradient(to bottom, #e0e0e0 0%, #e0e0e0 100%);
+      //   color: #333333;
+      // }
+    }
+  }
+  .btn-to-cover{ height: 25px; line-height: 20px; vertical-align: top; padding: 2px 5px;}
+
+}
+
+
+
+/*-----------Edit Profile Restaurant----------------*/
+
+.edit_profile{
+  .btn-group.bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]){
+      .dropdown-toggle.selectpicker{ 
+          border: none;
+          border-radius: 0px;
+          -moz-border-radius: 0px;
+          -webkit-border-radius: 0px;
+          .caret{
+              margin-top: 0px;
+          }
+      }
+  }
+  padding-bottom: 50px;
+  .restaurant-image-cover{width: 100%; max-width: 300px;}
+  h2, h4 {text-transform: uppercase; font-weight: bold;}
+
+  h4 {text-transform: uppercase; font-weight: bold; margin-top: 30px; }
+  .textarea{
+    label {margin-bottom: 8px; margin-top: 10px;  }
+  }
+  #your_profile{
+    label {margin-bottom: 8px; margin-top: 10px;   }
+    .form-control{width: 30%;}
+  }
+  #hala_status, #facilities, #prices, #shishas {label {font-weight: normal;  margin-top: 5px; margin-bottom: 0px; text-transform: capitalize; }
+    }
+  #acohol_allowance{label {font-weight: normal; margin-top: 5px; margin-bottom: 0px; }  }
+  #time_box:not(.backend){
+    background: #58595B; width: 100%; margin-bottom: 20px;
+    padding-top: 20px; padding-bottom: 20px;
+    .evening, .daily{margin-bottom: 0px;
+      span {text-transform: uppercase; font-weight: bold; }
+    }
+    .text-time{ line-height: 34px; text-transform: uppercase;}
+    .btn-apply-all{ color:#fff;display: inline-block; float: right; padding-right: 0; text-decoration: underline;}
+    .table-open-time{ width: 100%;
+      tr{ 
+        td{ padding-bottom: 10px;}
+      }
+    }
+    .time-closed{
+      color: #fff;
+    }
+    .time-closed:hover, .btn-apply-all:hover{
+      text-decoration: none;
+    }
+  }
+  #time_box.backend{
+    background: #d9edf6; width: 100%;
+    padding-top: 20px; padding-bottom: 20px;
+    .evening, .daily{margin-bottom: 0px;
+      span {text-transform: uppercase; color: #005c9e; font-weight: bold; }
+    }
+    .text-time{ line-height: 34px; text-transform: uppercase;}
+    .btn-apply-all{ display: inline-block; float: right; padding-right: 0; text-decoration: underline;}
+    .table-open-time{ width: 100%;
+      tr{ 
+        td{ padding-bottom: 10px;}
+      }
+    }
+    .time-closed{
+      color: #333333;
+    }
+    .time-closed:hover, .btn-apply-all:hover{
+      text-decoration: none;
+    }
+  }
+  .btn-group.bootstrap-select{
+            vertical-align: top; margin-top: 5px;border: none; width: 100px;
+            .dropdown-toggle.selectpicker{ background: #ffffff; border: solid #ffffff 1px; height: 33px; padding: 0; border-radius: 0;
+                .caret{
+                  // background: image-url("small_icon_btn_dropdown.png") no-repeat scroll center center transparent;
+                    border: none;
+                    height: 32px;
+                    padding: 0;
+                    width: 32px;
+                    outline: none;
+                    margin-top: -1px;
+                    top: 0;  right: 0; margin-right: -1px;
+                }
+            }
+        }
+  #opening_hours{
+    .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {width: 100%;}
+    
+  }
+  #select_cuisines{
+    .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {width: 250px;}
+  }
+}
+
+
+/*------Offer membership*/
+
+.membership{
+  padding-bottom: 40px;
+
+  #title_membership{     
+    padding: 40px 0 20px 0;
+    font-weight: bold; text-transform: uppercase;
+    h2 {margin: 0; font-weight: bold;}
+  }
+
+  #offer_area{
+    .dropdown-toggle.selectpicker{
+        border: none;
+        border-radius: 0px;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        .caret{
+            margin-top: 0px;
+        }
+      }
+    .edit-btn, .next-btn{
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+    .title_part{background-color: #fff; padding: 20px 30px; 
+      h4{font-weight: bold; text-transform: uppercase;  color: #000; margin-bottom: 0px; margin-top: 0px; text-align: center;}
+     }
+
+     h5{font-weight: bold; text-transform: uppercase;}
+     h5.font-normal{text-transform: none;}
+     .next {font-size: smaller; font-weight: bold; margin-top: 10px;}
+     .next:hover{cursor: pointer;}
+    .or_part{ text-align: center; padding-top: 10px;
+      .line-or{ border-top: 1px #fff solid; margin-top: 20px; display: inline-block;width: 40%; }
+      .text-or{
+        display: inline-block; padding: 10px; vertical-align: middle; font-size: 20px;
+        p {font-weight: bold; text-transform: uppercase; margin: 0px; height: 30px; line-height: 35px;}
+      }
+      &.padding-0{ padding-top: 0;}
+    }
+    .choose_date_time{
+      .day_time_to{display: inline-block;width: 45%;  vertical-align: middle; }
+      .text_to{
+        display: inline-block; padding: 10px 5px;font-size: 20px;
+        p { margin: 0px; text-transform: lowercase; font-size: 16px;}
+      }
+    }
+    .choose_year_month{ text-align: center;
+      .year_month_to{display: inline-block;width: 50%;}
+    }
+    .datepicker{width: 100%; padding: 0px;
+      .form-control{
+        width: 100%; 
+        height: 32px; 
+        display: inline-block; 
+        border: none;
+        -webkit-border-top-right-radius: 4px;
+        -webkit-border-bottom-right-radius: 4px;
+        -moz-border-radius-topright: 4px;
+        -moz-border-radius-bottomright: 4px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+      #input_date_month{margin: 0px; }
+      .input-group-addon{ 
+        color: #000;         
+        display: inline-block; 
+        width: 31px; 
+        text-align: center; 
+        height: 32px; 
+        line-height: 22px;
+        padding: 4px 3px 4px 5px;
+        margin-left: -31px;
+      }
+    }
+    input[type="radio"], input[type="checkbox"] {margin-right: 5px;}
+    .select_day_time{
+        .btn-group.bootstrap-select{
+
+          vertical-align: top; border: none; width: 100px;
+          .dropdown-toggle.selectpicker{ background: #ffffff; height: 32px; padding: 0; border-radius: 0;
+              .caret{
+                // background: image-url("small_icon_btn_dropdown.png") no-repeat scroll center center transparent;
+                  border: none;
+                  height: 32px;
+                  padding: 0;
+                  width: 30px;
+                  outline: none;
+                  margin-top: 0px;
+                  top: 0;  right: 0; margin-right: -1px;
+              }
+          }
+        }
+        .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {width: 100%;}
+        .bootstrap-select.btn-group .dropdown-menu li > a { cursor: pointer; text-align: left;}
+    }
+
+    .p1{ min-height: 435px;
+      .select_offers{
+        .btn-group.bootstrap-select{
+              vertical-align: top; margin-top: 0;  width: 150px; border: none; 
+              .dropdown-toggle.selectpicker{ background: #ffffff; height: 40px; line-height: 40px; padding: 0; border-radius: 0;
+                  .caret{
+                    // background: image-url("icon_btn_dropdown.png") no-repeat scroll center center transparent;
+                      border: none;
+                      height: 40px;
+                      padding: 0;
+                      width: 50px;
+          
+                      outline: none;
+                      margin-top: 0px;
+                      top: 0;  right: 0; margin-right: -1px;
+                  }
+              }
+          }
+        
+        .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {width: 100%;}
+      }
+    }
+
+    .p2{ min-height: 435px;
+      #choose_time{
+        label{font-weight: normal; }
+        label.next-btn{
+          font-weight: bold;
+        }
+        p{margin: 0px;}
+      }
+    }
+
+    .p3{ min-height: 435px;
+      #custom_col{padding-left: 0px;}
+      #btn-now{
+        padding: 10px;
+        margin: 0px;
+      }
+      #active_public{ }
+    }
+  }
+
+
+
+  .tn3-gallery{
+    .tn3-thumbs{ max-width: 330px;}
+  }
+}
+.edit-restaurant-page{
+  background-color: #ecf6fa ;
+  .page-header{
+    margin-top: 0; margin-bottom: 0;
+    padding: 60px 0 0px;
+    border: none;
+
+    h2{ font-size: 32px; text-transform: uppercase;}
+  }
+  .label-text{padding: 10px 0 5px 0;
+    font-weight: normal; margin: 0;
+  }
+}
+
+/*update offer*/
+.offer_time_public{
+  .bootstrap-select.btn-group{
+    .filter-option{
+      height: 30px; line-height: 30px;
+    }
+  } 
+  label.error-message{ color: red; font-weight: normal; font-size: 14px; background-color: rgb(233, 211, 211);
+padding: 0 5px; line-height: 30px;  margin-top: 10px;}
+
+}
+#offer_area{
+  .arrow_box.bottom-center:after{ border-top-color: #fff;}
+  .offer-public-time-row{
+    .column-offer{
+      .p1, .p2, .p3{ 
+        height: 100%;
+        position: relative;
+      }
+      .next-btn{ 
+        i{
+          font-size: 25px; font-weight: normal;
+        } 
+      }
+    }
+    .select_offers{
+      .bootstrap-select.btn-group{ margin-bottom: 0; 
+        .filter-option{
+          height: 40px; line-height: 40px;
+        }
+      } 
+    }
+    .title-top{
+      margin-top: 0;
+    }
+    #show-time{ margin-bottom: 20px;}
+    .get-time-now{ padding-top: 15px;}
+    .calendar-time-public{ margin-top: 15px; }
+    .select_day_time{ height: 30px;}
+    .btn-submit-offer{ margin-top: 0; padding: 10px; margin-top: 10px; }
+  }
+  .section_completed{ margin-top: 150px; text-align: center;
+    .edit{
+      .edit-btn{ i{ font-size: 25px; font-weight: normal;}}
+    }
+  }
+}
+.edit-restaurant-admin{
+    .tab-content{
+        padding-top: 10px;
+        .control-group{ padding: 5px 0;}
+    }
+}
+
+.modal{
+  .modal_container{ width: 100%;}
+}
+.offer-dest{ list-style: none; padding-bottom: 20px;}
+.form_add_new_restaurant,.form_add_new_collection{
+  input, textarea{
+    box-shadow: 2px 2px 7px -4px #888888 inset;
+    -moz-box-shadow: 2px 2px 7px -4px #888888 inset;
+    -webkit-box-shadow: 2px 2px 7px -4px #888888 inset;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    &:focus{
+      box-shadow: 2px 2px 7px -4px #888888 inset;
+      -moz-box-shadow: 2px 2px 7px -4px #888888 inset;
+      -webkit-box-shadow: 2px 2px 7px -4px #888888 inset;
+    }
+  }
+  .filed-form{ padding-top: 10px;}
+  #select_date_month{
+    .btn{
+      background: #ffffff;
+      border: solid #ffffff 1px;
+      height: 40px;
+      line-height: 40px;
+      padding: 0;
+      border-radius: 0;
+    }
+  }
+}
+.edit-profile{
+  .btn-edit-profile{ margin-top: 0px;}
+  .profile-dest{ margin-bottom: 5px;}
+}
+.offer-descriptions{
+  margin: 20px 0 0px 0;
+}
+#require_payment_modal{
+  .close{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+  }
+  .btn-red{
+    margin: 15px 0px 0px 0px;
+  }
+}
+.show-review-page-top-search-box{
+  background: #000; color: #fff;
+  .show-review-page{
+    background: #000;
+  }
+  &+ .show-review-page{
+    background: #000;
+    color: #fff;
+  }
+}
+.show-review-page{
+  .bootstrap-select.select-sort-review{ width: 80%; margin-bottom: 0;}  
+  .dropdown-toggle.selectpicker .caret {
+    background: url(/assets/caret_down.png) no-repeat scroll center center transparent;
+    // background: url(/assets/small_icon_btn_dropdown.png) no-repeat scroll center center transparent;
+    border: none;
+    height: 32px;
+    padding: 0;
+    width: 39px;
+    outline: none;
+    margin-top: -1px;
+    top: 0;
+    right: 0;
+    margin-right: -6px;
+
+  }
+  form#sort_review{
+    .btn-group.bootstrap-select.form-control{
+      border: none;
+      height: 32px;
+    }
+    button{
+      border: 1px solid #ccc;;
+      height: 32px;
+      background: #fff;
+      box-shadow: 2px 2px 7px -4px #888888 inset;
+      -moz-box-shadow: 2px 2px 7px -4px #888888 inset;
+      -webkit-box-shadow: 2px 2px 7px -4px #888888 inset;
+      transition: none;
+    }
+  }
+}
+.report{
+  text-align: right;
+  .btn.btn-link{
+    padding: 0px;
+    text-decoration: underline;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+}
+form.advertise_your_restaurant{
+  .modal-header {
+    background-color: #F2FAFC;
+    padding: 0 0 0 20px;
+    line-height: 56px;
+    button.close {
+      margin-top: 0;
+      height: 56px;
+      width: 50px;
+      background-color: #C8E0EC;
+      font-size: 40px;
+      color: #2274AC;
+      font-weight: bolder;
+    }
+    .title-page {
+      margin-bottom: 0;
+    }
+  }
+  .report-item{
+    padding-top: 10px;
+    input[type=checkbox]{
+      margin-right: 10px;
+      height: 15px;
+      vertical-align: middle;
+      margin-top: 0;
+    }
+  }
+  .modal-footer {
+    padding: 0px 20px 20px;
+    margin-top: 0px;
+    text-align: left;
+    border-top: none;
+  }
+}
+.flash_caution{
+  .message_common{
+    padding: 10px;
+  }
+}
+
+/*share rest to email*/
+
+#share_restaurant_via_email{
+  .modal-header{ height: 50px; background: #58595b; padding: 0;
+    .close{line-height: 48px; width: 50px; margin: 0;} 
+    .modal-title{
+      line-height: 50px; text-align: left; padding-left: 15px;}
+  }
+  .modal-body{
+    .form-group{margin-bottom: 0px;}
+    label{
+      color: #000;
+    }
+    .lable_email{ position: absolute; line-height: 32px; font-weight: normal;}
+    .input-email-form{ padding-left: 70px; border-left: none; border-right: none; border-top: none; box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;  }
+    .text-area-email{box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;  border-top: none; border-left: none; border-right: none; }
+  }
+  .modal-footer{
+    .default-btn{
+      background: #58595b;
+    }
+  }
+}
+
+.reply-info{ color: #fff;
+  .name-users{ height: auto; padding-bottom: 10px;}
+}
+
+#reply_area,.normal-review{
+  blockquote{ border-left-width: 0;}
+}
+#show_map{
+  .modal-dialog{ width: 80%;}
+}
+
+.title-halal-status{
+  font-family: serif; font-weight: bold;}
+.status-comment{
+  font-style: italic;
+  color: #C9BDA8;
+  font-family: serif;
+  font-size: 20px;
+  padding: 10px 0;
+}
+.share-title{ color: #A4B1B1;}

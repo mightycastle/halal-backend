@@ -1,0 +1,146 @@
+<%= render "shared/review_manage_tabs" %>
+
+<h1 class="title"><%=t 'review.management' %></h1>
+
+<%= search_form_for @search do |f| %>
+  <div class="well">
+    <%= f.condition_fields do |c| %>
+      <%= render "condition_fields", f: c %>
+    <% end %>
+    <div class="actions">
+      <%= link_to_add_fields " Add Conditions", f, :condition %>
+      <%= f.submit "Search", :class => "btn btn-success icon-search" %>
+    </div>
+  </div>
+<% end %>
+
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th><%= sort_link @search, :created_at, "Created Date" %></th>
+      <th><%= sort_link @search, :restaurant_name, "Restaurant" %></th>
+      <th><%= sort_link @search, :user_username, "User" %></th>
+      <th><%= sort_link @search, :content, "Content" %></th>
+      <th>Rating</th>
+      <th><%= sort_link @search, :status, "Status" %></th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reviews.each_with_index do |review,index| %>
+      <tr>
+        
+        <td><%= review.created_at.strftime("%b-%d-%Y")%></td>
+        <td>
+          <%= link_to(image_tag(backend_thumb_url(review.restaurant)), restaurant_info_path(review.restaurant.slug),:title=>"Go to edit restaurant page.")%><br /><%= link_to(review.restaurant.name, restaurant_info_path(review.restaurant.slug), :class => "review_restaurant_#{review.id}") if review.restaurant %><br />
+          <%= review.restaurant.address if review.restaurant %>
+        </td>
+        <td><%= (review.user.username  if review.user) || "No Name"%></td>
+        <td>
+          <div class="content_review_bounder" style="width: 370px;">            
+            <div id='review_content_show_<%= review.id %>'>
+              <% if (review.content=="Thanks for helping fellow eaters make better choices about their meals. We're all grateful.") %>
+                <span style="color: red;">This user has not written a comment. They used the stars to say it all.</span>
+              <% else %>
+                <%= review.content %>
+              <% end %>
+            </div>
+          </div>
+        </td>
+        <td nowrap>
+           <table>
+            <tr><td align="right">Overall</td>
+            <td>&nbsp;<%= render :partial=>"rating", :locals =>{:rate_count=>review.rating, :is_rating =>true}%></td>
+            </tr>
+            <tr><td align="right">Service</td>
+            <td>&nbsp;<%= render :partial=>"rating", :locals =>{:rate_count=>review.service, :is_rating =>false}%></td>
+            </tr>
+            <tr><td align="right">Quality</td>
+            <td>&nbsp;<%= render :partial=>"rating", :locals =>{:rate_count=>review.quality, :is_rating =>false}%></td>
+            </tr>
+            <tr><td align="right">Value</td>
+            <td>&nbsp;<%= render :partial=>"rating", :locals =>{:rate_count=>review.value, :is_rating =>false}%></td>
+            </tr>
+          </table>
+        </td>
+
+        <td id="status_label_<%= review.id%>"><%= render partial: "status_label", locals: {status: review.status} %></td>
+        <td width="150px" id="status_review_<%=review.id%>">
+          <%= render partial: "review_status", locals: {review: review} %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @reviews, :theme => "twitter-bootstrap-3"%>
+
+
+<script>
+  $('.submit_content').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    $('#form_content_'+id+' form').submit();
+  });
+  $('.edit_review_content').click(function(e){
+    e.preventDefault();
+    id = $(this).attr('id');
+    url = '/reviews/' + id + '/update_review'
+    options = {
+      "backdrop" : "static"
+    }
+    $('#edit_review_content').modal(options);
+    $('#edit_review_content').on('shown.bs.modal', function (e) {
+      content_text = $('#review_content_show_'+id).text();
+      restaurant_name = $('.review_restaurant_'+id).text();
+      $('#edit_review_admin').attr('action', url);
+
+      $('.review_content_body').val(content_text.trim());
+      $('#review_restaurant').val(restaurant_name.trim());
+    })
+  });
+
+</script>
+
+
+<div class="modal fade" id="edit_review_content" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id='edit_review_admin' class="form-horizontal edit_review_admin" accept-charset="UTF-8" action="" method="POST" novalidate="novalidate" data-validate="false">
+        <div style="margin:0;padding:0">
+        <input name="utf8" type="hidden" value="&#x2713;" />
+        <input name="authenticity_token" type="hidden" value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" />
+      </div>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Edit Review</h4>
+        </div>
+        <div class="modal-body">
+          <div class="restaurant-choice">
+            <p for="content">Restaurant</p>
+
+            <div class="control-group autocomplete optional">
+              <div class="controls">
+                <span role="status" aria-live="polite" class="ui-helper-hidden-accessible">3 results are available, use up and down arrow keys to navigate.</span>
+                <input class="autocomplete optional form-control ui-autocomplete-input autocomplete_restaurant valid" data-autocomplete="/admin/restaurants/autocomplete_restaurant_name" data-id-element="#review_restaurant_id" id="review_restaurant"  placeholder="Enter restaurant name to get suggestion" size="30" type="text" autocomplete="off">
+                <input id='review_restaurant_id' type="hidden" name="review[restaurant_id]" value=''>
+                <span class='color-red hide label-validate-username' >Restaurant does not exist!</span>
+              </div>
+            </div>
+          </div>
+          <div class="content">
+            <p for="content">Content</p>
+            <textarea class="form-control review_content_body" name='review[content]' rows="6"></textarea>
+          </div>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-success none-mg" type="submit">
+            <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i>  -->
+            Submit
+          </button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

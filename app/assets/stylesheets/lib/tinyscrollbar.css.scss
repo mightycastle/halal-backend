@@ -1,0 +1,11 @@
+/* Examples - Tiny Carousel */
+
+
+#slider_show { height: 1%; overflow:hidden; position: relative; padding: 0 0 10px;   }
+#slider_show .viewport { float: left; width: 780px; height: 125px; overflow: hidden; position: relative; }
+#slider_show .buttons { background: image-url("buttons.png") no-repeat scroll 0 0 transparent; display: block; margin: 30px 10px 0 0; background-position: 0 -38px; text-indent: -999em; float: left; width: 39px; height: 37px; overflow: hidden; position: relative; }
+#slider_show .next { background-position: 0 0; margin: 30px 0 0 10px; }
+#slider_show .disable { visibility: hidden; }
+#slider_show .overview { list-style: none; position: absolute; width: 240px; left: 0; top: 0; }
+#slider_show .overview li{ float: left; margin: 0 20px 0 0; padding: 1px; height: 121px; border: 1px solid #dcdcdc; width: 236px;}
+

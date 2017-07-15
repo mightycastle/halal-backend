@@ -1,0 +1,156 @@
+.header{
+  .nav_top{
+    min-height: 90px;
+    position: relative;
+    background-color: #000000;
+    margin-bottom: 0px;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    .navbar-header{
+      float: none;
+      text-align: center;
+      .navbar-logo{
+        line-height: 90px;
+        float: none;
+        // padding: 0px;
+      }
+      .logo{
+        // position: absolute; 
+        z-index: 999;
+      }
+      .navbar-toggle{
+        border-color: #ffffff; margin-right: 10px;
+        &:hover, &:focus{
+          border-color: #cccccc;
+          .icon-bar{
+              background-color: #cccccc;
+          }
+        }
+        .icon-bar{
+          background-color: #ffffff;
+        }
+      }
+    }
+    .navbar-right{
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      margin-right: 15px !important;
+      min-height: 90px;
+      padding-top: 15px;
+      font-family: OldStandard_Italic;
+      &.guest{
+        padding-top: 30px;
+        font-family: OldStandard_Italic;
+      }
+      .username{
+        text-align: center;
+        margin: 0px 0px 0px 0px;
+        color: #d2c5af;
+        text-transform: capitalize;
+        font-size: 18px;
+      }
+      .logout{
+        padding-left: 0px;
+      }
+      span.divider{
+        color: #ffffff;
+        padding: 5px 0px;
+      }
+      .dropdown-menu {
+        background-color: #000;
+      }
+    }
+    .navbar-nav > li{
+      &.social-icons{
+        > a{
+          display: inline-block;
+          &:hover{
+            color: #a4b1b1;
+            background-color: transparent;
+          }
+        }
+      }
+      > a{
+        padding: 5px;
+        color: #ffffff;
+        &:hover, &:focus {
+          background-color: transparent;
+          background-color: #a4b1b1;
+        }
+        .caret{
+          border-top-color: #ffffff;
+          border-bottom-color: #ffffff;
+        }
+      }
+    }
+  }
+  .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background-color: transparent;
+  }
+  .dropdown-menu > li > a{
+    color: #ffffff;
+  }
+  .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{
+    color: #000000;
+  }
+  .header-container{ height: 100%;}
+}
+.red-header-top{ height: 10px; background-color: red;}
+.blue{ background-color: #005c9e;
+  .top-right{
+    .login-part{
+      background-color: #1c6ea9;
+    }
+  }
+}
+.white{
+    background-color: #fff;
+}
+.nav_top a.add_your_restaurant{
+    color: #fff;
+    line-height: 100px;
+    padding: 10px 0;
+    text-align: center;
+    width: 172px;text-transform: uppercase; padding: 0 20px; 
+    text-decoration: underline; 
+    
+}
+.nav_top.white a.add_your_restaurant{ color: #0d5da0;}
+.white{
+  .top-right{
+    .login-part{
+      border-left: 1px solid #f3f3f3; 
+      border-right: 1px solid #f3f3f3;
+      .login-link{ color: #0d5da0; }
+    } 
+    .add-restaurant-btn{border-left: 1px solid #f3f3f3;}
+  }
+}
+.top-right{ 
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  .login-part{
+    float: right;
+    line-height: 90px;  
+    border-left: 1px solid #19679e; 
+    border-right: 1px solid #19679e; 
+    text-transform: uppercase; padding: 0 30px;
+    .login-link{ color: #fff;}
+  }
+  .add-restaurant-btn{ 
+    float: right;
+    height: 100%; 
+    border-left: 1px solid #19679e; 
+    vertical-align: top;
+  }
+}
+.nav_center{
+    position: relative;
+    width: 100%;
+    margin: 0; padding: 0;
+}
+.btn-add-restaurant{ padding-right: 5px;}

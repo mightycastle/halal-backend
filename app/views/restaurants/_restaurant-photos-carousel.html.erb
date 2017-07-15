@@ -1,0 +1,28 @@
+
+<div id="restaurant-<%= restaurant.id %>-photos-carousel" class="carousel slide" data-ride="carousel">
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <% group_count = 0 %>
+    <% restaurant.photos.order('status ASC, created_at DESC ').in_groups_of(5, false) do |group| %>
+      <div class="item <%= group_count == 0 ? 'active' : '' %>">
+        <% group.each_with_index do |photo, index1| %>
+          <div id="photo-<%= photo.id %>" class="photo-item pull-left">
+            <%= render partial: 'photos/photo-carousel-item', locals: {photo: photo} %>
+          </div>
+        <% end %>
+      </div>
+      <% group_count += 1 %>
+    <% end %>
+  </div>
+
+  <!-- Controls -->
+  <% if restaurant.photos.count > 5 %>
+    <a class="left carousel-control" href="#restaurant-<%= restaurant.id %>-photos-carousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#restaurant-<%= restaurant.id %>-photos-carousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+  <% end %>
+</div>

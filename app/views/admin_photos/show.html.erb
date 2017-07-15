@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @admin_photo.user_id %>
+</p>
+
+<p>
+  <b>Cover:</b>
+  <%= @admin_photo.cover %>
+</p>
+
+<p>
+  <b>Image uid:</b>
+  <%= @admin_photo.image_uid %>
+</p>
+<p>
+  <b>Image name:</b>
+  <%= @admin_photo.image_name %>
+</p>
+<p>&nbsp;&nbsp;
+  <%= image_tag(@admin_photo.image.thumb("420x400#").url) %>
+</p>
+
+<%= link_to 'Edit', edit_admin_photo_path(@admin_photo) %> |
+<%= link_to 'Back', admin_photos_path %>

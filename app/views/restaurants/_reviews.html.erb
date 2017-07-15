@@ -1,0 +1,18 @@
+<div class="row reviews">
+  <% if @gem_hunter.present? %>  
+    <div class="col-xs-12 col-sm-4">
+      <%= render "restaurants/block_review", :review => @gem_hunter, :gem_hunter => true %>
+    </div>
+    <div class="col-xs-12 col-sm-8">
+      <div class="row">
+        <% reviews.each do |review| %>
+          <div class="col-xs-12 col-sm-6 normal-review"><%= render "restaurants/block_review", :review => review, :gem_hunter => false %></div>
+        <%end%>
+      </div>
+    </div>
+  <% else %>
+    <% reviews.each do |review| %>
+        <div class="col-xs-12 col-sm-4 normal-review"><%= render "restaurants/block_review", :review => review, :gem_hunter => false %></div>
+      <%end%>
+  <% end %>
+</div>

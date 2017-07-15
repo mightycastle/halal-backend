@@ -1,0 +1,151 @@
+<%= form_for Menu.new, :html => { :multipart => true, :id => "fileupload_menu"  } do |f| %>
+  <div>
+    <div class="fileupload-buttonbar">
+      <div class="progressbar fileupload-progressbar nofade"><div style="width:0%;"></div></div>
+
+        <%= f.hidden_field :restaurant_id, value: @restaurant.id, :name => "menus[restaurant_id]" %>
+        <%= f.hidden_field :user_id, value: current_user.id ,:name => "menus[user_id]"%>
+        <!-- <%= f.text_field :name, placeholder:  t('menu.menu_name')  , :name => "menus[name]" , class: 'form-control' %> -->
+        <div class="clearfix"></div>
+        <label class="default-btn fileinput-button btn-details" for="menu_menu">
+        <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i> -->
+        <span>Upload New Menu</span>
+      </label>
+        <%= f.file_field :menu, :multiple => true , :name => "menus[menu]", class: 'hide', accept: "application/pdf,image/*"%>
+      <span class="fileupload-process"></span>
+
+      
+      <div class="col-lg-5 fileupload-progress fade pull-right">
+                <!-- The global progress bar -->
+                <div id="progress_menu" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                </div>
+                <!-- The extended global progress state -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+
+    </div>
+  </div>
+  <br/>
+  <table width="100%" class="zebra-striped table_photo" cellpadding="5px">
+    <tr class='hide'>
+      <th>Photo</th>
+      <th>File Name</th>
+      <th></th>
+      <th><div class="fileupload-buttonbar">Action &nbsp;</div></th>
+    </tr>
+    <tbody id="files" class="files" >
+      <tr class="row-no-img"><td colspan="4" class="align-c"><%= I18n.t("restaurant.no_menu") %>
+    </tbody>
+  </table>
+  <div id="loading"></div>
+<% end %>
+<script>
+  var photo_count = 0;
+  var fileUploadErrors = {
+    maxFilestatus: 'File is too big',
+    minFilestatus: 'File is too small',
+    acceptFileTypes: 'Filetype not allowed',
+    maxNumberOfFiles: 'Max number of files exceeded',
+    uploadedBytes: 'Uploaded bytes exceed file status',
+    emptyResult: 'Empty file upload result'
+  };
+</script>
+
+<!-- IMPORTANT fade class makes fileupload depend on css transition effect REMOVE or RENAME it -->
+<script id="template-upload" type="text/html">
+  {% for (var i=0, files=o.files, l=files.length, file=files[0]; i<l; file=files[++i]) { %}
+  <tr class="template-upload nofade">
+    <td class="preview"><span class="nofade"></span></td>
+    <td class="name"><input name='menus[name]' value={%=file.name%}/></td>
+  
+    {% if (file.error) { %}
+    <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
+    {% } else if (o.files.valid && !i) { %}
+    <td class="start">{% if (!o.options.autoUpload) { %}<button class="btn primary"><%= t('photos.template.start') %></button>{% } %}
+    
+    </td>
+    <td class='cancel'>{% if (!i) { %}<button class="btn info"><%= t('photos.template.cancel') %></button>{% } %}</td>
+
+    {% } else { %}
+    <td colspan="2"></td>
+    {% } %}
+  </tr>
+  {% } %}
+</script>
+<script id="template-download" type="text/html">
+  {% for (var i=0, files=o.files, l=files.length, file=files[0]; i<l; file=files[++i]) { %}
+  <tr class="template-download nofade">
+    {% if (file.error) { %}
+    <td></td>
+    <td class="name">{%=file.name%}</td>
+    <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
+    {% } else { %}
+    <td class="preview">{% if (file.thumbnail_url) { %}
+      <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery"><img src="{%=file.thumbnail_url%}"></a>
+    {% } %}</td>
+    <td class="name">
+      <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
+    </td>
+
+    {% } %}
+
+    <td class="delete">
+    
+    <i class="fa fa-trash-o fa-lg" style="cursor: pointer;" data-type="{%=file.delete_type%}" data-confirm="<%=t 'restaurant.photo_delete_confirm' %>" data-url="{%=file.delete_url%}" title='Delete'></i>
+    
+    </td>
+  </tr>
+  {% } %}
+</script>
+
+<script type="text/javascript" charset="utf-8">
+    $(function () {
+        // Initialize the jQuery File Upload widget:
+        $('#fileupload_menu').fileupload({
+ 
+          autoUpload: false,
+          prependFiles: true,
+          progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress_menu .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+          }
+
+        })
+
+        // Load existing files:
+        $.getJSON($('#fileupload_menu').prop('action') + "?r_id=<%= @restaurant.id%>", function (files) {
+          var fu = $('#fileupload_menu').data('fileupload'), 
+            template;
+          fu._adjustMaxNumberOfFiles(-files.length);
+          template = fu._renderDownload(files)
+            .prependTo($('#fileupload_menu .files'));
+          // Force reflow:
+          fu._reflow = fu._transition && template.length &&
+            template[0].offsetWidth;
+          template.addClass('in');
+          $('#loading').remove();
+        });
+
+        
+        var fu = $('#fileupload_menu').data("fileupload");
+        var eventData = { fileupload: fu };
+        var clickEvent = 'click.' + fu.options.namespace;
+
+        $('#fileupload_menu')
+            .off(clickEvent, '.delete i')
+            .on(clickEvent, '.delete i', eventData, function(e) {
+                var fileName = $(this).parent().siblings(".name").children().prop("title");
+                if (confirm("Are you sure you want to delete?")) {
+                    fu._deleteHandler.call($(this), e);
+                } else {
+                    return false;
+                }
+            });
+
+    });
+
+</script>

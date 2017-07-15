@@ -1,0 +1,82 @@
+<div id="map_modal" style="max-width: 540px; height: 440px"></div>
+
+
+<script type="text/javascript">
+<!--
+  var defaultZoom = 14; // Why zoomed in? Because it looks good.
+  var styles = [
+    {
+      stylers: [
+        { hue: "#00ffe6" },
+        { saturation: -20 }
+      ]
+    },{
+      featureType: "road",
+      elementType: "geometry",
+      stylers: [
+        { lightness: 100 },
+        { visibility: "simplified" }
+      ]
+    },{
+      featureType: "road",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];
+  var styledMap = new google.maps.StyledMapType(styles,
+    {name: "Styled Map"});
+  var lat = <%= @restaurant.lat.present? ? @restaurant.lat : '10.79878' %>;
+  var lng = <%= @restaurant.lng.present? ? @restaurant.lng : '106.64892199999997' %>;
+
+  // create map and add controls
+  // lat = '10.79878'
+  // lng = '106.64892199999997'
+  var mapOptions = {
+    center: new google.maps.LatLng(lat, lng),
+    zoom: defaultZoom,
+    // mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeControlOptions: {
+    //   mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+    }
+  };
+  console.log(mapOptions)
+  var map = new google.maps.Map(document.getElementById('map_modal'),mapOptions);
+  // / comment for styled map *************************
+  // map.mapTypes.set('map_style', styledMap);
+  // map.setMapTypeId('map_style');
+
+
+  // set center point of map to be of the Marker or the Default City
+  var centrePoint = new google.maps.LatLng(lat, lng);
+  // console.log(centrePoint);
+  map.setCenter(centrePoint);
+  map.setZoom(defaultZoom);
+  var shadow = new google.maps.MarkerImage('<%= asset_path "map_marker.png" %>',
+      // The shadow image is larger in the horizontal dimension
+      // while the position and offset are the same as for the main image.
+      new google.maps.Size(50, 50),
+      new google.maps.Point(0,0),
+      new google.maps.Point(0, 0));   
+  // add a draggable marker
+  marker = new google.maps.Marker({
+    map:map,
+    draggable: false,
+  //  animation: google.maps.Animation.DROP,
+    shadow: shadow,
+    position: centrePoint
+  });
+
+  // Set marker image
+  var defaultImage = new google.maps.MarkerImage(
+      "<%= asset_path 'map_marker.png' %>",
+      new google.maps.Size(50, 50),
+      new google.maps.Point(0,0)
+  );
+  marker.setIcon(defaultImage);
+
+
+//-->
+</script>
+

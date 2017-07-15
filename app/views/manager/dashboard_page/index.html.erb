@@ -1,0 +1,48 @@
+<div class="manager-container">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>DASHBOARD</h1>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-4 quick-stats info-box">
+      <%= render "manager/shared/quick_stats" %>
+    </div>
+
+    <div class="col-md-8 info-box">
+      <%= render "manager/shared/latest_reviews" %>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 info-box">
+      <%= render "manager/shared/line_chart", canvas_id: "average_ratings", chart_title: "Average ratings per day",
+      y_axis: [1, 2, 3, 4, 5],
+      min_value: 1, max_value: 5,
+      datasets: [
+        {
+          name: "Service",
+          color: "#a5b0af",
+          source: "reviews_and_ratings_average_service",
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }, {
+          name: "Quality",
+          color: "#d2c5af",
+          source: "reviews_and_ratings_average_quality",
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }, {
+          name: "Value",
+          color: "#ffffff",
+          source: "reviews_and_ratings_average_value",
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }
+      ] %>
+    </div>
+
+  </div>
+
+</div>

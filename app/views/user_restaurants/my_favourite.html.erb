@@ -1,0 +1,35 @@
+<div class="page-header">
+  <h1>My Favourite Restaurants</h1>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Cover</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Owner</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @restaurants.each do |restaurant| %>
+      <tr>
+        <td><%= restaurant.id %></td>
+        <td><%= restaurant.name %></td>
+        <td><%= link_to(image_tag(restaurant.cover.image.thumb("80x80#").url), restaurant_info_path(restaurant.slug), :title=>"Go to the #{restaurant.name} detail.") if restaurant.cover%></td>
+        <td><%= restaurant.address %></td>
+        <td><%= restaurant.phone %></td>
+        <td><%= restaurant.email %></td>
+        <td><%= restaurant.user.username if restaurant.user_id %></td>
+        <td><%= restaurant.description %></td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

@@ -1,0 +1,580 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  activerecord: 
+    attributes:
+      filter_type:
+        name: "Group"
+
+  simple_captcha:
+    label: ""
+
+  # Kaminari pagination.
+  #------------------------------------------
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: "Last &raquo;"
+      previous: "&lsaquo; Prev"
+      next: "Next &rsaquo;"
+      truncate: "..."
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "No restaurant found with your filter. Please try again with other filter."
+          one: "Displaying <b>1</b> restaurant"
+          other: "Displaying <b>%{count}</b> restaurants"
+      more_pages:
+        display_entries: "<b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> restaurants"
+  #Labels
+  #layout
+  # common
+
+  title_page: 'HalalGems'
+  reply: 'Reply'
+  #-----------------------------------------
+
+  giftcards:
+    register_redeemed_giftcard: 'Register Redeemed Giftcard'
+    restaurant_select_explanation: "Select for which of your restaurants you want to register the redeemed giftcard."
+    restaurant_select: "Select restaurant:"
+    code_explanation: "Type in the giftcard code and submit  it in order to register that it has been redeemed."
+    giftcard_code: 'Giftcard Code:'
+    register: "Submit"
+    wrong_format_error: 'Giftcard codes must only have numerals.'
+    wrong_length_error: "Giftcard codes must have 16 characters."
+    code_already_redeemed_error: "Giftcard is already redeemed."
+    unknown_error: "Unknown error."
+    giftcard_does_not_exist_error: "Giftcard with given code not found."
+
+  layout:
+    search: 'Search'
+    subscriptions: 'Subscriptions'
+    show_results: "Show results"
+    report: 'Report'
+    closed: 'closed'
+    apply_to_all: 'Apply to all'
+    hala_status_comment: 'Halal status comment'
+    add_restaurant: 'Add a restaurant'
+    eaten_here: 'Eaten here?'
+    is_your_restaurant: 'Is this your restaurant?'
+    about_us: "About Us"
+    contact_us: "Contact Us"
+    advertise_your_restaurant: "Advertise Your Restaurant"
+    how_it_works: "How it works"
+    login: "Log in"
+    my_account: 'My account'
+    term_and_conditions: "Terms & Conditions"
+    sign_up: "Sign up"
+    register: "Register"
+    sign_out: "Sign out"
+    sign_up_newsletter: 'Sign up for news + offers'
+    copy_right: '© Copyright HalalGems 2014'
+    dashboard: 'Dashboard'
+    dashboard_title: 'Site administration'
+    restaurant: 'Restaurants'
+    review: 'Reviews'
+    user: 'Users'
+    filter: 'Filters'
+    basic_page: 'Basic Pages'
+    restaurant_waiting_approve: "Restaurant Waiting Approve"
+    admin_photos: "Photos"
+    offers: 'Offers'
+    submit: 'Submit'
+    manager_responded: 'Manager responded'
+    type_reply_here: 'Type your reply here'
+    features: 'Features'
+    add_reviews: 'Add your review'
+    forgot_password_title: "Forgot your password? "
+    new_forgot_password_title: 'Type in your new password'
+    your_profile: 'Your profile'
+    membership: 'Membership'
+    create_an_offer: 'Create an offer'
+    save: 'Save'
+    reply: 'Reply'
+    visited: 'Visited'
+    hala_status: 'Halal Status'
+    review_reply: 'Review Replies'
+    delete: 'Delete'
+    edit_text_line: 'Text Line'
+    title: 'Title'
+    content: 'Content'
+    cancel: 'Cancel'
+    hyperlink: 'Hyperlink'
+    this_restaurant: 'This Restaurant'
+    type_your_message: 'Type your message here'
+    email_send_restaurant_ok: 'Your message has been sent to the restaurant'
+    login_message: "You’ll need to log in to leave a review"
+    are_you_sure: "Are you sure?"
+    halal_status_comment: "Halal status comment"
+  # footer
+  footer_layout:
+    copy_right: "© Copyright HalalGems"
+    info_text: 
+      "<p>Hala Gems is a site dedicated to opening up the world of Hala dinning. Pudiatur apicid que nullaud igendebit aut laborias sim a perro maio voluptatent, optur?</p>
+      <p>Gendae consequiae pra sinverro occae. Caborem inti testo volesequas que vendenis eum non rem que pererem eossuntium nus, occus, nis ipisciet ullatur?</p>"
+  #...................
+
+  # Views -> Sign Up.  
+  #------------------------------------------
+  layout_sign_up:
+    title_text_sub: "Sign up to write reviews and save your favourite restaurants."
+  # Views -> Log in.  
+
+  layout_login:
+    login_fb: "Log in with facebook"
+    title_text_sub: "Write reviews and save your favourite restaurants."
+    forgot_password: "Forgot your password?"
+    creat_account: "Need an account?"
+  #------------------------------------------
+
+  # Views -> Change password.  
+  #------------------------------------------
+  change_password:
+    invalid: "Current password is incorrect."
+    success: "Your password has been changed successfully."
+
+  # Views -> Reset password.
+  #------------------------------------------
+
+
+  # Views -> Home page.  
+  home:
+    visit_our_blog: 'visit our blog'
+    text_visit_our_blog: 'Read our blog for new Halal places we have found'
+    connect_us: 'Connect with us'
+    text_connect_us: 'Follow us on Twitter, Facebook, Pinterest & Instagram'
+    advertise_us: 'Advertise with us'
+    text_advertise_us: 'If you provide Halal food advertise with us...'
+    title_wordpress_post: 'From the blog'
+  #------------------------------------------
+
+  # Views -> Membership.
+  #------------------------------------------
+  approved: 'Approved'
+  choose_offer: 'Choose Offer'
+  choose_time: 'Choose Time'
+  active_publish: 'Publish'
+  line_or: 'Or'
+  create_your_own: 'Create your own'
+  type_here: 'Type here'
+  admin_approval_required: 'Admin approval required'
+  how_long_offer_last: 'How long does the offer last?'
+  custom_timing: 'Custom timing'
+  schedule_for_future: 'Schedule for the future'
+  weekdays: 'Weekdays 9-5'
+  weekdays_all_day: 'Weekdays all day'
+  weekends: 'Weekends'
+  all_the_time: 'All the time'
+  to_day: 'to'
+  now:  'Now'
+  next: 'Next'
+  edit: 'Edit'
+  section_completed: 'This section has been completed'
+  my-info: 'My Info'
+  my_review: 'My Reviews'
+  my_favourite: 'My Favourites'
+  save: 'Save'
+  offer_publish_time: 'When should this offer be published?'
+  price_sub: 'The cost of the average starter and main course'
+  please_choice_cuisine: 'Please choice cuisine'
+
+  # Views -> Search page.
+  #------------------------------------------
+  price_currency: "&pound; %{price}"
+  count_reviews: 
+    one: '1 review'
+    other: "%{count} reviews" 
+  search_placeholder: 'enter area, postcode, or restaurant' #'Town, City, Postcode or Restaurant...'
+  sort: "Sort"
+  new_search: 'New Search'
+  redo_search_in_map: 'Redo search in map'
+  show_more: 'Show more...'
+  delivery: 'Delivery'
+  opening_hour: 'Opening hours'
+  opening_times: 'Opening times'
+  shisha: 'Shisha'
+  price: 'Price'
+  filter_option: "Filter Options"
+  find_place: 'Find a Restaurant'
+  pick_cuisine: 'Search by cuisine'
+  all_cuisine:  'All Cuisines'
+  choose_your_cuisine:  'Choose your cuisine'
+  featured_review: 'Featured Reviews'
+
+  # Views -> Restaurant info page.
+  #------------------------------------------
+
+  # Views -> Edit profile restaurant
+  #-------------------------------------------
+  page_owner: 'Page owner'
+  full_name: 'Full name'
+  hala_status: 'Halalgems status'
+  edit_hala_status: 'Halal status comment'
+  day_time: 'Day time'
+  evening: 'Evening'
+  alcohol_available: 'Available'
+  alcohol_not_allowed: 'Not allowed'
+  bring_your_own_bottle: 'Bring your own bottle'
+  cuisine: 'Cuisine'
+  facilities: 'Facilities'
+  features: 'Features'
+  wi_fi: 'Wifi'
+  wheel_chair: 'Wheel chair'
+  card_accepted: 'Card accepted'
+  alcohol: 'Alcohol'
+  shisha: 'Shisha'
+  shisha_available: 'Shisha available'
+  staff_confirm: 'Staff confirmation'
+  sign_in_windown: 'Sign in windown'
+  certificate_available: 'Certificate available'
+  title_time: 'Time'
+  apply_all: 'Apply to all'
+  choose_options : 'Choose an option'
+  approve: 'Approve'
+  reject: 'Reject'
+  contact_us: "Contact Us"
+  organic: 'Organic'
+  restaurant_profile:
+    profile: "Profile"
+    menu: "Menu"
+    photos: "Photos"
+
+  # Views -> Add Restaurant page.  
+  #------------------------------------------
+  suggestion:
+    restaurant_name: 'Restaurant name'
+    short_address: 'Short Address'
+    city: 'City'
+    description: 'Tell the restaurant why you would like to see them on halalgems (optional)'
+    contact_detail: "If you've got phone or address details, please type them in here (optional)"
+    add_review: "Add your review"
+    suggester_name: 'Your name'
+    suggester_email: 'Email'
+    suggester_phone: "Phone"
+    suggester_website: "Website"
+    restaurant_address: "Address"
+    monthly_prize: 'To enter the monthly prize draw for three &pound;10 vouchers, fill in these details'
+    website: 'Website'
+    contact_you: "We will contact you to make sure we've got your details right"
+    halalgems_lover: "Halalgems food lovers will be coming to your restaurant soon!"
+    touch_restaurant: "We'll get in touch with the restaurant and invite them to join. Thanks for your suggestion!"
+    sign_in: "If you'd like to enter the prize draw, <a href='%{url}'>sign in</a>"
+    contact_us: "If you'd rather get in touch in another way, <a href='%{url}'>click here for our contact details.</a>"
+    let_us_know: "let us know and be in with a chance to win a prize"
+    create_success: 'Thank you for your suggestion!'    
+    change_other_details: "To change any other details, "
+
+  # Views -> My Account page.  
+  #------------------------------------------
+
+  # Views -> Admin -> User page.  
+  #------------------------------------------
+  user:
+    update_success: 'User was successfully updated.'
+    create_success: 'User was successfully created.'
+    management: 'Users Management'
+    required_login: "Please log in to continue."
+    required_verify: "You cannot write a review before your account is verified."
+    required_admin_role: "You have not permission to access this page."
+    required_restaurant_owner_role: "It looks like you don’t have permission to access this page. Try going back"
+    require_profession_user: "It looks like you don’t have permission to access this page. Need upgrade to your account."
+
+  # Views -> Admin -> Restaurants Management page.
+  #------------------------------------------
+  restaurant:
+    average_cost: 'Average cost'
+    change_info_request: 'Change Info Requests'
+    change_photo_request: 'Change Photo Requests'
+    create_success: 'Thank you for submitting a restaurant to halalgems.' 
+    create_success_and_confirm_review: "Thanks for adding a new restaurant. To confirm this review, please log in."
+    create_by_owner_success: 'Thanks! We’ll be in touch to confirm your restaurant’s details.'
+    create_by_admin_success: 'The resraurant created successfully'
+    update_success: 'Restaurant was successfully updated.'
+    update_wait_approve: 'Your update is waiting for admin approval.'
+    map_title: 'Type your location below to get directions'
+    management: 'Restaurants Management'
+    new: ' New Restaurant'
+    confirm_disable: 'Are you sure?'
+    add_favourite: 'Add the restaurant to your favourites successfully.'
+    remove_favourite: 'Remove the restaurant from your favourites successfully.'
+    photo_delete_confirm: 'Do you really want to delete this photo?'
+    no_halal_status: 'This restaurant has not provided an explanation of their halal status.'
+    modal_header_share: 'Share with your friend by email'
+    model_header_send_to: "Send %{restaurant_name} an email"
+    waiting_approve: "Waiting for approve"
+    direction: 'Directions'
+    read_more: 'Read more'
+    read_more_reviews: 'Read more reviews'
+    no_review: "There are no reviews for this restaurant. Be the first to add yours below"
+    no_img: "There 's no image"
+    no_menu: "There 's no menu"
+    popup_title_menu: 'Choose a menu to download'
+    price: 'Price'
+    share_email: 'Email'
+    restaurant_manager_title: "You are currently managing %{rest_name} restaurant"
+    messages_default: "I found this restaurant on HalalGems. Lets check it out one day!"
+    subject_email: 'Check out this restaurant on HalalGems'
+    share_via_email: 'Thanks for sharing. Remember to review your experience!'
+    restaurant_exist: 'Already has a restaurant with this name, please try with another name.'
+  schedules:
+    time_closed: 'Close time'
+
+
+  collections:
+    no_img: "There 's no image"
+    tab: "Collections"
+    title: "Existing collections"
+    new: "New Collection"
+    create_success: "Thank you for submitting a collection to HalalGems."
+    update_success: "Collection was successfully updated."
+    update_failed: "Collection update failed."
+    collection_restaurant_exists: "The restaurant is already included in this collection."
+    choose_new_image: "Choose a new image"
+    photo_delete_confirm: 'Do you really want to delete this photo?'
+    please_choose_image: "Please choose image"
+    collection_exist: "A collection with the same name already exists."
+    edit: 'Edit'
+    delete: 'Delete'
+    enable: 'Enable'
+    disable: 'Disable'
+    confirm_disable: 'Are you sure to disable this collection?'
+    confirm_remove_restaurant: 'Are you sure to remove this restaurant from the collection?'
+    confirm_remove: 'Are you sure to remove this collection?'
+  collection_image:
+    title: "Collection image"
+    template:
+      start: "Begin"
+      cancel: "Cancel"
+      delete: "Remove"
+    add_files: "Add Image"
+    start_upload: "Begin"
+    cancel_upload: "Cancel"
+    delete_selected: "Remove selected"
+
+  # Views -> Admin -> Reviews page.
+  #------------------------------------------
+  review:
+    missing_rating: 'Please rate service, quality, value.'
+    missing_content: "Please enter review's content."
+    create_success: 'Thank you for sharing! Your review will appear on the site shortly.'
+    update_success: 'Review was successfully updated.'
+    management: 'Reviews Management'
+    reply_management: 'Reply Management'
+    add_new: ' New Review'
+    new: ' New'
+    public: 'Public'
+    rejected: 'Rejected'
+    reply_review: 'Reply review was successfully created.'
+    sub_title_share: "No personal details will ever be shared."
+    review_using_username: 'Reviews will be posted using your username.'
+    not_yet_approved_reply: "Your reply has not yet been approved. It will be checked within a day"
+    warning_message_feature: "You can't set more than 3 review featured. Please remove other featured before to continue."
+    validate_star: " Please rate this restaurant using the stars above"
+
+  # Views -> Admin -> Photos page.
+  #------------------------------------------
+
+  my_purchase:
+    date_start: 'Start Date'
+    status: 'Status'
+    subscription_type: 'Subscription Type'
+    date_next_payment: 'Next Billing Cycle'
+    amount: 'Amount (£)'
+    phone_contact: 'Phone Contact'
+    paypal_status: 'Status'
+    action: 'Action'
+    cancel_recurring: 'Cancel Recurring'
+    enable_recurring: 'Enable Recurring'
+
+  warning:
+    message_login_review: 'Please login to write your review.'
+
+  admin_photo:
+    create_success: 'Admin photo was successfully created.'
+    update_success: 'Admin photo was successfully updated.'
+    required_role: 'You must have role of administrator.'
+    template:
+      change_type: 'Change Type'
+
+  # Views -> Admin -> Filter page.
+  #------------------------------------------
+  filter:
+    create_success: 'Filter was successfully created.'
+    update_success: 'Filter was successfully updated.'
+    management: 'Filters Management'
+    new: ' New Filter'
+    delete_confirm: 'Are you sure to delete this cuisine?'
+
+  # Messages
+  #------------------------------------------
+  send_direction_message: "The restaurant's directions were sent to your email. Enjoy!"
+
+
+
+  signup:
+    newsletter_unsucsess: 'Sign up for newsletter unsuccessfully.'
+    email_exist: has already been taken. Please register another email.
+    password_short: is too short (minimum is 6 characters)
+    password_long: is too long (maximum is 20 characters)
+    match_pass: "Password confirmation doesn't match"
+
+  login:
+    invalid: "Hmmm… Your login information seems to be incorrect. If you've forgotten your password, please click here."
+
+  # Views -> Admin -> Basics page.  
+  #------------------------------------------
+  basic_pages:
+    title: Basic pages
+
+  week_day_0: "Sun"
+  week_day_1: "Mon"
+  week_day_2: "Tue"
+  week_day_3: "Wed"
+  week_day_4: "Thu"
+  week_day_5: "Fri"
+  week_day_6: "Sat"
+
+  errors: 
+    invalid_phone: "Invalid phone"
+    invalid_email: "Invalid Email"
+    invalid_suggester_email: "Invalid Suggester email"
+    invalid_rating_service: "Invalid rating for service"
+    invalid_rating_quality: "Invalid rating for quality"
+    invalid_rating_value: "Invalid rating for value"
+
+  # Services API Messages
+  #------------------------------------------
+  service_api: 
+    errors:
+      invalid_api_key: 'Invalid API key'
+      user_not_found: 'User not found'
+      missing_required_fields: "Missing required fields"
+      wrong_authentication_token: "Wrong authentication token"
+      wrong_email_password: "Looks like your email address or password aren't recognised. Please try again."
+      locked: "Your account haven't verified yet. So it has locked. Please contact admin to support it."
+      wrong_login_detail: "There are some required filed missing"
+      page_not_found: "Page not found"
+      restaurant_was_not_favourited_yet: "Restaurant was not favorited yet"
+      restaurant_not_found: "Restaurant not found"
+      restaurant_was_already_added_to_favourite_list: "Restaurant was already added to favourite list"
+    success:
+      add_restaurant: "Restaurant was successfully created"
+      add_to_favourite_list: "Restaurant was successfully added to favourite list"
+      remove_from_favourite_list: "Restaurant was successfully remove from favourite list"
+      log_out: 'Log out successfully'
+      create_user: "Create your account successfully"
+      forgot_password: 'Reset password successfully. An email was sent to your email. Please check it to change your password.'
+      get_user_profile: "Get user info successfully"
+      add_review: "Review was successfully added"
+      get_restaurant_detail: "Get restaurant was successful"
+      get_list_reviews: "Get restaurant reviews was successful"
+      get_restaurant_menus: "Get restaurant memus was successful"
+      get_list_favourites: "Get restaurant favourites was successful"
+      get_cuisine_list: "Get list cuisines was successful"
+      get_all_filters: "Get filters was successful"
+      get_list_by_location: "Get retaurants was successful"
+      get_list_by_name: "Get retaurants was successful"
+      get_static_page: "Get page was successful"
+      none_reviews: "There's no reviews"
+      none_menus: "There's no menus"
+      none_cuisines: "There's no cuisines"
+      none_favourites: "There's no favourite restaurants"
+      none_restaurants: "There's no restaurants"
+
+    get_cuisine_success: "Get cuisine list successfully."   
+    login:
+      format_is_not_json: "The request must be json"
+      missing_email_password: "The request must contain the user email and password."
+      missing_login_params: "Please sure present email and passoword or facebook_token to login."
+      wrong_authentication_token: "Wrong authentication token"
+      successful: "Great news! You're signed in."
+      invalid_device_type: "Device type is miss or invalid"
+    sign_up:
+      successful: "Thank you for signing up! Please check your email to complete your registration."
+    reset_password:
+      send_email: "Reset passoword instruction email was send to user successfully."
+      user_not_found: "Looks like your email address is not recognised. Please try again or sign up."
+    add_restaurant:
+      successful: "Thank you for sharing! Your review will appear shortly."
+    restaurant_detail:
+      not_found: "The restaurant is not found."
+    add_review:
+      successful: "Thank you for sharing! Your review will appear shortly."
+      unsuccessful: "Create review unsuccessfully."
+    search_restaurant:
+      successful: "Get restaurants successfully."
+      successfully: 'ddd'
+      not_found: "No data."
+    review_list:
+      successful: "Get reviews list successfully."
+      not_found: "No data."
+    favourite_list:
+      successful: "Get favourite list successfully."
+    contact_us:
+      successful: "Message sent out successfully."
+      unsuccessful: "Send mail error."
+    add_favourite:
+      successful: "Add favourite successfully."
+      unsuccessful: "Error"
+    remove_favourite:
+      successful: "Remove favourite(s) successfully."
+      unsuccessful: "Error"
+  datetime:
+    distance_in_words:
+      about_x_weeks:
+        one: "about 1 week"
+        other: "about %{count} weeks"
+      x_weeks:
+        one: 1 week
+        other: ! '%{count} weeks'
+
+
+  # Views -> Edit user-restaurant  
+  #------------------------------------------
+  menu: 
+    create_success: "Your menu was successfully updated."
+    create_fail: "Your menu was unsuccessfully updated."
+    please_set_menu_name: "Please set menu name"
+    please_set_menu_file: "Please choose file"
+    menu_name: "Menu Name"
+
+  photos:
+    template:
+      cancel: "Cancel"
+    add_files: "Add Pictures"
+
+  offer:
+    content: 'Content'
+    restaurant_name: "Restaurant Name"
+    time_available: 'Time Available'
+    time_publish: 'Time Publish'
+    create_success: 'Your offer is waiting for admin approval.'
+    management: "Offer Management"
+  admin: 
+    reply_content: 'Reply Content'
+    review_management: 'Reviews Management'
+  text_line:
+    title_edit: 'Edit Textline Photo'
+  membership:
+    announce_membership: "We'll announce your membership in our 3,000 strong email newsletter"
+    restaurant_window_dinner: 'Restaurant window sticker to attract diners'
+    completed_with_social_media: 'Complete your listing on HalalGems with facebook, twitter, pinterest, menus & pictures'
+    post_offer: 'Post offers to fill covers at slow periods. Choose the  offer, frequency and time validity'
+    benefit: 'Benefits'
+    sign_up_here: 'Sign up here'
+    title_fill_empty_table: 'Fill empty tables'
+    title_build_engagement: 'Build Engagement'
+    title_connect_foodies: 'Connect with HalalGems foodies'
+    text_build_engagement: 'Show off your facebook, Twitter & pinterest page'
+    text_fill_empty_table: 'Attract diners via exclusive offers'
+    text_connect_foodies: 'Foodies are looking for your information on HalalGems'
+    membership_allow: 'Membership allows you to'
+    upgrade_account: 'If you own or manage a restaurant, click here to become a HalalGems member.'
+    upgrade_account_title: 'Upgrade Account'
+  menu_tab:
+    admin_site: 'Admin Site'
+    restaurant_owner: 'Restaurant Management '
+    history_subscription: 'Membership History'

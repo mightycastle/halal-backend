@@ -1,0 +1,13 @@
+.edit-restaurant-page{
+  padding: 20px;
+  background: #000;
+}
+
+.table_photo{
+  th{
+    &:first-child, &:last-child{
+      width: 20%;
+      max-width: 140px;
+    }
+  }
+}

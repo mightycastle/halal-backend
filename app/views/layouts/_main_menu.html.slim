@@ -1,0 +1,47 @@
+nav.navbar.hidden-xs role="navigation" id="main-menu"
+  .container-fluid
+    /! Brand and toggle get grouped for better mobile display
+    .navbar-header
+      button.navbar-toggle.collapsed data-target="#front-end-main-menu-navbar-collapse" data-toggle="collapse" type="button" 
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      ul.nav.navbar-nav
+        li.social-icon.social-icon-instagram.visible-xs data-toggle="tooltip" data-placement="bottom" data-original-title="Instagram"
+          a href="#"
+            .fa.fa-instagram.fa-2x
+        li.social-icon.social-icon-twitter.visible-xs data-toggle="tooltip" data-placement="bottom" data-original-title="Twitter"
+          a href="#"
+            .fa.fa-twitter.fa-2x
+        li.social-icon.social-icon-facebook.visible-xs data-toggle="tooltip" data-placement="bottom" data-original-title="Facebook"
+          a href="#"
+            .fa.fa-facebook-square.fa-2x
+
+    /! Collect the nav links, forms, and other content for toggling
+    #front-end-main-menu-navbar-collapse.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li class="#{ active_restaurants_pages? ? "active" : "" }"
+          = link_to "Restaurants", root_path
+        li
+          a href="http://halalgems.com/gem-hunter-profiles"  Gemhunters
+        li
+          a href="http://halalgems.com/halal-gems/news"  News
+        li
+          a href="http://halalgems.com/halal-gems/magazine"  Magazine
+        li
+          = link_to "FAQ", faq_path
+        li
+          = link_to 'Contact Us', contact_us_path
+        li.social-icon.social-icon-instagram
+          = link_to "http://www.instagram.com/halalgems", target: "_blank"
+            .fa.fa-instagram.fa-2x
+        li.social-icon.social-icon-twitter
+          = link_to "https://twitter.com/halalgems", target: "_blank"
+            .fa.fa-twitter.fa-2x
+        li.social-icon.social-icon-facebook
+          = link_to "https://www.facebook.com/halalgems", target: "_blank"
+            .fa.fa-facebook-square.fa-2x
+    /! /.navbar-collapse
+
+  /! /.container-fluid

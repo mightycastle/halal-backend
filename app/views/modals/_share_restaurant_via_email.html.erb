@@ -1,0 +1,28 @@
+<div class="modal fade" id="share_restaurant_via_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form accept-charset="UTF-8" action="<%= share_restaurant_via_email_users_path %>" class="form_share_restaurant_email" id="form_send_email_to_restaurant_owner" method="post" data-remote='true' novalidate="novalidate"  >
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title" id="myModalLabel"><%= t('restaurant.share_email')%></h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class='lable_email'>To:</label>
+            <input class='form-control input-email-form' name='email_pr[to]' >
+            <label class='lable_email'>From:</label>
+            <input class='form-control input-email-form' name='email_pr[from]' value='<%= current_user.email if current_user %>' >
+            <label class='lable_email'>Subject:</label>
+            <input class='form-control input-email-form' name='email_pr[subject]' value='<%= t"restaurant.subject_email" %>'>
+            <textarea class="form-control text-area-email" name='email_pr[message]' rows="5" placeholder="Enter your messages to share this restaurant" style="resize: none;"><%= t'restaurant.messages_default' %></textarea>
+            <label class='lable_email'>URL:</label>
+            <input class='form-control input-email-form ' name='email_pr[url]' value="<%= request.original_url %>" >
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="default-btn btn-details"> Send</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,254 @@
+
+<div class="form_add_new_restaurant">
+  <%= form_for(@restaurant, url: '/restaurants' , html: { id: "new_restaurant" }) do |f| %>
+      <div class="form_infor_restaurant">
+        <div class="">
+          <div class="row filed-form">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+              <h1 class="titles_page_add_restaurant title-page">
+                <span><%= image_tag('btn_add_restaurant_1.png') %></span>
+                <%= t('layout.add_restaurant') %>
+              </h1>
+            </div>
+          </div>
+          <div class="row filed-form">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+              <div class="textfield_name">
+                <label for="restaurantName" class="custom_label"><%= t('suggestion.restaurant_name') %></label><span>*</span>
+                <%= f.text_field :name, class: "form-control " , required: "true" %>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-6 col-lg-6">
+              <label for="restaurant_name" generated="true" class="error"></label>
+            </div>
+          </div>
+          
+          <div class="row filed-form">
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <div class="textfield">
+                <label for="cityName"><%= t('suggestion.city') %></label><span>*</span>
+                <%= f.text_field :city, class: "form-control" , required: "true" %>
+              </div>
+            </div>
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <label for="restaurant_city" generated="true" class="error">
+
+              </label>
+            </div>
+
+          </div>
+          <div class="row filed-form">
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <div class="textfield">
+                <label for="emailAddress"><%= t('suggestion.suggester_email') %></label>
+                <%= f.email_field :email, class: "form-control"  %>
+              </div>
+            </div>
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <label for="restaurant_email" generated="true" class="error"></label>
+            </div>
+          </div>
+          <div class="row filed-form">
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <div class="textfield">
+                <label for="restaurantAddress"><%= t('suggestion.restaurant_address') %></label>
+                <%= f.text_field :address, class: "form-control"%>
+
+              </div>
+            </div>
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <label for="restaurant_address" generated="true" class="error"></label>
+            </div>
+          </div>
+
+          <div class="row filed-form">
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <div class="textfield">
+                <label for="restaurantAddress"><%= t('suggestion.short_address') %></label>
+                <%= f.text_field :short_address, class: "form-control"  %>
+              </div>
+            </div>
+          </div>
+          <div class="row filed-form">
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <div class="textfield">
+                <label for="restaurantPhone"><%= t('suggestion.suggester_phone') %></label>
+                <%= f.phone_field :phone, class: "form-control" %>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+              <label for="restaurant_phone" generated="true" class="error"></label>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form_review_restaurant">
+        <%= f.fields_for :reviews do |r| %>
+            <div class="">
+
+              <div class="titles_page_add_restaurant san-pro-medium"><%= t('layout.eaten_here') %></div>
+              <% if current_user.nil? %>
+                <p class='re-login-message'><%= t('layout.login_message') %></p>
+              <% end %>
+              <div class="add_review_new_restaurant">
+                <div class="row rate-row">
+                  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 rate-service">
+                    <div class="rating-label">Service</div>
+                    <div>
+                      <% (1..5).each do |i| %>
+                          <li class="fa fa-star-o star-review-format" style="list-style-type:none;" id="service_<%= i %>"
+                              data-stars="<%= i %>"
+                              onclick="chage_rating('service', '<%= i %>');return false;"
+                              last="service_false"
+                              num="<%= i %>"
+                              type="service"
+                              onmouseover="choose_over_stars('<%= i %>','service')"
+                              onmouseout="choose_out_stars('<%= i %>','service')">
+                            </li>
+                      <% end %>
+                      <%= r.hidden_field :service, {:value => 0, :id => 'restaurant_review_service'} %>
+                    </div>
+
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 rate-quality">
+                    <div class="rating-label">Quality</div>
+                    <div>
+                      <% (1..5).each do |i| %>
+                          <li class="fa fa-star-o star-review-format" style="list-style-type:none;" id="quality_<%= i %>"
+                              data-stars="<%= i %>"
+                              onclick="chage_rating('quality', '<%= i %>');return false;"
+                              last="quality_false"
+                              num="<%= i %>"
+                              type="quality"
+                              onmouseover="choose_over_stars('<%= i %>','quality')"
+                              onmouseout="choose_out_stars('<%= i %>','quality')">
+                          </li>
+                      <% end %>
+                      <%= r.hidden_field :quality, {:value => 0, :id => 'restaurant_review_quality'} %>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 rate-value">
+                    <div class="rating-label">Value</div>
+                    <div>
+                      <% (1..5).each do |i| %>
+                          <li class="fa fa-star-o star-review-format " style="list-style-type:none;" id="value_<%= i %>"
+                              data-stars="<%= i %>"
+                              onclick="chage_rating('value', '<%= i %>');return false;"
+                              last="value_false"
+                              num="<%= i %>"
+                              type="value"
+                              onmouseover="choose_over_stars('<%= i %>','value')"
+                              onmouseout="choose_out_stars('<%= i %>','value')">
+                          </li>
+
+                      <% end %>
+                      <%= r.hidden_field :value, {:value => 0, :id => 'restaurant_review_value'} %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row validate-message-row hide">
+                  <label for="review_rating" generated="true" class="error " ><i  class='fa fa-exclamation custom-icon-invalid'></i><%= t('review.validate_star') %></label>
+                </div>
+              </div>
+              <div class="row ">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+                  <div><label>When you visited</label></div>
+                  <div id="select_date_month">
+                    <%= r.select_month(Time.now ,{:name=>"visited_date"},  {:class => "selectpicker",:style=>"width:120px;"}) %>
+                    <%= r.select_year(Time.now, {:name=>"visited_date"}, {:class => "selectpicker", :style=>"width:120px;"}) %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row ">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+                  <div class="textarea">
+                    <label for="addReview"><%= t('suggestion.add_review') %></label>
+                    <%= r.text_area(:content, cols: 100, rows: 6, class: 'form-control', id: 'review_content', onkeyup: "countChar(this)") %>
+                    <span class="content_character_count pull-right">0/5000</span>
+                  </div>
+                  
+                  
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+                  <label for="review_content" generated="true" class="error"></label>
+                </div>
+              </div>
+              <div >
+                <button name="button"  class="default-btn btn-submit btn-submit-top-30 mg-t-5" id="submit_restaurant_normal">
+                  <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i> -->
+                  <%= t('layout.submit') %>
+                </button>
+              </div>
+
+            </div>
+        <% end %>
+      </div>
+
+
+      <div class="form_is_your_restaurant">
+
+        <div class="">
+          <div class="titles_page_add_restaurant san-pro-medium"><%= t('layout.is_your_restaurant') %></div>
+          <div class="row filed-form">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+              <div class="textfield_name">
+                <label for="userName"><%= t('suggestion.suggester_name') %></label><span>*</span>
+                <%= f.text_field :suggester_name, class: "form-control", id:'restaurant_suggester_name' %>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+              <label for="restaurant_suggester_name" generated="true" class="error"></label>
+            </div>
+          </div>
+          <div class="row filed-form">
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+
+              <div class="textfield">
+                <label for="userEmailAddress"><%= t('suggestion.suggester_email') %></label><span>*</span>
+                <%= f.email_field :suggester_email, class: "form-control", id: 'restaurant_suggester_email' %>
+              </div>
+            </div>
+            
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <label for="restaurant_suggester_email" generated="true" class="error"></label>
+            </div>
+          </div>
+          <div class="row filed-form">
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <div class="textfield">
+                <label for="userPhone"><%= t('suggestion.suggester_phone') %></label><span>*</span>
+                <%= f.phone_field :suggester_phone, class: "form-control",  id: 'restaurant_suggester_phone' %>
+              </div>
+            </div>
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <label for="restaurant_suggester_phone" generated="true" class="error"></label>
+            </div>
+          </div>
+          <div class="row filed-form">
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <div class="textfield">
+                <label for="restaurantAddress"><%= t('suggestion.suggester_website') %></label>
+                <%= f.text_field :website, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="row ">
+            <input id='check_user_restaurant' name='check_user' type='hidden' value='false'/>
+            <div class="col-xs-10 col-sm-6 col-md-5 col-lg-5">
+              <div >
+                <button  id='submit_restaurant_user' class="default-btn btn-submit">
+                  <!-- <i class="fa fa-angle-right fa-lg arrow-left"></i>  -->
+                  <%= t('layout.submit') %>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+  <% end %>
+  </div>
+</div>
+

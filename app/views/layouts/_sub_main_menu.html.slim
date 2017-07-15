@@ -1,0 +1,23 @@
+- if active_restaurants_pages?
+  nav.navbar.hidden-xs role="navigation" id="sub-main-menu"
+    .container-fluid
+      /! Brand and toggle get grouped for better mobile display
+      .navbar-header
+        button.navbar-toggle.collapsed data-target="#front-end-sub-main-menu-navbar-collapse" data-toggle="collapse" type="button" 
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+
+      /! Collect the nav links, forms, and other content for toggling
+      #front-end-sub-main-menu-navbar-collapse.collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li
+            = link_to "Search Restaurants", root_path
+          li
+            = link_to "Add Restaurants", new_restaurant_path
+          li
+            a href="#" Advertising
+      /! /.navbar-collapse
+
+    /! /.container-fluid

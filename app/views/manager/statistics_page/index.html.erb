@@ -1,0 +1,102 @@
+<div class="manager-container">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>STATISTICS</h1>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-4 quick-stats info-box">
+      <%= render "manager/shared/quick_stats" %>
+    </div>
+
+    <div class="col-md-8 info-box">
+      <%= render "manager/shared/sectional_chart", canvas_id: "customer_satisfaction", chart_title: "Customer satisfaction",
+      y_axis: [1, 2, 3, 4, 5],
+      min_value: 1, max_value: 5,
+      datasets: [
+        {
+          name: "Today",
+          color: "#a5b0af",
+          source: "satisfaction_over_time",
+          time_range: [Time.now.beginning_of_day, Time.now.end_of_day],
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }, {
+          name: "This month",
+          color: "#d2c5af",
+          time_range: [Time.now - 30.days, Time.now],
+          source: "satisfaction_over_time",
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }, {
+          name: "This year",
+          color: "#ffffff",
+          time_range: [Time.now - 365.days, Time.now],
+          source: "satisfaction_over_time",
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }
+      ] %>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 info-box">
+      <%= render "manager/shared/line_chart", canvas_id: "average_ratings", chart_title: "Average ratings per day",
+      y_axis: [1, 2, 3, 4, 5],
+      min_value: 1, max_value: 5,
+      datasets: [
+        {
+          name: "Service",
+          color: "#a5b0af",
+          source: "reviews_and_ratings_average_service",
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }, {
+          name: "Quality",
+          color: "#d2c5af",
+          source: "reviews_and_ratings_average_quality",
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }, {
+          name: "Value",
+          color: "#ffffff",
+          source: "reviews_and_ratings_average_value",
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }
+      ] %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 info-box">
+      <%= render "manager/shared/line_chart", canvas_id: "number_of_ratings", chart_title: "Ratings per day",
+      y_axis: [0, 5, 10, 15, 20],
+      min_value: 0, max_value: 20,
+      datasets: [
+        {
+          name: "Ratings",
+          color: "#d2c5af",
+          source: "number_of_ratings",
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }
+      ] %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 info-box">
+      <%= render "manager/shared/line_chart", canvas_id: "number_of_checkins", chart_title: "Check-ins per day",
+      y_axis: [0, 5, 10, 15, 20],
+      min_value: 0, max_value: 20,
+      datasets: [
+        {
+          name: "Check-ins",
+          color: "#d2c5af",
+          source: "checkins_per_day",
+          pull_data_url: manager_pull_data_path(current_restaurant.id)
+        }
+      ] %>
+    </div>
+  </div>
+
+</div>

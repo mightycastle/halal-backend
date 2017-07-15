@@ -1,0 +1,92 @@
+#feature_view{
+  background: #58595B;
+  *{
+    color: #fff;
+  }
+  .dotted-line{
+    margin: 12px 0;
+  }
+  .title, .more{
+    background: #000;
+    text-align: center;
+    padding: 15px 0;
+    display: block;
+    h4{
+      margin:0;
+      font-weight: bold;
+      font-family: open-sans;
+      margin:0;
+      font-size: 24px;
+      line-height: 20px;
+    }
+    p{
+      margin:0;
+      color: #a4b1b1;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+  }
+  .title{
+    padding: 20px 0;
+    text-indent: -9999px;
+    background: image-url("restaurant_detail/text_gem_hunter.png") no-repeat center center #000;
+  }
+
+  .content-review{
+    padding: 10px 20px;
+    h4{
+      font-family: open-sans;
+      font-weight: bold;
+      display: block;
+      color: #97A4A5;
+      margin: 0 0 2px 0;
+      text-transform: uppercase;
+
+    }
+    h5{
+      a{
+        text-transform: capitalize;
+        font-family: open-sans;
+        font-size: 22px;
+        font-style:italic;
+        color: #d2c5af;
+      }
+    }
+    .stars_color{
+      margin-bottom: 16px;
+    }
+    .content{
+      margin: 12px 0;
+    }
+  }
+  
+  .wrap-img{
+    line-height: 250px;
+    height: 260px;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}
+
+.nav-tabs{
+  a{
+    color:#fff;
+  }
+  li:hover a{
+    color:#555;
+  }
+}
+
+@media (max-width:676px){
+  #feature_view{
+    .content-review{
+      padding: 20px 0px;
+    }
+    .col-sm-4{
+      margin-bottom: 30px;
+    }
+  }
+}
+.simple_captcha_field{
+  height: 55px;
+}

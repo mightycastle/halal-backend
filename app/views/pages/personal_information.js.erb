@@ -1,0 +1,5 @@
+<% if @tab_name == "my_reviews" %>
+  $("#content_5").html("<%= escape_javascript render partial: 'my_review' %>");
+<% else %>
+  $("#content_2").html("<%= escape_javascript render partial: 'my_favorite' %>");
+<% end %>
