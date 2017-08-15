@@ -1,6 +1,5 @@
 body{
     padding: 0 !important;
-    /*font-size: 12px !important;*/
 }
 .nav_top{
     background: image-url("nav_top_bg.jpg") repeat-x top #FFF;
@@ -331,7 +330,7 @@ select{
         }
     }
     .title-approved{ background-color: #419641; line-height: 25px;}
-    
+
 }
 
 #change_photo_request_page{
@@ -351,9 +350,9 @@ select{
     .carousel{
         margin: 0px 40px;
         width: 820px;
-        .carousel-control .icon-prev, 
-        .carousel-control .icon-next, 
-        .carousel-control .glyphicon-chevron-left, 
+        .carousel-control .icon-prev,
+        .carousel-control .icon-next,
+        .carousel-control .glyphicon-chevron-left,
         .carousel-control .glyphicon-chevron-right{
             color: #131313;
             top: 42%;
