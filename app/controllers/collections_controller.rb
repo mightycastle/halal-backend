@@ -59,7 +59,6 @@ class CollectionsController < ApplicationController
     end
   end
 
-
   # =================================================================================
   #  * Method name: create
   #  * Input: Collection name, Collection description, Collection image_url
@@ -243,7 +242,7 @@ class CollectionsController < ApplicationController
 
     render template: "collections/remove_restaurant"
   end
-  
+
   # =================================================================================
   #  * Method name: destroy
   #  * Input:
